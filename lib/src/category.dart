@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class Category {
-  final int id;
+  final int id; // TODO: required
   final String name;
 
   Category.fromMap(Map<String, dynamic> map)

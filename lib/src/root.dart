@@ -3,14 +3,14 @@ import 'dart:convert';
 import 'package:wordnik/src/category.dart';
 
 class Root {
-  final int id;
-  final String name;
   final List<Category> categories;
+  final int id; // TODO: required
+  final String name;
 
   Root.fromMap(Map<String, dynamic> map)
-  : id = map['id'] ?? 0,
-    name = map['name'],
-    categories = map['categories']?.map((category) => Category.fromMap(category))?.toList() ?? <Category>[];
+  : categories = map['categories']?.map((category) => Category.fromMap(category))?.toList() ?? <Category>[],
+    id = map['id'] ?? 0,
+    name = map['name'];
 
   factory Root.fromJson(String jsonString) {
     return Root.fromMap(json.decode(jsonString));

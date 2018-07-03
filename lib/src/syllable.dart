@@ -1,13 +1,13 @@
 import 'dart:convert';
 
 class Syllable {
-  final String text;
   final int seq;
+  final String text;
   final String type;
 
   Syllable.fromMap(Map<String, dynamic> map)
-  : text = map['text'],
-    seq = map['seq'] ?? 0,
+  : seq = map['seq'] ?? 0,
+    text = map['text'],
     type = map['type'];
   
   factory Syllable.fromJson(String jsonString) {

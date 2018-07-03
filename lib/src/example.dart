@@ -5,32 +5,32 @@ import 'package:wordnik/src/scored_word.dart';
 import 'package:wordnik/src/sentence.dart';
 
 class Example {
-  final int id;
-  final String title;
+  final int documentId;
   final int exampleId;
-  final String text;
+  final int id;
+  final ContentProvider provider;
+  final double rating;
   final ScoredWord score;
   final Sentence sentence;
-  final String word;
-  final ContentProvider provider;
-  final int year;
-  final int rating;
-  final int documentId;
+  final String text;
+  final String title;
   final String url;
+  final String word;
+  final int year;
 
   Example.fromMap(Map<String, dynamic> map)
-  : id = map['id'] ?? 0,
-    title = map['title'],
+  : documentId = map['documentId'] ?? 0,
     exampleId = map['exampleId'] ?? 0,
-    text = map['text'],
+    id = map['id'] ?? 0,
+    provider = (map['provider'] == null) ? null : ContentProvider.fromMap(map['provider']),
+    rating = map['rating'] ?? 0,
     score = (map['score'] == null) ? null : ScoredWord.fromMap(map['score']),
     sentence = (map['sentence'] == null) ? null : Sentence.fromMap(map['sentence']),
+    text = map['text'],
+    title = map['title'],
+    url = map['url'],
     word = map['word'],
-    provider = (map['provider'] == null) ? null : ContentProvider.fromMap(map['provider']),
-    year = map['year'] ?? 0,
-    rating = map['rating'] ?? 0,
-    documentId = map['documentId'] ?? 0,
-    url = map['url'];
+    year = map['year'] ?? 0;
 
   factory Example.fromJson(String jsonString) {
     return Example.fromMap(json.decode(jsonString));
