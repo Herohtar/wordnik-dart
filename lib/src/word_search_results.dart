@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:wordnik/src/word_search_results.dart';
+import 'package:wordnik/src/word_search_result.dart';
 
 class WordSearchResults {
   final List<WordSearchResult> searchResults;
