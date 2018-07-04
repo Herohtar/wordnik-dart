@@ -7,7 +7,7 @@ class WordSearchResults {
   final int totalResults;
 
   WordSearchResults.fromMap(Map<String, dynamic> map)
-  : searchResults = map['searchResults']?.map((result) => WordSearchResult.fromMap(result))?.toList() ?? <WordSearchResult>[],
+  : searchResults = map['searchResults']?.map<WordSearchResult>((result) => WordSearchResult.fromMap(result))?.toList() ?? <WordSearchResult>[],
     totalResults = map['totalResults'] ?? 0;
 
   factory WordSearchResults.fromJson(String jsonString) {

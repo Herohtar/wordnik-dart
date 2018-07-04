@@ -8,7 +8,7 @@ class Root {
   final String name;
 
   Root.fromMap(Map<String, dynamic> map)
-  : categories = map['categories']?.map((category) => Category.fromMap(category))?.toList() ?? <Category>[],
+  : categories = map['categories']?.map<Category>((category) => Category.fromMap(category))?.toList() ?? <Category>[],
     id = map['id'] ?? 0,
     name = map['name'];
 

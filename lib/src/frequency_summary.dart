@@ -10,7 +10,7 @@ class FrequencySummary {
   final String word;
 
   FrequencySummary.fromMap(Map<String, dynamic> map)
-  : frequency = map['frequency']?.map((freq) => Frequency.fromMap(freq))?.toList() ?? <Frequency>[],
+  : frequency = map['frequency']?.map<Frequency>((freq) => Frequency.fromMap(freq))?.toList() ?? <Frequency>[],
     frequencyString = map['frequencyString'],
     totalCount = map['totalCount'] ?? 0,
     unknownYearCount = map['unknownYearCount'] ?? 0,

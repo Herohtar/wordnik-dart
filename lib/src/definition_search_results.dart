@@ -7,9 +7,9 @@ class DefinitionSearchResults {
   final int totalResults;
 
   DefinitionSearchResults.fromMap(Map<String, dynamic> map)
-  : results = map['results']?.map((result) => Definition.fromMap(result))?.toList() ?? <Definition>[],
+  : results = map['results']?.map<Definition>((result) => Definition.fromMap(result))?.toList() ?? <Definition>[],
     totalResults = map['totalResults'] ?? 0;
-  
+
   factory DefinitionSearchResults.fromJson(String jsonString) {
     return DefinitionSearchResults.fromMap(json.decode(jsonString));
   }

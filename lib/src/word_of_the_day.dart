@@ -23,15 +23,15 @@ class WordOfTheDay {
     contentProvider = (map['contentProvider'] == null) ? null : ContentProvider.fromMap(map['contentProvider']),
     createdAt = (map['createdAt'] == null) ? null : DateTime.parse(map['createdAt']),
     createdBy = map['createdBy'],
-    definitions = map['definitions']?.map((definition) => SimpleDefinition.fromMap(definition))?.toList() ?? <SimpleDefinition>[],
-    examples = map['examples']?.map((example) => SimpleExample.fromMap(example))?.toList() ?? <SimpleExample>[],
+    definitions = map['definitions']?.map<SimpleDefinition>((definition) => SimpleDefinition.fromMap(definition))?.toList() ?? <SimpleDefinition>[],
+    examples = map['examples']?.map<SimpleExample>((example) => SimpleExample.fromMap(example))?.toList() ?? <SimpleExample>[],
     htmlExtra = map['htmlExtra'],
     id = map['id'] ?? 0,
     note = map['note'],
     parentId = map['parentId'],
     publishDate = map['publishDate'],
     word = map['word'];
-  
+
   factory WordOfTheDay.fromJson(String jsonString) {
     return WordOfTheDay.fromMap(json.decode(jsonString));
   }

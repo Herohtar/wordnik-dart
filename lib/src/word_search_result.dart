@@ -7,7 +7,7 @@ class WordSearchResult {
 
   WordSearchResult.fromMap(Map<String, dynamic> map)
   : count = map['count'] ?? 0,
-    lexicality = map['lexicality'] ?? 0,
+    lexicality = (map['lexicality'] ?? 0).toDouble(),
     word = map['word'];
 
   factory WordSearchResult.fromJson(String jsonString) {

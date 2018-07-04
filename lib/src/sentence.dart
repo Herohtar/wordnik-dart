@@ -16,7 +16,7 @@ class Sentence {
     hasScoredWords = map['hasScoredWords'] ?? false,
     id = map['id'] ?? 0,
     rating = map['rating'] ?? 0,
-    scoredWords = map['scoredWords']?.map((word) => ScoredWord.fromMap(word))?.toList() ?? <ScoredWord>[];
+    scoredWords = map['scoredWords']?.map<ScoredWord>((word) => ScoredWord.fromMap(word))?.toList() ?? <ScoredWord>[];
 
   factory Sentence.fromJson(String jsonString) {
     return Sentence.fromMap(json.decode(jsonString));

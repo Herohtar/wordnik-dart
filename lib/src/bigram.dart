@@ -11,9 +11,9 @@ class Bigram {
   : count = map['count'] ?? 0,
     gram1 = map['gram1'],
     gram2 = map['gram2'],
-    mi = map['mi'] ?? 0,
-    wlmi = map['wlmi'] ?? 0;
-  
+    mi = (map['mi'] ?? 0).toDouble(),
+    wlmi = (map['wlmi'] ?? 0).toDouble();
+
   factory Bigram.fromJson(String jsonString) {
     return Bigram.fromMap(json.decode(jsonString));
   }

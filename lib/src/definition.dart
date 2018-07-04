@@ -28,21 +28,21 @@ class Definition {
   Definition.fromMap(Map<String, dynamic> map)
   : attributionText = map['attributionText'],
     attributionUrl = map['attributionUrl'],
-    citations = map['citations']?.map((citation) => Citation.fromMap(citation))?.toList() ?? <Citation>[],
-    exampleUses = map['exampleUses']?.map((example) => ExampleUsage.fromMap(example))?.toList() ?? <ExampleUsage>[],
+    citations = map['citations']?.map<Citation>((citation) => Citation.fromMap(citation))?.toList() ?? <Citation>[],
+    exampleUses = map['exampleUses']?.map<ExampleUsage>((example) => ExampleUsage.fromMap(example))?.toList() ?? <ExampleUsage>[],
     extendedText = map['extendedText'],
-    labels = map['labels']?.map((label) => Label.fromMap(label))?.toList() ?? <Label>[],
-    notes = map['notes']?.map((note) => Note.fromMap(note))?.toList() ?? <Note>[],
+    labels = map['labels']?.map<Label>((label) => Label.fromMap(label))?.toList() ?? <Label>[],
+    notes = map['notes']?.map<Note>((note) => Note.fromMap(note))?.toList() ?? <Note>[],
     partOfSpeech = map['partOfSpeech'],
-    relatedWords = map['relatedWords']?.map((word) => Related.fromMap(word))?.toList() ?? <Related>[],
-    score = map['score'] ?? 0,
+    relatedWords = map['relatedWords']?.map<Related>((word) => Related.fromMap(word))?.toList() ?? <Related>[],
+    score = (map['score'] ?? 0).toDouble(),
     seqString = map['seqString'],
     sequence = map['sequence'],
     sourceDictionary = map['sourceDictionary'],
     text = map['text'],
-    textProns = map['textProns']?.map((text) => TextPron.fromMap(text))?.toList() ?? <TextPron>[],
+    textProns = map['textProns']?.map<TextPron>((text) => TextPron.fromMap(text))?.toList() ?? <TextPron>[],
     word = map['word'];
-  
+
   factory Definition.fromJson(String jsonString) {
     return Definition.fromMap(json.decode(jsonString));
   }

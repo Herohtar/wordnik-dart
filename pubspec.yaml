@@ -1,7 +1,7 @@
 name: wordnik
 description: Wordnik API for Dart.
 version: 0.0.1
-author: "Herohtar"
+author: "Herohtar <belac1186@gmail.com>"
 homepage: https://github.com/herohtar/wordnik-dart
 
 dependencies:

@@ -8,8 +8,8 @@ class ExampleSearchResults {
   final List<Facet> facets;
 
   ExampleSearchResults.fromMap(Map<String, dynamic> map)
-  : examples = map['examples']?.map((example) => Example.fromMap(example))?.toList() ?? <Example>[],
-    facets = map['facets']?.map((facet) => Facet.fromMap(facet))?.toList() ?? <Facet>[];
+  : examples = map['examples']?.map<Example>((example) => Example.fromMap(example))?.toList() ?? <Example>[],
+    facets = map['facets']?.map<Facet>((facet) => Facet.fromMap(facet))?.toList() ?? <Facet>[];
 
   factory ExampleSearchResults.fromJson(String jsonString) {
     return ExampleSearchResults.fromMap(json.decode(jsonString));

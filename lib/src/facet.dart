@@ -7,7 +7,7 @@ class Facet {
   final String name;
 
   Facet.fromMap(Map<String, dynamic> map)
-  : facetValues = map['facetValues']?.map((facet) => Facet.fromMap(facet))?.toList() ?? <FacetValue>[],
+  : facetValues = map['facetValues']?.map<Facet>((facet) => Facet.fromMap(facet))?.toList() ?? <FacetValue>[],
     name = map['name'];
 
   factory Facet.fromJson(String jsonString) {

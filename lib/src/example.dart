@@ -23,7 +23,7 @@ class Example {
     exampleId = map['exampleId'] ?? 0,
     id = map['id'] ?? 0,
     provider = (map['provider'] == null) ? null : ContentProvider.fromMap(map['provider']),
-    rating = map['rating'] ?? 0,
+    rating = (map['rating'] ?? 0).toDouble(),
     score = (map['score'] == null) ? null : ScoredWord.fromMap(map['score']),
     sentence = (map['sentence'] == null) ? null : Sentence.fromMap(map['sentence']),
     text = map['text'],
