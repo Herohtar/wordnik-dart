@@ -29,7 +29,7 @@ class WordOfTheDay {
     id = map['id'] ?? 0,
     note = map['note'],
     parentId = map['parentId'],
-    publishDate = map['publishDate'],
+    publishDate = (map['publishDate'] == null) ? null : DateTime.parse(map['publishDate']),
     word = map['word'];
 
   factory WordOfTheDay.fromJson(String jsonString) {
