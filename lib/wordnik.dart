@@ -109,7 +109,8 @@ class Wordnik {
     );
 
     Map<String, String> fullHeaders = {
-      'api_key': apiKey
+      'api_key': apiKey,
+      'Content-Type': 'application/json'
     };
     fullHeaders.addAll(headers);
 
@@ -172,6 +173,18 @@ class Wordnik {
     List<dynamic> wordList = json.decode(wordListJson);
 
     return wordList.map<WordList>((list) => WordList.fromMap(list)).toList();
+  }
+
+  Future<WordList> createWordList(String authToken, WordList wordList) async {
+    Map<String, String> headers = {
+      'auth_token': authToken
+    };
+
+    String body = json.encode(wordList);
+
+    String wordListJson = await _queryApi('wordLists', 'json', '', headers: headers, method: ApiMethods.post, body: body);
+
+    return WordList.fromJson(wordListJson);
   }
 
   Future<WordObject> getWord(

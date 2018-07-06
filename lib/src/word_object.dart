@@ -19,4 +19,15 @@ class WordObject {
   factory WordObject.fromJson(String jsonString) {
     return WordObject.fromMap(json.decode(jsonString));
   }
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic> {
+      'canonicalForm': canonicalForm,
+      'id': id,
+      'originalWord': originalWord,
+      'suggestions': suggestions,
+      'vulgar': vulgar,
+      'word': word
+    };
+  }
 }
