@@ -13,7 +13,7 @@ class WordList {
   final int userId;
   final String username;
 
-  WordList(String listName, String listDescription, String listType)
+  WordList(String listName, String listType, {String listDescription})
   : createdAt = null,
     description = listDescription,
     id = 0,
