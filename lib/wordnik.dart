@@ -192,8 +192,8 @@ class Wordnik {
     {
       bool useCanonical = false,
       bool includeSuggestions = true
-    }) async {
-
+    }
+  ) async {
     Map<String, String> parameters = {
       'useCanonical': '$useCanonical',
       'includeSuggestions': '$includeSuggestions'
@@ -204,18 +204,46 @@ class Wordnik {
     return WordObject.fromJson(json.decode(wordJson));
   }
 
-  Future<WordObject> getRandomWord({
-    bool hasDictionaryDef = true,
-    String includePartOfSpeech = '',
-    String excludePartOfSpeech = '',
-    int minCorpusCount = 1,
-    int maxCorpusCount = -1,
-    int minDictionaryCount = 1,
-    int maxDictionaryCount = -1,
-    int minLength = 1,
-    int maxLength = -1
-    }) async {
+  Future<List<Definition>> getDefinitions(
+    String word,
+    {
+      int limit = 200,
+      String partOfSpeech,
+      bool includeRelated = false,
+      List<String> sourceDictionaries,
+      bool useCanonical = false,
+      bool includeTags = false
+    }
+  ) async {
+    Map<String, String> parameters = {
+      'word': word,
+      'limit': '$limit',
+      'partOfSpeech': partOfSpeech,
+      'includeRelated': '$includeRelated',
+      'sourceDictionaries': sourceDictionaries?.join(',') ?? '',
+      'useCanonical': '$useCanonical',
+      'includeTags': '$includeTags'
+    };
 
+    String definitionListJson = await _queryApi('word', 'json', word, extraTerm: 'definitions', queryParameters: parameters);
+    List<dynamic> definitionList = json.decode(definitionListJson);
+
+    return definitionList.map<Definition>((definition) => Definition.fromJson(definition)).toList();
+  }
+
+  Future<WordObject> getRandomWord(
+    {
+      bool hasDictionaryDef = true,
+      String includePartOfSpeech = '',
+      String excludePartOfSpeech = '',
+      int minCorpusCount = 1,
+      int maxCorpusCount = -1,
+      int minDictionaryCount = 1,
+      int maxDictionaryCount = -1,
+      int minLength = 1,
+      int maxLength = -1
+    }
+  ) async {
     Map<String, String> parameters = {
       'hasDictionaryDef': '$hasDictionaryDef',
       'includePartOfSpeech': includePartOfSpeech,
@@ -233,21 +261,22 @@ class Wordnik {
     return WordObject.fromJson(json.decode(wordJson));
   }
 
-  Future<List<WordObject>> getRandomWords({
-    bool hasDictionaryDef = true,
-    String includePartOfSpeech = '',
-    String excludePartOfSpeech = '',
-    int minCorpusCount = 1,
-    int maxCorpusCount = -1,
-    int minDictionaryCount = 1,
-    int maxDictionaryCount = -1,
-    int minLength = 1,
-    int maxLength = -1,
-    String sortBy = 'alpha',
-    String sortOrder = 'desc',
-    int limit = 10
-    }) async {
-
+  Future<List<WordObject>> getRandomWords(
+    {
+      bool hasDictionaryDef = true,
+      String includePartOfSpeech = '',
+      String excludePartOfSpeech = '',
+      int minCorpusCount = 1,
+      int maxCorpusCount = -1,
+      int minDictionaryCount = 1,
+      int maxDictionaryCount = -1,
+      int minLength = 1,
+      int maxLength = -1,
+      String sortBy = 'alpha',
+      String sortOrder = 'desc',
+      int limit = 10
+    }
+  ) async {
     Map<String, String> parameters = {
       'hasDictionaryDef': '$hasDictionaryDef',
       'includePartOfSpeech': includePartOfSpeech,
@@ -287,7 +316,8 @@ class Wordnik {
       String sortOrder,
       int skip = 0,
       int limit = 10
-    }) async {
+    }
+  ) async {
     Map<String, String> parameters = {
       'query': query,
       'findSenseForWord': findSenseForWord,
@@ -349,7 +379,11 @@ class Wordnik {
     return WordSearchResults.fromJson(json.decode(wordSearchJson));
   }
 
-  Future<WordOfTheDay> getWordOfTheDay({DateTime date}) async {
+  Future<WordOfTheDay> getWordOfTheDay(
+    {
+      DateTime date
+    }
+  ) async {
     Map<String, String> parameters = (date == null) ? null : {
       'date': _dateFormat.format(date)
     };
