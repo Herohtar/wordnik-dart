@@ -1,18 +1,28 @@
-import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
-class Note {
+part 'note.g.dart';
+
+@JsonSerializable()
+class Note extends Object with _$NoteSerializerMixin {
+  @JsonKey(defaultValue: <String>[])
   final List<String> appliesTo;
+
   final String noteType;
+
+  @JsonKey(defaultValue: 0)
   final int pos;
+
   final String value;
 
-  Note.fromMap(Map<String, dynamic> map)
-  : appliesTo = List<String>.from(map['appliesTo'] ?? <String>[]),
-    noteType = map['noteType'],
-    pos = map['pos'] ?? 0,
-    value = map['value'];
+  Note(
+    {
+      List<String> appliesTo,
+      this.noteType,
+      this.pos = 0,
+      this.value
+    }
+  )
+  : this.appliesTo = appliesTo ?? <String>[];
 
-  factory Note.fromJson(String jsonString) {
-    return Note.fromMap(json.decode(jsonString));
-  }
+  factory Note.fromJson(Map<String, dynamic> json) => _$NoteFromJson(json);
 }

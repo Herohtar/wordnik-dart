@@ -1,19 +1,31 @@
-import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
 import 'package:wordnik/src/category.dart';
 import 'package:wordnik/src/root.dart';
 
-class PartOfSpeech {
+part 'part_of_speech.g.dart';
+
+@JsonSerializable()
+class PartOfSpeech extends Object with _$PartOfSpeechSerializerMixin {
+  @JsonKey(defaultValue: <Category>[])
   final List<Category> allCategories;
+
+  @JsonKey(defaultValue: <Root>[])
   final List<Root> roots;
+
+  @JsonKey(defaultValue: <String>[])
   final List<String> storageAbbr;
 
-  PartOfSpeech.fromMap(Map<String, dynamic> map)
-  : allCategories = map['allCategories']?.map<Category>((category) => Category.fromMap(category))?.toList() ?? <Category>[],
-    roots = map['roots']?.map<Root>((root) => Root.fromMap(root)) ?? <Root>[],
-    storageAbbr = List<String>.from(map['storageAbbr'] ?? <String>[]);
+  PartOfSpeech(
+    {
+      List<Category> allCategories,
+      List<Root> roots,
+      List<String> storageAbbr
+    }
+  )
+  : this.allCategories = allCategories ?? <Category>[],
+    this.roots = roots ?? <Root>[],
+    this.storageAbbr = storageAbbr ?? <String>[];
 
-  factory PartOfSpeech.fromJson(String jsonString) {
-    return PartOfSpeech.fromMap(json.decode(jsonString));
-  }
+  factory PartOfSpeech.fromJson(Map<String, dynamic> json) => _$PartOfSpeechFromJson(json);
 }

@@ -1,14 +1,20 @@
-import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
-class AudioType {
+part 'audio_type.g.dart';
+
+@JsonSerializable()
+class AudioType extends Object with _$AudioTypeSerializerMixin {
+  @JsonKey(defaultValue: 0)
   final int id;
+
   final String name;
 
-  AudioType.fromMap(Map<String, dynamic> map)
-  : id = map['id'] ?? 0,
-    name = map['name'];
-  
-  factory AudioType.fromJson(String jsonString) {
-    return AudioType.fromMap(json.decode(jsonString));
-  }
+  AudioType(
+    {
+      this.id = 0,
+      this.name
+    }
+  );
+
+  factory AudioType.fromJson(Map<String, dynamic> json) => _$AudioTypeFromJson(json);
 }

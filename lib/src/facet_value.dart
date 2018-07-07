@@ -1,14 +1,20 @@
-import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
-class FacetValue {
+part 'facet_value.g.dart';
+
+@JsonSerializable()
+class FacetValue extends Object with _$FacetValueSerializerMixin {
+  @JsonKey(defaultValue: 0)
   final int count;
+
   final String value;
 
-  FacetValue.fromMap(Map<String, dynamic> map)
-  : count = map['count'] ?? 0,
-    value = map['value'];
-  
-  factory FacetValue.fromJson(String jsonString) {
-    return FacetValue.fromMap(json.decode(jsonString));
-  }
+  FacetValue(
+    {
+      this.count = 0,
+      this.value
+    }
+  );
+
+  factory FacetValue.fromJson(Map<String, dynamic> json) => _$FacetValueFromJson(json);
 }

@@ -1,33 +1,34 @@
-import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
-class WordObject {
+part 'word_object.g.dart';
+
+@JsonSerializable()
+class WordObject extends Object with _$WordObjectSerializerMixin {
   final String canonicalForm;
-  final int id; // TODO: required
+
+  @JsonKey(required: true, defaultValue: 0)
+  final int id;
+
   final String originalWord;
+
+  @JsonKey(defaultValue: <String>[])
   final List<String> suggestions;
+
   final String vulgar;
+
   final String word;
 
-  WordObject.fromMap(Map<String, dynamic> map)
-  : canonicalForm = map['canonicalForm'],
-    id = map['id'] ?? 0,
-    originalWord = map['originalWord'],
-    suggestions = List<String>.from(map['suggestions'] ?? <String>[]),
-    vulgar = map['vulgar'],
-    word = map['word'];
+  WordObject(
+    this.id,
+    {
+      this.canonicalForm,
+      this.originalWord,
+      List<String> suggestions,
+      this.vulgar,
+      this.word
+    }
+  )
+  : this.suggestions = suggestions ?? <String>[];
 
-  factory WordObject.fromJson(String jsonString) {
-    return WordObject.fromMap(json.decode(jsonString));
-  }
-
-  Map<String, dynamic> toJson() {
-    return <String, dynamic> {
-      'canonicalForm': canonicalForm,
-      'id': id,
-      'originalWord': originalWord,
-      'suggestions': suggestions,
-      'vulgar': vulgar,
-      'word': word
-    };
-  }
+  factory WordObject.fromJson(Map<String, dynamic> json) => _$WordObjectFromJson(json);
 }

@@ -1,38 +1,58 @@
-import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
 import 'package:wordnik/src/content_provider.dart';
 import 'package:wordnik/src/scored_word.dart';
 import 'package:wordnik/src/sentence.dart';
 
-class Example {
+part 'example.g.dart';
+
+@JsonSerializable()
+class Example extends Object with _$ExampleSerializerMixin {
+  @JsonKey(defaultValue: 0)
   final int documentId;
+
+  @JsonKey(defaultValue: 0)
   final int exampleId;
+
+  @JsonKey(defaultValue: 0)
   final int id;
+
   final ContentProvider provider;
+
+  @JsonKey(defaultValue: 0.0)
   final double rating;
+
   final ScoredWord score;
+
   final Sentence sentence;
+
   final String text;
+
   final String title;
+
   final String url;
+
   final String word;
+
+  @JsonKey(defaultValue: 0)
   final int year;
 
-  Example.fromMap(Map<String, dynamic> map)
-  : documentId = map['documentId'] ?? 0,
-    exampleId = map['exampleId'] ?? 0,
-    id = map['id'] ?? 0,
-    provider = (map['provider'] == null) ? null : ContentProvider.fromMap(map['provider']),
-    rating = (map['rating'] ?? 0).toDouble(),
-    score = (map['score'] == null) ? null : ScoredWord.fromMap(map['score']),
-    sentence = (map['sentence'] == null) ? null : Sentence.fromMap(map['sentence']),
-    text = map['text'],
-    title = map['title'],
-    url = map['url'],
-    word = map['word'],
-    year = map['year'] ?? 0;
+  Example(
+    {
+      this.documentId = 0,
+      this.exampleId = 0,
+      this.id = 0,
+      this.provider,
+      this.rating = 0.0,
+      this.score,
+      this.sentence,
+      this.text,
+      this.title,
+      this.url,
+      this.word,
+      this.year = 0
+    }
+  );
 
-  factory Example.fromJson(String jsonString) {
-    return Example.fromMap(json.decode(jsonString));
-  }
+  factory Example.fromJson(Map<String, dynamic> json) => _$ExampleFromJson(json);
 }

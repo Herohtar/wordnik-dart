@@ -1,16 +1,23 @@
-import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
-class TextPron {
+part 'text_pron.g.dart';
+
+@JsonSerializable()
+class TextPron extends Object with _$TextPronSerializerMixin {
   final String raw;
+
   final String rawType;
+
+  @JsonKey(defaultValue: 0)
   final int seq;
 
-  TextPron.fromMap(Map<String, dynamic> map)
-  : raw = map['raw'],
-    rawType = map['rawType'],
-    seq = map['seq'] ?? 0;
-  
-  factory TextPron.fromJson(String jsonString) {
-    return TextPron.fromMap(json.decode(jsonString));
-  }
+  TextPron(
+    {
+      this.raw,
+      this.rawType,
+      this.seq = 0
+    }
+  );
+
+  factory TextPron.fromJson(Map<String, dynamic> json) => _$TextPronFromJson(json);
 }

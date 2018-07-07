@@ -1,38 +1,61 @@
-import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
-class AudioFile {
+part 'audio_file.g.dart';
+
+@JsonSerializable()
+class AudioFile extends Object with _$AudioFileSerializerMixin {
   final String attributionText;
+
   final String attributionUrl;
+
   final String audioType;
+
+  @JsonKey(defaultValue: 0)
   final int commentCount;
+
   final DateTime createdAt;
+
   final String createdBy;
+
   final String description;
+
+  @JsonKey(defaultValue: 0.0)
   final double duration;
+
   final String fileUrl;
-  final int id; // TODO: required
+
+  @JsonKey(required: true, defaultValue: 0)
+  final int id;
+
+  @JsonKey(defaultValue: 0.0)
   final double voteAverage;
+
+  @JsonKey(defaultValue: 0)
   final int voteCount;
+
+  @JsonKey(defaultValue: 0.0)
   final double voteWeightedAverage;
+
   final String word;
 
-  AudioFile.fromMap(Map<String, dynamic> map)
-  : attributionText = map['attributionText'],
-    attributionUrl = map['attributionUrl'],
-    audioType = map['audioType'],
-    commentCount = map['commentCount'] ?? 0,
-    createdAt = (map['createdAt'] == null) ? null : DateTime.parse(map['createdAt']),
-    createdBy = map['createdBy'],
-    description = map['description'],
-    duration = (map['duration'] ?? 0).toDouble(),
-    fileUrl = map['fileUrl'],
-    id = map['id'] ?? 0,
-    voteAverage = (map['voteAverage'] ?? 0).toDouble(),
-    voteCount = map['voteCount'] ?? 0,
-    voteWeightedAverage = (map['voteWeightedAverage'] ?? 0).toDouble(),
-    word = map['word'];
+  AudioFile(
+    this.id,
+    {
+      this.attributionText,
+      this.attributionUrl,
+      this.audioType,
+      this.commentCount = 0,
+      this.createdAt,
+      this.createdBy,
+      this.description,
+      this.duration = 0.0,
+      this.fileUrl,
+      this.voteAverage = 0.0,
+      this.voteCount = 0,
+      this.voteWeightedAverage = 0.0,
+      this.word
+    }
+  );
 
-  factory AudioFile.fromJson(String jsonString) {
-    return AudioFile.fromMap(json.decode(jsonString));
-  }
+  factory AudioFile.fromJson(Map<String, dynamic> json) => _$AudioFileFromJson(json);
 }

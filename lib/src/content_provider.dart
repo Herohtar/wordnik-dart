@@ -1,14 +1,20 @@
-import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
-class ContentProvider {
+part 'content_provider.g.dart';
+
+@JsonSerializable()
+class ContentProvider extends Object with _$ContentProviderSerializerMixin {
+  @JsonKey(defaultValue: 0)
   final int id;
+
   final String name;
 
-  ContentProvider.fromMap(Map<String, dynamic> map)
-  : id = map['id'] ?? 0,
-    name = map['name'];
-  
-  factory ContentProvider.fromJson(String jsonString) {
-    return ContentProvider.fromMap(json.decode(jsonString));
-  }
+  ContentProvider(
+    {
+      this.id = 0,
+      this.name
+    }
+  );
+
+  factory ContentProvider.fromJson(Map<String, dynamic> json) => _$ContentProviderFromJson(json);
 }

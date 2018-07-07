@@ -1,16 +1,23 @@
-import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
 import 'package:wordnik/src/definition.dart';
 
-class DefinitionSearchResults {
+part 'definition_search_results.g.dart';
+
+@JsonSerializable()
+class DefinitionSearchResults extends Object with _$DefinitionSearchResultsSerializerMixin {
+  @JsonKey(defaultValue: <Definition>[])
   final List<Definition> results;
+
   final int totalResults;
 
-  DefinitionSearchResults.fromMap(Map<String, dynamic> map)
-  : results = map['results']?.map<Definition>((result) => Definition.fromMap(result))?.toList() ?? <Definition>[],
-    totalResults = map['totalResults'] ?? 0;
+  DefinitionSearchResults(
+    {
+      List<Definition> results,
+      this.totalResults = 0
+    }
+  )
+  : this.results = results ?? <Definition>[];
 
-  factory DefinitionSearchResults.fromJson(String jsonString) {
-    return DefinitionSearchResults.fromMap(json.decode(jsonString));
-  }
+  factory DefinitionSearchResults.fromJson(Map<String, dynamic> json) => _$DefinitionSearchResultsFromJson(json);
 }

@@ -1,14 +1,20 @@
-import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
-class Category {
-  final int id; // TODO: required
+part 'category.g.dart';
+
+@JsonSerializable()
+class Category extends Object with _$CategorySerializerMixin {
+  @JsonKey(required: true, defaultValue: 0)
+  final int id;
+
   final String name;
 
-  Category.fromMap(Map<String, dynamic> map)
-  : id = map['id'] ?? 0,
-    name = map['name'];
-  
-  factory Category.fromJson(String jsonString) {
-    return Category.fromMap(json.decode(jsonString));
-  }
+  Category(
+    this.id,
+    {
+      this.name
+    }
+  );
+
+  factory Category.fromJson(Map<String, dynamic> json) => _$CategoryFromJson(json);
 }

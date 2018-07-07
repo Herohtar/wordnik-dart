@@ -1,12 +1,16 @@
-import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
-class StringValue {
+part 'string_value.g.dart';
+
+@JsonSerializable()
+class StringValue extends Object with _$StringValueSerializerMixin {
   final String word;
 
-  StringValue.fromMap(Map<String, dynamic> map)
-  : word = map['word'];
+  StringValue(
+    {
+      this.word
+    }
+  );
 
-  factory StringValue.fromJson(String jsonString) {
-    return StringValue.fromMap(json.decode(jsonString));
-  }
+  factory StringValue.fromJson(Map<String, dynamic> json) => _$StringValueFromJson(json);
 }

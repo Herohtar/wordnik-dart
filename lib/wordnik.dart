@@ -133,13 +133,13 @@ class Wordnik {
   Future<ApiTokenStatus> getApiTokenStatus() async {
     String statusJson = await _queryApi('account', 'json', 'apiTokenStatus');
 
-    return ApiTokenStatus.fromJson(statusJson);
+    return ApiTokenStatus.fromJson(json.decode(statusJson));
   }
 
   Future<AuthenticationToken> authenticate(String username, String password) async {
     String tokenJson = await _queryApi('account', 'json', 'authenticate', extraTerm: username, method: ApiMethods.post, body: password);
 
-    return AuthenticationToken.fromJson(tokenJson);
+    return AuthenticationToken.fromJson(json.decode(tokenJson));
   }
 
   Future<User> getLoggedInUser(String authToken) async {
@@ -149,7 +149,7 @@ class Wordnik {
 
     String userJson = await _queryApi('account', 'json', 'user', headers: headers);
 
-    return User.fromJson(userJson);
+    return User.fromJson(json.decode(userJson));
   }
 
   Future<List<WordList>> getWordListsForLoggedInUser(
@@ -172,7 +172,7 @@ class Wordnik {
 
     List<dynamic> wordList = json.decode(wordListJson);
 
-    return wordList.map<WordList>((list) => WordList.fromMap(list)).toList();
+    return wordList.map<WordList>((list) => WordList.fromJson(list)).toList();
   }
 
   Future<WordList> createWordList(String authToken, WordList wordList) async {
@@ -184,7 +184,7 @@ class Wordnik {
 
     String wordListJson = await _queryApi('wordLists', 'json', '', headers: headers, method: ApiMethods.post, body: body);
 
-    return WordList.fromJson(wordListJson);
+    return WordList.fromJson(json.decode(wordListJson));
   }
 
   Future<WordObject> getWord(
@@ -201,7 +201,7 @@ class Wordnik {
 
     String wordJson = await _queryApi('word', 'json', word, queryParameters: parameters);
 
-    return WordObject.fromJson(wordJson);
+    return WordObject.fromJson(json.decode(wordJson));
   }
 
   Future<WordObject> getRandomWord({
@@ -230,7 +230,7 @@ class Wordnik {
 
     String wordJson = await _queryApi('words', 'json', 'randomWord', queryParameters: parameters);
 
-    return WordObject.fromJson(wordJson);
+    return WordObject.fromJson(json.decode(wordJson));
   }
 
   Future<List<WordObject>> getRandomWords({
@@ -266,7 +266,7 @@ class Wordnik {
     String wordListJson = await _queryApi('words', 'json', 'randomWords', queryParameters: parameters);
     List<dynamic> wordList = json.decode(wordListJson);
 
-    return wordList.map<WordObject>((word) => WordObject.fromMap(word)).toList();
+    return wordList.map<WordObject>((word) => WordObject.fromJson(word)).toList();
   }
 
   Future<DefinitionSearchResults> reverseDictionary(
@@ -309,7 +309,7 @@ class Wordnik {
 
     String reverseDictionaryJson = await _queryApi('words', 'json', 'reverseDictionary', queryParameters: parameters);
 
-    return DefinitionSearchResults.fromJson(reverseDictionaryJson);
+    return DefinitionSearchResults.fromJson(json.decode(reverseDictionaryJson));
   }
 
   Future<WordSearchResults> searchWords(
@@ -346,7 +346,7 @@ class Wordnik {
 
     String wordSearchJson = await _queryApi('words', 'json', 'search', extraTerm: query, queryParameters: parameters);
 
-    return WordSearchResults.fromJson(wordSearchJson);
+    return WordSearchResults.fromJson(json.decode(wordSearchJson));
   }
 
   Future<WordOfTheDay> getWordOfTheDay({DateTime date}) async {
@@ -356,6 +356,6 @@ class Wordnik {
 
     String wordOfTheDayJson = await _queryApi('words', 'json', 'wordOfTheDay', queryParameters: parameters);
 
-    return WordOfTheDay.fromJson(wordOfTheDayJson);
+    return WordOfTheDay.fromJson(json.decode(wordOfTheDayJson));
   }
 }

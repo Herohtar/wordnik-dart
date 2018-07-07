@@ -1,14 +1,21 @@
-import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
-class Frequency {
+part 'frequency.g.dart';
+
+@JsonSerializable()
+class Frequency extends Object with _$FrequencySerializerMixin {
+  @JsonKey(defaultValue: 0)
   final int count;
+
+  @JsonKey(defaultValue: 0)
   final int year;
 
-  Frequency.fromMap(Map<String, dynamic> map)
-  : count = map['count'] ?? 0,
-    year = map['year'] ?? 0;
-  
-  factory Frequency.fromJson(String jsonString) {
-    return Frequency.fromMap(json.decode(jsonString));
-  }
+  Frequency(
+    {
+      this.count = 0,
+      this.year = 0
+    }
+  );
+
+  factory Frequency.fromJson(Map<String, dynamic> json) => _$FrequencyFromJson(json);
 }

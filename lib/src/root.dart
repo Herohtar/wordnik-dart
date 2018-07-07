@@ -1,18 +1,27 @@
-import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
 import 'package:wordnik/src/category.dart';
 
-class Root {
+part 'root.g.dart';
+
+@JsonSerializable()
+class Root extends Object with _$RootSerializerMixin {
+  @JsonKey(defaultValue: <Category>[])
   final List<Category> categories;
-  final int id; // TODO: required
+
+  @JsonKey(required: true, defaultValue: 0)
+  final int id;
+
   final String name;
 
-  Root.fromMap(Map<String, dynamic> map)
-  : categories = map['categories']?.map<Category>((category) => Category.fromMap(category))?.toList() ?? <Category>[],
-    id = map['id'] ?? 0,
-    name = map['name'];
+  Root(
+    this.id,
+    {
+      List<Category> categories,
+      this.name
+    }
+  )
+  : this.categories = categories ?? <Category>[];
 
-  factory Root.fromJson(String jsonString) {
-    return Root.fromMap(json.decode(jsonString));
-  }
+  factory Root.fromJson(Map<String, dynamic> json) => _$RootFromJson(json);
 }

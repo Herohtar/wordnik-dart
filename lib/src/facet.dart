@@ -1,16 +1,23 @@
-import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
 import 'package:wordnik/src/facet_value.dart';
 
-class Facet {
+part 'facet.g.dart';
+
+@JsonSerializable()
+class Facet extends Object with _$FacetSerializerMixin {
+  @JsonKey(defaultValue: <FacetValue>[])
   final List<FacetValue> facetValues;
+
   final String name;
 
-  Facet.fromMap(Map<String, dynamic> map)
-  : facetValues = map['facetValues']?.map<Facet>((facet) => Facet.fromMap(facet))?.toList() ?? <FacetValue>[],
-    name = map['name'];
+  Facet(
+    {
+      List<FacetValue> facetValues,
+      this.name
+    }
+  )
+  : this.facetValues = facetValues ?? <FacetValue>[];
 
-  factory Facet.fromJson(String jsonString) {
-    return Facet.fromMap(json.decode(jsonString));
-  }
+  factory Facet.fromJson(Map<String, dynamic> json) => _$FacetFromJson(json);
 }

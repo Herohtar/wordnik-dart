@@ -1,18 +1,26 @@
-import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
-class SimpleExample {
+part 'simple_example.g.dart';
+
+@JsonSerializable()
+class SimpleExample extends Object with _$SimpleExampleSerializerMixin {
+  @JsonKey(defaultValue: 0)
   final int id;
+
   final String text;
+
   final String title;
+
   final String url;
 
-  SimpleExample.fromMap(Map<String, dynamic> map)
-  : id = map['id'] ?? 0,
-    text = map['text'],
-    title = map['title'],
-    url = map['url'];
+  SimpleExample(
+    {
+      this.id = 0,
+      this.text,
+      this.title,
+      this.url
+    }
+  );
 
-  factory SimpleExample.fromJson(String jsonString) {
-    return SimpleExample.fromMap(json.decode(jsonString));
-  }
+  factory SimpleExample.fromJson(Map<String, dynamic> json) => _$SimpleExampleFromJson(json);
 }

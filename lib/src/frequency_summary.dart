@@ -1,22 +1,34 @@
-import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
 import 'package:wordnik/src/frequency.dart';
 
-class FrequencySummary {
+part 'frequency_summary.g.dart';
+
+@JsonSerializable()
+class FrequencySummary extends Object with _$FrequencySummarySerializerMixin {
+  @JsonKey(defaultValue: <Frequency>[])
   final List<Frequency> frequency;
+
   final String frequencyString;
+
+  @JsonKey(defaultValue: 0)
   final int totalCount;
+
+  @JsonKey(defaultValue: 0)
   final int unknownYearCount;
+
   final String word;
 
-  FrequencySummary.fromMap(Map<String, dynamic> map)
-  : frequency = map['frequency']?.map<Frequency>((freq) => Frequency.fromMap(freq))?.toList() ?? <Frequency>[],
-    frequencyString = map['frequencyString'],
-    totalCount = map['totalCount'] ?? 0,
-    unknownYearCount = map['unknownYearCount'] ?? 0,
-    word = map['word'];
+  FrequencySummary(
+    {
+      List<Frequency> frequency,
+      this.frequencyString,
+      this.totalCount = 0,
+      this.unknownYearCount = 0,
+      this.word
+    }
+  )
+  : this.frequency = frequency ?? <Frequency>[];
 
-  factory FrequencySummary.fromJson(String jsonString) {
-    return FrequencySummary.fromMap(json.decode(jsonString));
-  }
+  factory FrequencySummary.fromJson(Map<String, dynamic> json) => _$FrequencySummaryFromJson(json);
 }

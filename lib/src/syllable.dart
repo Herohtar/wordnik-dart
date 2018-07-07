@@ -1,16 +1,23 @@
-import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
-class Syllable {
+part 'syllable.g.dart';
+
+@JsonSerializable()
+class Syllable extends Object with _$SyllableSerializerMixin {
+  @JsonKey(defaultValue: 0)
   final int seq;
+
   final String text;
+
   final String type;
 
-  Syllable.fromMap(Map<String, dynamic> map)
-  : seq = map['seq'] ?? 0,
-    text = map['text'],
-    type = map['type'];
-  
-  factory Syllable.fromJson(String jsonString) {
-    return Syllable.fromMap(json.decode(jsonString));
-  }
+  Syllable(
+    {
+      this.seq = 0,
+      this.text,
+      this.type
+    }
+  );
+
+  factory Syllable.fromJson(Map<String, dynamic> json) => _$SyllableFromJson(json);
 }

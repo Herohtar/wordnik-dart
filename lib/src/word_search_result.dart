@@ -1,16 +1,24 @@
-import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
-class WordSearchResult {
+part 'word_search_result.g.dart';
+
+@JsonSerializable()
+class WordSearchResult extends Object with _$WordSearchResultSerializerMixin {
+  @JsonKey(defaultValue: 0)
   final int count;
+
+  @JsonKey(defaultValue: 0.0)
   final double lexicality;
+
   final String word;
 
-  WordSearchResult.fromMap(Map<String, dynamic> map)
-  : count = map['count'] ?? 0,
-    lexicality = (map['lexicality'] ?? 0).toDouble(),
-    word = map['word'];
+  WordSearchResult(
+    {
+      this.count = 0,
+      this.lexicality = 0.0,
+      this.word
+    }
+  );
 
-  factory WordSearchResult.fromJson(String jsonString) {
-    return WordSearchResult.fromMap(json.decode(jsonString));
-  }
+  factory WordSearchResult.fromJson(Map<String, dynamic> json) => _$WordSearchResultFromJson(json);
 }

@@ -1,16 +1,23 @@
-import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
-class AuthenticationToken {
+part 'authentication_token.g.dart';
+
+@JsonSerializable()
+class AuthenticationToken extends Object with _$AuthenticationTokenSerializerMixin {
   final String token;
+
+  @JsonKey(defaultValue: 0)
   final int userId;
+
   final String userSignature;
 
-  AuthenticationToken.fromMap(Map<String, dynamic> map)
-  : token = map['token'],
-    userId = map['userId'] ?? 0,
-    userSignature = map['userSignature'];
+  AuthenticationToken(
+    {
+      this.token,
+      this.userId = 0,
+      this.userSignature
+    }
+  );
 
-  factory AuthenticationToken.fromJson(String jsonString) {
-    return AuthenticationToken.fromMap(json.decode(jsonString));
-  }
+  factory AuthenticationToken.fromJson(Map<String, dynamic> json) => _$AuthenticationTokenFromJson(json);
 }

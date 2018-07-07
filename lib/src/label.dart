@@ -1,14 +1,19 @@
-import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
-class Label {
+part 'label.g.dart';
+
+@JsonSerializable()
+class Label extends Object with _$LabelSerializerMixin {
   final String text;
+
   final String type;
 
-  Label.fromMap(Map<String, dynamic> map)
-  : text = map['text'],
-    type = map['type'];
-  
-  factory Label.fromJson(String jsonString) {
-    return Label.fromMap(json.decode(jsonString));
-  }
+  Label(
+    {
+      this.text,
+      this.type
+    }
+  );
+
+  factory Label.fromJson(Map<String, dynamic> json) => _$LabelFromJson(json);
 }

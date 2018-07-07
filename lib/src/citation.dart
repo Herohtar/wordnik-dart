@@ -1,14 +1,19 @@
-import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
-class Citation {
+part 'citation.g.dart';
+
+@JsonSerializable()
+class Citation extends Object with _$CitationSerializerMixin {
   final String cite;
+
   final String source;
 
-  Citation.fromMap(Map<String, dynamic> map)
-  : cite = map['cite'],
-    source = map['source'];
-  
-  factory Citation.fromJson(String jsonString) {
-    return Citation.fromMap(json.decode(jsonString));
-  }
+  Citation(
+    {
+      this.cite,
+      this.source
+    }
+  );
+
+  factory Citation.fromJson(Map<String, dynamic> json) => _$CitationFromJson(json);
 }

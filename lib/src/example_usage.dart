@@ -1,12 +1,16 @@
-import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
-class ExampleUsage {
+part 'example_usage.g.dart';
+
+@JsonSerializable()
+class ExampleUsage extends Object with _$ExampleUsageSerializerMixin {
   final String text;
 
-  ExampleUsage.fromMap(Map<String, dynamic> map)
-  : text = map['text'];
-  
-  factory ExampleUsage.fromJson(String jsonString) {
-    return ExampleUsage.fromMap(json.decode(jsonString));
-  }
+  ExampleUsage(
+    {
+      this.text
+    }
+  );
+
+  factory ExampleUsage.fromJson(Map<String, dynamic> json) => _$ExampleUsageFromJson(json);
 }
