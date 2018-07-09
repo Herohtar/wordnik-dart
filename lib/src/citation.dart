@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'citation.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class Citation extends Object with _$CitationSerializerMixin {
   final String cite;
 

@@ -9,10 +9,10 @@ part of 'sentence.dart';
 Sentence _$SentenceFromJson(Map<String, dynamic> json) {
   return new Sentence(
       display: json['display'] as String,
-      documentMetadataId: json['documentMetadataId'] as int ?? 0,
-      hasScoredWords: json['hasScoredWords'] as bool ?? false,
-      id: json['id'] as int ?? 0,
-      rating: json['rating'] as int ?? 0,
+      documentMetadataId: json['documentMetadataId'] as int,
+      hasScoredWords: json['hasScoredWords'] as bool,
+      id: json['id'] as int,
+      rating: json['rating'] as int,
       scoredWords: (json['scoredWords'] as List)
               ?.map((e) => e == null
                   ? null
@@ -28,12 +28,21 @@ abstract class _$SentenceSerializerMixin {
   int get id;
   int get rating;
   List<ScoredWord> get scoredWords;
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'display': display,
-        'documentMetadataId': documentMetadataId,
-        'hasScoredWords': hasScoredWords,
-        'id': id,
-        'rating': rating,
-        'scoredWords': scoredWords
-      };
+  Map<String, dynamic> toJson() {
+    var val = <String, dynamic>{};
+
+    void writeNotNull(String key, dynamic value) {
+      if (value != null) {
+        val[key] = value;
+      }
+    }
+
+    writeNotNull('display', display);
+    writeNotNull('documentMetadataId', documentMetadataId);
+    writeNotNull('hasScoredWords', hasScoredWords);
+    writeNotNull('id', id);
+    writeNotNull('rating', rating);
+    writeNotNull('scoredWords', scoredWords);
+    return val;
+  }
 }

@@ -20,6 +20,17 @@ Facet _$FacetFromJson(Map<String, dynamic> json) {
 abstract class _$FacetSerializerMixin {
   List<FacetValue> get facetValues;
   String get name;
-  Map<String, dynamic> toJson() =>
-      <String, dynamic>{'facetValues': facetValues, 'name': name};
+  Map<String, dynamic> toJson() {
+    var val = <String, dynamic>{};
+
+    void writeNotNull(String key, dynamic value) {
+      if (value != null) {
+        val[key] = value;
+      }
+    }
+
+    writeNotNull('facetValues', facetValues);
+    writeNotNull('name', name);
+    return val;
+  }
 }

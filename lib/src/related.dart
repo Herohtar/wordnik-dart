@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'related.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class Related extends Object with _$RelatedSerializerMixin {
   final String gram;
 

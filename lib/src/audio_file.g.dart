@@ -12,18 +12,17 @@ AudioFile _$AudioFileFromJson(Map<String, dynamic> json) {
       attributionText: json['attributionText'] as String,
       attributionUrl: json['attributionUrl'] as String,
       audioType: json['audioType'] as String,
-      commentCount: json['commentCount'] as int ?? 0,
+      commentCount: json['commentCount'] as int,
       createdAt: json['createdAt'] == null
           ? null
           : DateTime.parse(json['createdAt'] as String),
       createdBy: json['createdBy'] as String,
       description: json['description'] as String,
-      duration: (json['duration'] as num)?.toDouble() ?? 0.0,
+      duration: (json['duration'] as num)?.toDouble(),
       fileUrl: json['fileUrl'] as String,
-      voteAverage: (json['voteAverage'] as num)?.toDouble() ?? 0.0,
-      voteCount: json['voteCount'] as int ?? 0,
-      voteWeightedAverage:
-          (json['voteWeightedAverage'] as num)?.toDouble() ?? 0.0,
+      voteAverage: (json['voteAverage'] as num)?.toDouble(),
+      voteCount: json['voteCount'] as int,
+      voteWeightedAverage: (json['voteWeightedAverage'] as num)?.toDouble(),
       word: json['word'] as String);
 }
 
@@ -42,20 +41,29 @@ abstract class _$AudioFileSerializerMixin {
   int get voteCount;
   double get voteWeightedAverage;
   String get word;
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'attributionText': attributionText,
-        'attributionUrl': attributionUrl,
-        'audioType': audioType,
-        'commentCount': commentCount,
-        'createdAt': createdAt?.toIso8601String(),
-        'createdBy': createdBy,
-        'description': description,
-        'duration': duration,
-        'fileUrl': fileUrl,
-        'id': id,
-        'voteAverage': voteAverage,
-        'voteCount': voteCount,
-        'voteWeightedAverage': voteWeightedAverage,
-        'word': word
-      };
+  Map<String, dynamic> toJson() {
+    var val = <String, dynamic>{};
+
+    void writeNotNull(String key, dynamic value) {
+      if (value != null) {
+        val[key] = value;
+      }
+    }
+
+    writeNotNull('attributionText', attributionText);
+    writeNotNull('attributionUrl', attributionUrl);
+    writeNotNull('audioType', audioType);
+    writeNotNull('commentCount', commentCount);
+    writeNotNull('createdAt', createdAt?.toIso8601String());
+    writeNotNull('createdBy', createdBy);
+    writeNotNull('description', description);
+    writeNotNull('duration', duration);
+    writeNotNull('fileUrl', fileUrl);
+    writeNotNull('id', id);
+    writeNotNull('voteAverage', voteAverage);
+    writeNotNull('voteCount', voteCount);
+    writeNotNull('voteWeightedAverage', voteWeightedAverage);
+    writeNotNull('word', word);
+    return val;
+  }
 }

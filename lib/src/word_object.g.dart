@@ -25,12 +25,21 @@ abstract class _$WordObjectSerializerMixin {
   List<String> get suggestions;
   String get vulgar;
   String get word;
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'canonicalForm': canonicalForm,
-        'id': id,
-        'originalWord': originalWord,
-        'suggestions': suggestions,
-        'vulgar': vulgar,
-        'word': word
-      };
+  Map<String, dynamic> toJson() {
+    var val = <String, dynamic>{};
+
+    void writeNotNull(String key, dynamic value) {
+      if (value != null) {
+        val[key] = value;
+      }
+    }
+
+    writeNotNull('canonicalForm', canonicalForm);
+    writeNotNull('id', id);
+    writeNotNull('originalWord', originalWord);
+    writeNotNull('suggestions', suggestions);
+    writeNotNull('vulgar', vulgar);
+    writeNotNull('word', word);
+    return val;
+  }
 }

@@ -9,7 +9,7 @@ import 'package:wordnik/src/text_pron.dart';
 
 part 'definition.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class Definition extends Object with _$DefinitionSerializerMixin {
   final String attributionText;
 
@@ -34,7 +34,6 @@ class Definition extends Object with _$DefinitionSerializerMixin {
   @JsonKey(defaultValue: <Related>[])
   final List<Related> relatedWords;
 
-  @JsonKey(defaultValue: 0.0)
   final double score;
 
   final String seqString;
@@ -61,7 +60,7 @@ class Definition extends Object with _$DefinitionSerializerMixin {
       List<Note> notes,
       this.partOfSpeech,
       List<Related> relatedWords,
-      this.score = 0.0,
+      this.score,
       this.seqString,
       this.sequence,
       this.sourceDictionary,

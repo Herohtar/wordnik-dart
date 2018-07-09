@@ -4,17 +4,15 @@ import 'package:wordnik/src/frequency.dart';
 
 part 'frequency_summary.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class FrequencySummary extends Object with _$FrequencySummarySerializerMixin {
   @JsonKey(defaultValue: <Frequency>[])
   final List<Frequency> frequency;
 
   final String frequencyString;
 
-  @JsonKey(defaultValue: 0)
   final int totalCount;
 
-  @JsonKey(defaultValue: 0)
   final int unknownYearCount;
 
   final String word;
@@ -23,8 +21,8 @@ class FrequencySummary extends Object with _$FrequencySummarySerializerMixin {
     {
       List<Frequency> frequency,
       this.frequencyString,
-      this.totalCount = 0,
-      this.unknownYearCount = 0,
+      this.totalCount,
+      this.unknownYearCount,
       this.word
     }
   )

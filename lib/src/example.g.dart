@@ -8,14 +8,14 @@ part of 'example.dart';
 
 Example _$ExampleFromJson(Map<String, dynamic> json) {
   return new Example(
-      documentId: json['documentId'] as int ?? 0,
-      exampleId: json['exampleId'] as int ?? 0,
-      id: json['id'] as int ?? 0,
+      documentId: json['documentId'] as int,
+      exampleId: json['exampleId'] as int,
+      id: json['id'] as int,
       provider: json['provider'] == null
           ? null
           : new ContentProvider.fromJson(
               json['provider'] as Map<String, dynamic>),
-      rating: (json['rating'] as num)?.toDouble() ?? 0.0,
+      rating: (json['rating'] as num)?.toDouble(),
       score: json['score'] == null
           ? null
           : new ScoredWord.fromJson(json['score'] as Map<String, dynamic>),
@@ -26,7 +26,7 @@ Example _$ExampleFromJson(Map<String, dynamic> json) {
       title: json['title'] as String,
       url: json['url'] as String,
       word: json['word'] as String,
-      year: json['year'] as int ?? 0);
+      year: json['year'] as int);
 }
 
 abstract class _$ExampleSerializerMixin {
@@ -42,18 +42,27 @@ abstract class _$ExampleSerializerMixin {
   String get url;
   String get word;
   int get year;
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'documentId': documentId,
-        'exampleId': exampleId,
-        'id': id,
-        'provider': provider,
-        'rating': rating,
-        'score': score,
-        'sentence': sentence,
-        'text': text,
-        'title': title,
-        'url': url,
-        'word': word,
-        'year': year
-      };
+  Map<String, dynamic> toJson() {
+    var val = <String, dynamic>{};
+
+    void writeNotNull(String key, dynamic value) {
+      if (value != null) {
+        val[key] = value;
+      }
+    }
+
+    writeNotNull('documentId', documentId);
+    writeNotNull('exampleId', exampleId);
+    writeNotNull('id', id);
+    writeNotNull('provider', provider);
+    writeNotNull('rating', rating);
+    writeNotNull('score', score);
+    writeNotNull('sentence', sentence);
+    writeNotNull('text', text);
+    writeNotNull('title', title);
+    writeNotNull('url', url);
+    writeNotNull('word', word);
+    writeNotNull('year', year);
+    return val;
+  }
 }

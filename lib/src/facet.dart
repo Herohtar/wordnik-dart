@@ -4,7 +4,7 @@ import 'package:wordnik/src/facet_value.dart';
 
 part 'facet.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class Facet extends Object with _$FacetSerializerMixin {
   @JsonKey(defaultValue: <FacetValue>[])
   final List<FacetValue> facetValues;

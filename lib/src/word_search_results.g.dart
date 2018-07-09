@@ -14,14 +14,23 @@ WordSearchResults _$WordSearchResultsFromJson(Map<String, dynamic> json) {
                   : new WordSearchResult.fromJson(e as Map<String, dynamic>))
               ?.toList() ??
           [],
-      totalResults: json['totalResults'] as int ?? 0);
+      totalResults: json['totalResults'] as int);
 }
 
 abstract class _$WordSearchResultsSerializerMixin {
   List<WordSearchResult> get searchResults;
   int get totalResults;
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'searchResults': searchResults,
-        'totalResults': totalResults
-      };
+  Map<String, dynamic> toJson() {
+    var val = <String, dynamic>{};
+
+    void writeNotNull(String key, dynamic value) {
+      if (value != null) {
+        val[key] = value;
+      }
+    }
+
+    writeNotNull('searchResults', searchResults);
+    writeNotNull('totalResults', totalResults);
+    return val;
+  }
 }

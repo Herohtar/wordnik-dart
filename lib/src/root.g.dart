@@ -22,6 +22,18 @@ abstract class _$RootSerializerMixin {
   List<Category> get categories;
   int get id;
   String get name;
-  Map<String, dynamic> toJson() =>
-      <String, dynamic>{'categories': categories, 'id': id, 'name': name};
+  Map<String, dynamic> toJson() {
+    var val = <String, dynamic>{};
+
+    void writeNotNull(String key, dynamic value) {
+      if (value != null) {
+        val[key] = value;
+      }
+    }
+
+    writeNotNull('categories', categories);
+    writeNotNull('id', id);
+    writeNotNull('name', name);
+    return val;
+  }
 }

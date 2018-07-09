@@ -21,6 +21,17 @@ DefinitionSearchResults _$DefinitionSearchResultsFromJson(
 abstract class _$DefinitionSearchResultsSerializerMixin {
   List<Definition> get results;
   int get totalResults;
-  Map<String, dynamic> toJson() =>
-      <String, dynamic>{'results': results, 'totalResults': totalResults};
+  Map<String, dynamic> toJson() {
+    var val = <String, dynamic>{};
+
+    void writeNotNull(String key, dynamic value) {
+      if (value != null) {
+        val[key] = value;
+      }
+    }
+
+    writeNotNull('results', results);
+    writeNotNull('totalResults', totalResults);
+    return val;
+  }
 }

@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'label.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class Label extends Object with _$LabelSerializerMixin {
   final String text;
 

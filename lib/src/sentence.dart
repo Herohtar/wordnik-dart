@@ -4,20 +4,16 @@ import 'package:wordnik/src/scored_word.dart';
 
 part 'sentence.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class Sentence extends Object with _$SentenceSerializerMixin {
   final String display;
 
-  @JsonKey(defaultValue: 0)
   final int documentMetadataId;
 
-  @JsonKey(defaultValue: false)
   final bool hasScoredWords;
 
-  @JsonKey(defaultValue: 0)
   final int id;
 
-  @JsonKey(defaultValue: 0)
   final int rating;
 
   @JsonKey(defaultValue: <ScoredWord>[])
@@ -26,10 +22,10 @@ class Sentence extends Object with _$SentenceSerializerMixin {
   Sentence(
     {
       this.display,
-      this.documentMetadataId = 0,
-      this.hasScoredWords = false,
-      this.id = 0,
-      this.rating = 0,
+      this.documentMetadataId,
+      this.hasScoredWords,
+      this.id,
+      this.rating,
       List<ScoredWord> scoredWords
     }
   )

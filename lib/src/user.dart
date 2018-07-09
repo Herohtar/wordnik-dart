@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'user.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class User extends Object with _$UserSerializerMixin {
   final String displayName;
 
@@ -10,12 +10,10 @@ class User extends Object with _$UserSerializerMixin {
 
   final String faceBookId;
 
-  @JsonKey(defaultValue: 0)
   final int id;
 
   final String password;
 
-  @JsonKey(defaultValue: 0)
   final int status;
 
   final String userName;
@@ -28,9 +26,9 @@ class User extends Object with _$UserSerializerMixin {
       this.displayName,
       this.email,
       this.faceBookId,
-      this.id = 0,
+      this.id,
       this.password,
-      this.status = 0,
+      this.status,
       this.userName,
       this.username
     }

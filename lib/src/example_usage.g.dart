@@ -12,5 +12,16 @@ ExampleUsage _$ExampleUsageFromJson(Map<String, dynamic> json) {
 
 abstract class _$ExampleUsageSerializerMixin {
   String get text;
-  Map<String, dynamic> toJson() => <String, dynamic>{'text': text};
+  Map<String, dynamic> toJson() {
+    var val = <String, dynamic>{};
+
+    void writeNotNull(String key, dynamic value) {
+      if (value != null) {
+        val[key] = value;
+      }
+    }
+
+    writeNotNull('text', text);
+    return val;
+  }
 }

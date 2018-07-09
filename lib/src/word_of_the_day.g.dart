@@ -52,18 +52,27 @@ abstract class _$WordOfTheDaySerializerMixin {
   String get parentId;
   DateTime get publishDate;
   String get word;
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'category': category,
-        'contentProvider': contentProvider,
-        'createdAt': createdAt?.toIso8601String(),
-        'createdBy': createdBy,
-        'definitions': definitions,
-        'examples': examples,
-        'htmlExtra': htmlExtra,
-        'id': id,
-        'note': note,
-        'parentId': parentId,
-        'publishDate': publishDate?.toIso8601String(),
-        'word': word
-      };
+  Map<String, dynamic> toJson() {
+    var val = <String, dynamic>{};
+
+    void writeNotNull(String key, dynamic value) {
+      if (value != null) {
+        val[key] = value;
+      }
+    }
+
+    writeNotNull('category', category);
+    writeNotNull('contentProvider', contentProvider);
+    writeNotNull('createdAt', createdAt?.toIso8601String());
+    writeNotNull('createdBy', createdBy);
+    writeNotNull('definitions', definitions);
+    writeNotNull('examples', examples);
+    writeNotNull('htmlExtra', htmlExtra);
+    writeNotNull('id', id);
+    writeNotNull('note', note);
+    writeNotNull('parentId', parentId);
+    writeNotNull('publishDate', publishDate?.toIso8601String());
+    writeNotNull('word', word);
+    return val;
+  }
 }

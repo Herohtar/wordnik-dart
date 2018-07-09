@@ -6,20 +6,16 @@ import 'package:wordnik/src/sentence.dart';
 
 part 'example.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class Example extends Object with _$ExampleSerializerMixin {
-  @JsonKey(defaultValue: 0)
   final int documentId;
 
-  @JsonKey(defaultValue: 0)
   final int exampleId;
 
-  @JsonKey(defaultValue: 0)
   final int id;
 
   final ContentProvider provider;
 
-  @JsonKey(defaultValue: 0.0)
   final double rating;
 
   final ScoredWord score;
@@ -34,23 +30,22 @@ class Example extends Object with _$ExampleSerializerMixin {
 
   final String word;
 
-  @JsonKey(defaultValue: 0)
   final int year;
 
   Example(
     {
-      this.documentId = 0,
-      this.exampleId = 0,
-      this.id = 0,
+      this.documentId,
+      this.exampleId,
+      this.id,
       this.provider,
-      this.rating = 0.0,
+      this.rating,
       this.score,
       this.sentence,
       this.text,
       this.title,
       this.url,
       this.word,
-      this.year = 0
+      this.year
     }
   );
 

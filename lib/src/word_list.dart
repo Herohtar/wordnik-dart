@@ -2,13 +2,12 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'word_list.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class WordList extends Object with _$WordListSerializerMixin {
   final DateTime createdAt;
 
   final String description;
 
-  @JsonKey(defaultValue: 0)
   final int id;
 
   final DateTime lastActivityAt;
@@ -16,17 +15,15 @@ class WordList extends Object with _$WordListSerializerMixin {
   @JsonKey(required: true, disallowNullValue: true)
   final String name;
 
-  @JsonKey(defaultValue: 0)
   final int numberWordsInList;
 
   final String permalink;
 
-  @JsonKey(required: true, disallowNullValue: true, defaultValue: 'PRIVATE')
+  @JsonKey(required: true, disallowNullValue: true)
   final String type;
 
   final DateTime updatedAt;
 
-  @JsonKey(defaultValue: 0)
   final int userId;
 
   final String username;
@@ -37,12 +34,12 @@ class WordList extends Object with _$WordListSerializerMixin {
     {
       this.createdAt,
       this.description,
-      this.id = 0,
+      this.id,
       this.lastActivityAt,
-      this.numberWordsInList = 0,
+      this.numberWordsInList,
       this.permalink,
       this.updatedAt,
-      this.userId = 0,
+      this.userId,
       this.username
     }
   );

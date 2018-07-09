@@ -4,7 +4,7 @@ import 'package:wordnik/src/definition.dart';
 
 part 'definition_search_results.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class DefinitionSearchResults extends Object with _$DefinitionSearchResultsSerializerMixin {
   @JsonKey(defaultValue: <Definition>[])
   final List<Definition> results;
@@ -14,7 +14,7 @@ class DefinitionSearchResults extends Object with _$DefinitionSearchResultsSeria
   DefinitionSearchResults(
     {
       List<Definition> results,
-      this.totalResults = 0
+      this.totalResults
     }
   )
   : this.results = results ?? <Definition>[];

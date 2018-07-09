@@ -12,9 +12,9 @@ WordListWord _$WordListWordFromJson(Map<String, dynamic> json) {
       createdAt: json['createdAt'] == null
           ? null
           : DateTime.parse(json['createdAt'] as String),
-      numberCommentsOnWord: json['numberCommentsOnWord'] as int ?? 0,
-      numberLists: json['numberLists'] as int ?? 0,
-      userId: json['userId'] as int ?? 0,
+      numberCommentsOnWord: json['numberCommentsOnWord'] as int,
+      numberLists: json['numberLists'] as int,
+      userId: json['userId'] as int,
       username: json['username'] as String,
       word: json['word'] as String);
 }
@@ -27,13 +27,22 @@ abstract class _$WordListWordSerializerMixin {
   int get userId;
   String get username;
   String get word;
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'createdAt': createdAt?.toIso8601String(),
-        'id': id,
-        'numberCommentsOnWord': numberCommentsOnWord,
-        'numberLists': numberLists,
-        'userId': userId,
-        'username': username,
-        'word': word
-      };
+  Map<String, dynamic> toJson() {
+    var val = <String, dynamic>{};
+
+    void writeNotNull(String key, dynamic value) {
+      if (value != null) {
+        val[key] = value;
+      }
+    }
+
+    writeNotNull('createdAt', createdAt?.toIso8601String());
+    writeNotNull('id', id);
+    writeNotNull('numberCommentsOnWord', numberCommentsOnWord);
+    writeNotNull('numberLists', numberLists);
+    writeNotNull('userId', userId);
+    writeNotNull('username', username);
+    writeNotNull('word', word);
+    return val;
+  }
 }

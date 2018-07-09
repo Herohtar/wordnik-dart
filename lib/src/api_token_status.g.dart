@@ -11,13 +11,13 @@ ApiTokenStatus _$ApiTokenStatusFromJson(Map<String, dynamic> json) {
       expiresIn: json['expiresInMillis'] == null
           ? null
           : _durationFromMilliseconds(json['expiresInMillis'] as int),
-      remainingCalls: json['remainingCalls'] as int ?? 0,
+      remainingCalls: json['remainingCalls'] as int,
       resetsIn: json['resetsInMillis'] == null
           ? null
           : _durationFromMilliseconds(json['resetsInMillis'] as int),
       token: json['token'] as String,
-      totalRequests: json['totalRequests'] as int ?? 0,
-      valid: json['valid'] as bool ?? false);
+      totalRequests: json['totalRequests'] as int,
+      valid: json['valid'] as bool);
 }
 
 abstract class _$ApiTokenStatusSerializerMixin {
@@ -27,14 +27,23 @@ abstract class _$ApiTokenStatusSerializerMixin {
   String get token;
   int get totalRequests;
   bool get valid;
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'expiresInMillis':
-            expiresIn == null ? null : _durationToMilliseconds(expiresIn),
-        'remainingCalls': remainingCalls,
-        'resetsInMillis':
-            resetsIn == null ? null : _durationToMilliseconds(resetsIn),
-        'token': token,
-        'totalRequests': totalRequests,
-        'valid': valid
-      };
+  Map<String, dynamic> toJson() {
+    var val = <String, dynamic>{};
+
+    void writeNotNull(String key, dynamic value) {
+      if (value != null) {
+        val[key] = value;
+      }
+    }
+
+    writeNotNull('expiresInMillis',
+        expiresIn == null ? null : _durationToMilliseconds(expiresIn));
+    writeNotNull('remainingCalls', remainingCalls);
+    writeNotNull('resetsInMillis',
+        resetsIn == null ? null : _durationToMilliseconds(resetsIn));
+    writeNotNull('token', token);
+    writeNotNull('totalRequests', totalRequests);
+    writeNotNull('valid', valid);
+    return val;
+  }
 }

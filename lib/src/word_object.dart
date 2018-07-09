@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'word_object.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class WordObject extends Object with _$WordObjectSerializerMixin {
   final String canonicalForm;
 

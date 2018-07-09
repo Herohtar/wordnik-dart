@@ -25,6 +25,17 @@ ExampleSearchResults _$ExampleSearchResultsFromJson(Map<String, dynamic> json) {
 abstract class _$ExampleSearchResultsSerializerMixin {
   List<Example> get examples;
   List<Facet> get facets;
-  Map<String, dynamic> toJson() =>
-      <String, dynamic>{'examples': examples, 'facets': facets};
+  Map<String, dynamic> toJson() {
+    var val = <String, dynamic>{};
+
+    void writeNotNull(String key, dynamic value) {
+      if (value != null) {
+        val[key] = value;
+      }
+    }
+
+    writeNotNull('examples', examples);
+    writeNotNull('facets', facets);
+    return val;
+  }
 }

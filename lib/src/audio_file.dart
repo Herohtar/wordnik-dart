@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'audio_file.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class AudioFile extends Object with _$AudioFileSerializerMixin {
   final String attributionText;
 
@@ -10,7 +10,6 @@ class AudioFile extends Object with _$AudioFileSerializerMixin {
 
   final String audioType;
 
-  @JsonKey(defaultValue: 0)
   final int commentCount;
 
   final DateTime createdAt;
@@ -19,7 +18,6 @@ class AudioFile extends Object with _$AudioFileSerializerMixin {
 
   final String description;
 
-  @JsonKey(defaultValue: 0.0)
   final double duration;
 
   final String fileUrl;
@@ -27,13 +25,10 @@ class AudioFile extends Object with _$AudioFileSerializerMixin {
   @JsonKey(required: true, defaultValue: 0)
   final int id;
 
-  @JsonKey(defaultValue: 0.0)
   final double voteAverage;
 
-  @JsonKey(defaultValue: 0)
   final int voteCount;
 
-  @JsonKey(defaultValue: 0.0)
   final double voteWeightedAverage;
 
   final String word;
@@ -44,15 +39,15 @@ class AudioFile extends Object with _$AudioFileSerializerMixin {
       this.attributionText,
       this.attributionUrl,
       this.audioType,
-      this.commentCount = 0,
+      this.commentCount,
       this.createdAt,
       this.createdBy,
       this.description,
-      this.duration = 0.0,
+      this.duration,
       this.fileUrl,
-      this.voteAverage = 0.0,
-      this.voteCount = 0,
-      this.voteWeightedAverage = 0.0,
+      this.voteAverage,
+      this.voteCount,
+      this.voteWeightedAverage,
       this.word
     }
   );

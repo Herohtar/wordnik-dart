@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'example_usage.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class ExampleUsage extends Object with _$ExampleUsageSerializerMixin {
   final String text;
 

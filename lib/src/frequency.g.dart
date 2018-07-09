@@ -7,13 +7,23 @@ part of 'frequency.dart';
 // **************************************************************************
 
 Frequency _$FrequencyFromJson(Map<String, dynamic> json) {
-  return new Frequency(
-      count: json['count'] as int ?? 0, year: json['year'] as int ?? 0);
+  return new Frequency(count: json['count'] as int, year: json['year'] as int);
 }
 
 abstract class _$FrequencySerializerMixin {
   int get count;
   int get year;
-  Map<String, dynamic> toJson() =>
-      <String, dynamic>{'count': count, 'year': year};
+  Map<String, dynamic> toJson() {
+    var val = <String, dynamic>{};
+
+    void writeNotNull(String key, dynamic value) {
+      if (value != null) {
+        val[key] = value;
+      }
+    }
+
+    writeNotNull('count', count);
+    writeNotNull('year', year);
+    return val;
+  }
 }

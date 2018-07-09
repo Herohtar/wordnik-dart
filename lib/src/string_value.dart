@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'string_value.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class StringValue extends Object with _$StringValueSerializerMixin {
   final String word;
 

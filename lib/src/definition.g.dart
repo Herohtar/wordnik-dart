@@ -32,7 +32,7 @@ Definition _$DefinitionFromJson(Map<String, dynamic> json) {
               ?.map((e) => e == null ? null : new Related.fromJson(e as Map<String, dynamic>))
               ?.toList() ??
           [],
-      score: (json['score'] as num)?.toDouble() ?? 0.0,
+      score: (json['score'] as num)?.toDouble(),
       seqString: json['seqString'] as String,
       sequence: json['sequence'] as String,
       sourceDictionary: json['sourceDictionary'] as String,
@@ -58,22 +58,31 @@ abstract class _$DefinitionSerializerMixin {
   String get text;
   List<TextPron> get textProns;
   String get word;
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'attributionText': attributionText,
-        'attributionUrl': attributionUrl,
-        'citations': citations,
-        'exampleUses': exampleUses,
-        'extendedText': extendedText,
-        'labels': labels,
-        'notes': notes,
-        'partOfSpeech': partOfSpeech,
-        'relatedWords': relatedWords,
-        'score': score,
-        'seqString': seqString,
-        'sequence': sequence,
-        'sourceDictionary': sourceDictionary,
-        'text': text,
-        'textProns': textProns,
-        'word': word
-      };
+  Map<String, dynamic> toJson() {
+    var val = <String, dynamic>{};
+
+    void writeNotNull(String key, dynamic value) {
+      if (value != null) {
+        val[key] = value;
+      }
+    }
+
+    writeNotNull('attributionText', attributionText);
+    writeNotNull('attributionUrl', attributionUrl);
+    writeNotNull('citations', citations);
+    writeNotNull('exampleUses', exampleUses);
+    writeNotNull('extendedText', extendedText);
+    writeNotNull('labels', labels);
+    writeNotNull('notes', notes);
+    writeNotNull('partOfSpeech', partOfSpeech);
+    writeNotNull('relatedWords', relatedWords);
+    writeNotNull('score', score);
+    writeNotNull('seqString', seqString);
+    writeNotNull('sequence', sequence);
+    writeNotNull('sourceDictionary', sourceDictionary);
+    writeNotNull('text', text);
+    writeNotNull('textProns', textProns);
+    writeNotNull('word', word);
+    return val;
+  }
 }

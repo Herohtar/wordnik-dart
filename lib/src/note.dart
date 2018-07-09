@@ -2,14 +2,13 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'note.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class Note extends Object with _$NoteSerializerMixin {
   @JsonKey(defaultValue: <String>[])
   final List<String> appliesTo;
 
   final String noteType;
 
-  @JsonKey(defaultValue: 0)
   final int pos;
 
   final String value;
@@ -18,7 +17,7 @@ class Note extends Object with _$NoteSerializerMixin {
     {
       List<String> appliesTo,
       this.noteType,
-      this.pos = 0,
+      this.pos,
       this.value
     }
   )

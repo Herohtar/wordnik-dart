@@ -29,9 +29,18 @@ abstract class _$PartOfSpeechSerializerMixin {
   List<Category> get allCategories;
   List<Root> get roots;
   List<String> get storageAbbr;
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'allCategories': allCategories,
-        'roots': roots,
-        'storageAbbr': storageAbbr
-      };
+  Map<String, dynamic> toJson() {
+    var val = <String, dynamic>{};
+
+    void writeNotNull(String key, dynamic value) {
+      if (value != null) {
+        val[key] = value;
+      }
+    }
+
+    writeNotNull('allCategories', allCategories);
+    writeNotNull('roots', roots);
+    writeNotNull('storageAbbr', storageAbbr);
+    return val;
+  }
 }

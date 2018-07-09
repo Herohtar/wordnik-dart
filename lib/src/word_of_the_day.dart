@@ -6,7 +6,7 @@ import 'package:wordnik/src/simple_example.dart';
 
 part 'word_of_the_day.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class WordOfTheDay extends Object with _$WordOfTheDaySerializerMixin {
   final String category;
 

@@ -4,7 +4,7 @@ import 'package:wordnik/src/category.dart';
 
 part 'root.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class Root extends Object with _$RootSerializerMixin {
   @JsonKey(defaultValue: <Category>[])
   final List<Category> categories;

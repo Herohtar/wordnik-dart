@@ -2,16 +2,15 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'facet_value.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class FacetValue extends Object with _$FacetValueSerializerMixin {
-  @JsonKey(defaultValue: 0)
   final int count;
 
   final String value;
 
   FacetValue(
     {
-      this.count = 0,
+      this.count,
       this.value
     }
   );

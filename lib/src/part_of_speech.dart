@@ -5,7 +5,7 @@ import 'package:wordnik/src/root.dart';
 
 part 'part_of_speech.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class PartOfSpeech extends Object with _$PartOfSpeechSerializerMixin {
   @JsonKey(defaultValue: <Category>[])
   final List<Category> allCategories;

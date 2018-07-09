@@ -25,13 +25,22 @@ abstract class _$RelatedSerializerMixin {
   String get label4;
   String get relationshipType;
   List<String> get words;
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'gram': gram,
-        'label1': label1,
-        'label2': label2,
-        'label3': label3,
-        'label4': label4,
-        'relationshipType': relationshipType,
-        'words': words
-      };
+  Map<String, dynamic> toJson() {
+    var val = <String, dynamic>{};
+
+    void writeNotNull(String key, dynamic value) {
+      if (value != null) {
+        val[key] = value;
+      }
+    }
+
+    writeNotNull('gram', gram);
+    writeNotNull('label1', label1);
+    writeNotNull('label2', label2);
+    writeNotNull('label3', label3);
+    writeNotNull('label4', label4);
+    writeNotNull('relationshipType', relationshipType);
+    writeNotNull('words', words);
+    return val;
+  }
 }

@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'simple_definition.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class SimpleDefinition extends Object with _$SimpleDefinitionSerializerMixin {
   final String note;
 

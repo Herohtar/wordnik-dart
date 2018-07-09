@@ -5,7 +5,7 @@ part 'api_token_status.g.dart';
 Duration _durationFromMilliseconds(int milliseconds) => Duration(milliseconds: milliseconds);
 int _durationToMilliseconds(Duration duration) => duration.inMilliseconds;
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class ApiTokenStatus extends Object with _$ApiTokenStatusSerializerMixin {
   @JsonKey(
     name: 'expiresInMillis',
@@ -14,7 +14,6 @@ class ApiTokenStatus extends Object with _$ApiTokenStatusSerializerMixin {
   )
   final Duration expiresIn;
 
-  @JsonKey(defaultValue: 0)
   final int remainingCalls;
 
   @JsonKey(
@@ -26,20 +25,18 @@ class ApiTokenStatus extends Object with _$ApiTokenStatusSerializerMixin {
 
   final String token;
 
-  @JsonKey(defaultValue: 0)
   final int totalRequests;
 
-  @JsonKey(defaultValue: false)
   final bool valid;
 
   ApiTokenStatus(
     {
       Duration expiresIn,
-      this.remainingCalls = 0,
+      this.remainingCalls,
       Duration resetsIn,
       this.token,
-      this.totalRequests = 0,
-      this.valid = false
+      this.totalRequests,
+      this.valid
     }
   )
   : this.expiresIn = expiresIn ?? Duration(seconds: 0),

@@ -12,5 +12,16 @@ StringValue _$StringValueFromJson(Map<String, dynamic> json) {
 
 abstract class _$StringValueSerializerMixin {
   String get word;
-  Map<String, dynamic> toJson() => <String, dynamic>{'word': word};
+  Map<String, dynamic> toJson() {
+    var val = <String, dynamic>{};
+
+    void writeNotNull(String key, dynamic value) {
+      if (value != null) {
+        val[key] = value;
+      }
+    }
+
+    writeNotNull('word', word);
+    return val;
+  }
 }

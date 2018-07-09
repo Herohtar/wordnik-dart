@@ -2,9 +2,8 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'syllable.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class Syllable extends Object with _$SyllableSerializerMixin {
-  @JsonKey(defaultValue: 0)
   final int seq;
 
   final String text;
@@ -13,7 +12,7 @@ class Syllable extends Object with _$SyllableSerializerMixin {
 
   Syllable(
     {
-      this.seq = 0,
+      this.seq,
       this.text,
       this.type
     }

@@ -19,10 +19,19 @@ abstract class _$SimpleDefinitionSerializerMixin {
   String get partOfSpeech;
   String get source;
   String get text;
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'note': note,
-        'partOfSpeech': partOfSpeech,
-        'source': source,
-        'text': text
-      };
+  Map<String, dynamic> toJson() {
+    var val = <String, dynamic>{};
+
+    void writeNotNull(String key, dynamic value) {
+      if (value != null) {
+        val[key] = value;
+      }
+    }
+
+    writeNotNull('note', note);
+    writeNotNull('partOfSpeech', partOfSpeech);
+    writeNotNull('source', source);
+    writeNotNull('text', text);
+    return val;
+  }
 }

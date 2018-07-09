@@ -5,7 +5,7 @@ import 'package:wordnik/src/facet.dart';
 
 part 'example_search_results.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class ExampleSearchResults extends Object with _$ExampleSearchResultsSerializerMixin {
   @JsonKey(defaultValue: <Example>[])
   final List<Example> examples;

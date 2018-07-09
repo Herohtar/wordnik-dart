@@ -8,15 +8,15 @@ part of 'scored_word.dart';
 
 ScoredWord _$ScoredWordFromJson(Map<String, dynamic> json) {
   return new ScoredWord(
-      baseWordScore: (json['baseWordScore'] as num)?.toDouble() ?? 0.0,
-      docTermCount: json['docTermCount'] as int ?? 0,
-      id: json['id'] as int ?? 0,
+      baseWordScore: (json['baseWordScore'] as num)?.toDouble(),
+      docTermCount: json['docTermCount'] as int,
+      id: json['id'] as int,
       lemma: json['lemma'] as String,
       partOfSpeech: json['partOfSpeech'] as String,
-      position: json['position'] as int ?? 0,
-      score: (json['score'] as num)?.toDouble() ?? 0.0,
-      sentenceId: json['sentenceId'] as int ?? 0,
-      stopword: json['stopword'] as bool ?? false,
+      position: json['position'] as int,
+      score: (json['score'] as num)?.toDouble(),
+      sentenceId: json['sentenceId'] as int,
+      stopword: json['stopword'] as bool,
       word: json['word'] as String,
       wordType: json['wordType'] as String);
 }
@@ -33,17 +33,26 @@ abstract class _$ScoredWordSerializerMixin {
   bool get stopword;
   String get word;
   String get wordType;
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'baseWordScore': baseWordScore,
-        'docTermCount': docTermCount,
-        'id': id,
-        'lemma': lemma,
-        'partOfSpeech': partOfSpeech,
-        'position': position,
-        'score': score,
-        'sentenceId': sentenceId,
-        'stopword': stopword,
-        'word': word,
-        'wordType': wordType
-      };
+  Map<String, dynamic> toJson() {
+    var val = <String, dynamic>{};
+
+    void writeNotNull(String key, dynamic value) {
+      if (value != null) {
+        val[key] = value;
+      }
+    }
+
+    writeNotNull('baseWordScore', baseWordScore);
+    writeNotNull('docTermCount', docTermCount);
+    writeNotNull('id', id);
+    writeNotNull('lemma', lemma);
+    writeNotNull('partOfSpeech', partOfSpeech);
+    writeNotNull('position', position);
+    writeNotNull('score', score);
+    writeNotNull('sentenceId', sentenceId);
+    writeNotNull('stopword', stopword);
+    writeNotNull('word', word);
+    writeNotNull('wordType', wordType);
+    return val;
+  }
 }

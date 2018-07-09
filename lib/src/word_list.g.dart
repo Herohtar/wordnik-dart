@@ -10,22 +10,21 @@ WordList _$WordListFromJson(Map<String, dynamic> json) {
   $checkKeys(json,
       requiredKeys: const ['name', 'type'],
       disallowNullValues: const ['name', 'type']);
-  return new WordList(
-      json['name'] as String, json['type'] as String ?? 'PRIVATE',
+  return new WordList(json['name'] as String, json['type'] as String,
       createdAt: json['createdAt'] == null
           ? null
           : DateTime.parse(json['createdAt'] as String),
       description: json['description'] as String,
-      id: json['id'] as int ?? 0,
+      id: json['id'] as int,
       lastActivityAt: json['lastActivityAt'] == null
           ? null
           : DateTime.parse(json['lastActivityAt'] as String),
-      numberWordsInList: json['numberWordsInList'] as int ?? 0,
+      numberWordsInList: json['numberWordsInList'] as int,
       permalink: json['permalink'] as String,
       updatedAt: json['updatedAt'] == null
           ? null
           : DateTime.parse(json['updatedAt'] as String),
-      userId: json['userId'] as int ?? 0,
+      userId: json['userId'] as int,
       username: json['username'] as String);
 }
 
@@ -42,12 +41,7 @@ abstract class _$WordListSerializerMixin {
   int get userId;
   String get username;
   Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'createdAt': createdAt?.toIso8601String(),
-      'description': description,
-      'id': id,
-      'lastActivityAt': lastActivityAt?.toIso8601String(),
-    };
+    var val = <String, dynamic>{};
 
     void writeNotNull(String key, dynamic value) {
       if (value != null) {
@@ -55,13 +49,17 @@ abstract class _$WordListSerializerMixin {
       }
     }
 
+    writeNotNull('createdAt', createdAt?.toIso8601String());
+    writeNotNull('description', description);
+    writeNotNull('id', id);
+    writeNotNull('lastActivityAt', lastActivityAt?.toIso8601String());
     writeNotNull('name', name);
-    val['numberWordsInList'] = numberWordsInList;
-    val['permalink'] = permalink;
+    writeNotNull('numberWordsInList', numberWordsInList);
+    writeNotNull('permalink', permalink);
     writeNotNull('type', type);
-    val['updatedAt'] = updatedAt?.toIso8601String();
-    val['userId'] = userId;
-    val['username'] = username;
+    writeNotNull('updatedAt', updatedAt?.toIso8601String());
+    writeNotNull('userId', userId);
+    writeNotNull('username', username);
     return val;
   }
 }

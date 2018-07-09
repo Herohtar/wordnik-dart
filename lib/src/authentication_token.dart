@@ -2,11 +2,10 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'authentication_token.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class AuthenticationToken extends Object with _$AuthenticationTokenSerializerMixin {
   final String token;
 
-  @JsonKey(defaultValue: 0)
   final int userId;
 
   final String userSignature;
@@ -14,7 +13,7 @@ class AuthenticationToken extends Object with _$AuthenticationTokenSerializerMix
   AuthenticationToken(
     {
       this.token,
-      this.userId = 0,
+      this.userId,
       this.userSignature
     }
   );

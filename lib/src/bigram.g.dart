@@ -8,11 +8,11 @@ part of 'bigram.dart';
 
 Bigram _$BigramFromJson(Map<String, dynamic> json) {
   return new Bigram(
-      count: json['count'] as int ?? 0,
+      count: json['count'] as int,
       gram1: json['gram1'] as String,
       gram2: json['gram2'] as String,
-      mi: (json['mi'] as num)?.toDouble() ?? 0.0,
-      wlmi: (json['wlmi'] as num)?.toDouble() ?? 0.0);
+      mi: (json['mi'] as num)?.toDouble(),
+      wlmi: (json['wlmi'] as num)?.toDouble());
 }
 
 abstract class _$BigramSerializerMixin {
@@ -21,11 +21,20 @@ abstract class _$BigramSerializerMixin {
   String get gram2;
   double get mi;
   double get wlmi;
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'count': count,
-        'gram1': gram1,
-        'gram2': gram2,
-        'mi': mi,
-        'wlmi': wlmi
-      };
+  Map<String, dynamic> toJson() {
+    var val = <String, dynamic>{};
+
+    void writeNotNull(String key, dynamic value) {
+      if (value != null) {
+        val[key] = value;
+      }
+    }
+
+    writeNotNull('count', count);
+    writeNotNull('gram1', gram1);
+    writeNotNull('gram2', gram2);
+    writeNotNull('mi', mi);
+    writeNotNull('wlmi', wlmi);
+    return val;
+  }
 }
