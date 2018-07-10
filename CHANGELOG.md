@@ -1,3 +1,11 @@
+## [0.2.0] - 2018-07-10
+
+* Implemented all `wordList` API calls
+* Implemented `getDefinitions` from `word` API
+* Tweaked JSON serialization options for less cluttered output
+* Removed default values, for now
+* Cleaned up internal API structure
+
 ## [0.1.0] - 2018-07-06
 
 * Implemented all `account`, `wordLists`, and `words` API calls
