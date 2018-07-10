@@ -6,30 +6,14 @@ import 'package:intl/intl.dart';
 
 import 'package:wordnik/src/api_token_status.dart';
 import 'package:wordnik/src/audio_file.dart';
-import 'package:wordnik/src/audio_type.dart';
 import 'package:wordnik/src/authentication_token.dart';
 import 'package:wordnik/src/bigram.dart';
-import 'package:wordnik/src/category.dart';
-import 'package:wordnik/src/citation.dart';
-import 'package:wordnik/src/content_provider.dart';
 import 'package:wordnik/src/definition_search_results.dart';
 import 'package:wordnik/src/definition.dart';
 import 'package:wordnik/src/example_search_results.dart';
-import 'package:wordnik/src/example_usage.dart';
 import 'package:wordnik/src/example.dart';
-import 'package:wordnik/src/facet_value.dart';
-import 'package:wordnik/src/facet.dart';
 import 'package:wordnik/src/frequency_summary.dart';
-import 'package:wordnik/src/frequency.dart';
-import 'package:wordnik/src/label.dart';
-import 'package:wordnik/src/note.dart';
-import 'package:wordnik/src/part_of_speech.dart';
 import 'package:wordnik/src/related.dart';
-import 'package:wordnik/src/root.dart';
-import 'package:wordnik/src/scored_word.dart';
-import 'package:wordnik/src/sentence.dart';
-import 'package:wordnik/src/simple_definition.dart';
-import 'package:wordnik/src/simple_example.dart';
 import 'package:wordnik/src/string_value.dart';
 import 'package:wordnik/src/syllable.dart';
 import 'package:wordnik/src/text_pron.dart';
@@ -38,7 +22,6 @@ import 'package:wordnik/src/word_list_word.dart';
 import 'package:wordnik/src/word_list.dart';
 import 'package:wordnik/src/word_object.dart';
 import 'package:wordnik/src/word_of_the_day.dart';
-import 'package:wordnik/src/word_search_result.dart';
 import 'package:wordnik/src/word_search_results.dart';
 
 export 'package:wordnik/src/api_token_status.dart';
@@ -121,20 +104,25 @@ class Wordnik {
       headers['auth_token'] = authToken;
     }
 
+    http.Response response;
     switch (method) {
       case ApiMethods.post:
-        http.Response response = await http.post(queryUri, headers: headers, body: json.encode(body));
-        return response.body;
+        response = await http.post(queryUri, headers: headers, body: json.encode(body));
+        break;
       case ApiMethods.put:
-        await http.put(queryUri, headers: headers, body: json.encode(body));
-        return null;
+        response = await http.put(queryUri, headers: headers, body: json.encode(body));
+        break;
       case ApiMethods.delete:
-        await http.delete(queryUri, headers: headers);
-        return null;
+        response = await http.delete(queryUri, headers: headers);
+        break;
       case ApiMethods.get:
       default:
-        return await http.read(queryUri, headers: headers);
+        response = await http.get(queryUri, headers: headers);
+        break;
     }
+
+    // TODO: handle status codes, etc
+    return response.body;
   }
 
   Future<ApiTokenStatus> getApiTokenStatus() async {
@@ -177,10 +165,10 @@ class Wordnik {
 
     List<dynamic> wordList = json.decode(wordListJson);
 
-    return wordList.map<WordList>((list) => WordList.fromJson(list)).toList();
+    return wordList.map((list) => WordList.fromJson(list)).toList();
   }
 
-  // TODO: Doesn't return any success/failure status?
+  // TODO: doesn't return any success/failure status?
   Future<void> deleteWordList(
     String authToken,
     String permalink
@@ -236,7 +224,7 @@ class Wordnik {
 
     List<dynamic> wordListWordList = json.decode(wordListWordListJson);
 
-    return wordListWordList.map<WordListWord>((word) => WordListWord.fromJson(word)).toList();
+    return wordListWordList.map((word) => WordListWord.fromJson(word)).toList();
   }
 
   // TODO: doesn't return any success/failure status?
@@ -274,6 +262,24 @@ class Wordnik {
     return WordObject.fromJson(json.decode(wordJson));
   }
 
+  Future<List<AudioFile>> getAudio(
+    String word,
+    {
+      bool useCanonical = false,
+      int limit = 50
+    }
+  ) async {
+    Map<String, String> parameters = {
+      'useCanonical': '$useCanonical',
+      'limit': '$limit'
+    };
+
+    String audioListJson = await _queryApi('word', 'json', word, extraTerm: 'audio', queryParameters: parameters);
+    List<dynamic> audioList = json.decode(audioListJson);
+
+    return audioList.map((audio) => AudioFile.fromJson(audio)).toList();
+  }
+
   Future<List<Definition>> getDefinitions(
     String word,
     {
@@ -298,7 +304,159 @@ class Wordnik {
     String definitionListJson = await _queryApi('word', 'json', word, extraTerm: 'definitions', queryParameters: parameters);
     List<dynamic> definitionList = json.decode(definitionListJson);
 
-    return definitionList.map<Definition>((definition) => Definition.fromJson(definition)).toList();
+    return definitionList.map((definition) => Definition.fromJson(definition)).toList();
+  }
+
+  Future<List<String>> getEtymologies(
+    String word,
+    {
+      bool useCanonical = false,
+    }
+  ) async {
+    Map<String, String> parameters = {
+      'useCanonical': '$useCanonical'
+    };
+
+    String eListJson = await _queryApi('word', 'json', word, extraTerm: 'etymologies', queryParameters: parameters);
+
+    return json.decode(eListJson);
+  }
+
+  Future<ExampleSearchResults> getExamples(
+    String word,
+    {
+      bool includeDuplicates = false,
+      bool useCanonical = false,
+      int skip = 0,
+      int limit = 5
+    }
+  ) async {
+    Map<String, String> parameters = {
+      'includeDuplicates': '$includeDuplicates',
+      'useCanonical': '$useCanonical',
+      'skip': '$skip',
+      'limit': '$limit'
+    };
+
+    String examplesJson = await _queryApi('word', 'json', word, extraTerm: 'examples', queryParameters: parameters);
+
+    return ExampleSearchResults.fromJson(json.decode(examplesJson));
+  }
+
+  Future<FrequencySummary> getWordFrequency(
+    String word,
+    {
+      bool useCanonical = false,
+      int startYear = 1800,
+      int endYear = 2012
+    }
+  ) async {
+    Map<String, String> parameters = {
+      'useCanonical': '$useCanonical',
+      'startYear': '$startYear',
+      'endYear': '$endYear'
+    };
+
+    String frequencyJson = await _queryApi('word', 'json', word, extraTerm: 'frequency', queryParameters: parameters);
+
+    return FrequencySummary.fromJson(json.decode(frequencyJson));
+  }
+
+  Future<List<Syllable>> getHyphenation(
+    String word,
+    {
+      bool useCanonical = false,
+      String sourceDictionary,
+      int limit = 50
+    }
+  ) async {
+    Map<String, String> parameters = {
+      'useCanonical': '$useCanonical',
+      'sourceDictionary': '$sourceDictionary',
+      'limit': '$limit'
+    };
+
+    String syllableListJson = await _queryApi('word', 'json', word, extraTerm: 'hyphenation', queryParameters: parameters);
+    List<dynamic> syllableList = json.decode(syllableListJson);
+
+    return syllableList.map((syllable) => Syllable.fromJson(syllable)).toList();
+  }
+
+  Future<List<Bigram>> getPhrases(
+    String word,
+    {
+      bool useCanonical = false,
+      int limit = 5,
+      int wlmi = 0
+    }
+  ) async {
+    Map<String, String> parameters = {
+      'useCanonical': '$useCanonical',
+      'limit': '$limit',
+      'wlmi': '$wlmi'
+    };
+
+    String bigramListJson = await _queryApi('word', 'json', word, extraTerm: 'phrases', queryParameters: parameters);
+    List<dynamic> bigramList = json.decode(bigramListJson);
+
+    return bigramList.map((bigram) => Bigram.fromJson(bigram)).toList();
+  }
+
+  Future<List<TextPron>> getTextPronunciations(
+    String word,
+    {
+      bool useCanonical = false,
+      String sourceDictionary,
+      String typeFormat,
+      int limit = 50
+    }
+  ) async {
+    Map<String, String> parameters = {
+      'useCanonical': '$useCanonical',
+      'sourceDictionary': '$sourceDictionary',
+      'typeFormat': '$typeFormat',
+      'limit': '$limit'
+    };
+
+    String proListJson = await _queryApi('word', 'json', word, extraTerm: 'pronunciations', queryParameters: parameters);
+    List<dynamic> proList = json.decode(proListJson);
+
+    return proList.map((pro) => TextPron.fromJson(pro)).toList();
+  }
+
+  Future<List<Related>> getRelatedWords(
+    String word,
+    {
+      bool useCanonical = false,
+      String relationshipTypes,
+      int limitPerRelationshipType = 10
+    }
+  ) async {
+    Map<String, String> parameters = {
+      'useCanonical': '$useCanonical',
+      'relationshipTypes': '$relationshipTypes',
+      'limitPerRelationshipType': '$limitPerRelationshipType'
+    };
+
+    String relatedListJson = await _queryApi('word', 'json', word, extraTerm: 'relatedWords', queryParameters: parameters);
+    List<dynamic> relatedList = json.decode(relatedListJson);
+
+    return relatedList.map((related) => Related.fromJson(related)).toList();
+  }
+
+  Future<Example> getTopExample(
+    String word,
+    {
+      bool useCanonical = false
+    }
+  ) async {
+    Map<String, String> parameters = {
+      'useCanonical': '$useCanonical'
+    };
+
+    String exampleJson = await _queryApi('word', 'json', word, extraTerm: 'topExample', queryParameters: parameters);
+
+    return Example.fromJson(json.decode(exampleJson));
   }
 
   Future<WordObject> getRandomWord(
@@ -365,7 +523,7 @@ class Wordnik {
     String wordListJson = await _queryApi('words', 'json', 'randomWords', queryParameters: parameters);
     List<dynamic> wordList = json.decode(wordListJson);
 
-    return wordList.map<WordObject>((word) => WordObject.fromJson(word)).toList();
+    return wordList.map((word) => WordObject.fromJson(word)).toList();
   }
 
   Future<DefinitionSearchResults> reverseDictionary(
