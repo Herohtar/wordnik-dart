@@ -94,8 +94,12 @@ class Wordnik {
 
   Wordnik(this.apiKey);
 
-  Future<String> _queryApi(String resource, String format, String operation, {String extraTerm, Map<String, String> queryParameters, ApiMethods method = ApiMethods.get, String body, Map<String, String> headers = const {}}) async {
-    List<String> segments = ['v$_apiVersion', '$resource.$format', operation];
+  Future<String> _queryApi(String resource, String format, String operation, {String extraTerm, Map<String, String> queryParameters, ApiMethods method = ApiMethods.get, dynamic body, String authToken}) async {
+    List<String> segments = [
+      'v$_apiVersion',
+      '$resource.$format',
+      operation
+    ];
 
     if (extraTerm != null) {
       segments.add(extraTerm);
@@ -108,25 +112,28 @@ class Wordnik {
       queryParameters: queryParameters,
     );
 
-    Map<String, String> fullHeaders = {
+    Map<String, String> headers = {
       'api_key': apiKey,
       'Content-Type': 'application/json'
     };
-    fullHeaders.addAll(headers);
+
+    if (authToken != null) {
+      headers['auth_token'] = authToken;
+    }
 
     switch (method) {
       case ApiMethods.post:
-        http.Response response = await http.post(queryUri, headers: fullHeaders, body: body);
+        http.Response response = await http.post(queryUri, headers: headers, body: json.encode(body));
         return response.body;
       case ApiMethods.put:
-        await http.put(queryUri, headers: fullHeaders, body: body);
+        await http.put(queryUri, headers: headers, body: json.encode(body));
         return null;
       case ApiMethods.delete:
-        await http.delete(queryUri, headers: fullHeaders);
+        await http.delete(queryUri, headers: headers);
         return null;
       case ApiMethods.get:
       default:
-        return await http.read(queryUri, headers: fullHeaders);
+        return await http.read(queryUri, headers: headers);
     }
   }
 
@@ -149,11 +156,7 @@ class Wordnik {
   Future<User> getLoggedInUser(
     String authToken
   ) async {
-    Map<String, String> headers = {
-      'auth_token': authToken
-    };
-
-    String userJson = await _queryApi('account', 'json', 'user', headers: headers);
+    String userJson = await _queryApi('account', 'json', 'user', authToken: authToken);
 
     return User.fromJson(json.decode(userJson));
   }
@@ -165,16 +168,12 @@ class Wordnik {
       int limit = 50
     }
   ) async {
-    Map<String, String> headers = {
-      'auth_token': authToken
-    };
-
     Map<String, String> parameters = {
       'skip': '$skip',
       'limit': '$limit'
     };
 
-    String wordListJson = await _queryApi('account', 'json', 'wordLists', headers: headers, queryParameters: parameters);
+    String wordListJson = await _queryApi('account', 'json', 'wordLists', queryParameters: parameters, authToken: authToken);
 
     List<dynamic> wordList = json.decode(wordListJson);
 
@@ -186,22 +185,14 @@ class Wordnik {
     String authToken,
     String permalink
   ) async {
-    Map<String, String> headers = {
-      'auth_token': authToken
-    };
-
-    await _queryApi('wordList', 'json', permalink, headers: headers, method: ApiMethods.delete);
+    await _queryApi('wordList', 'json', permalink, method: ApiMethods.delete, authToken: authToken);
   }
 
   Future<WordList> getWordListByPermalink(
     String authToken,
     String permalink
   ) async {
-    Map<String, String> headers = {
-      'auth_token': authToken
-    };
-
-    String wordListJson = await _queryApi('wordList', 'json', permalink, headers: headers);
+    String wordListJson = await _queryApi('wordList', 'json', permalink, authToken: authToken);
 
     return WordList.fromJson(json.decode(wordListJson));
   }
@@ -212,13 +203,7 @@ class Wordnik {
     String permalink,
     WordList modifiedWordList
   ) async {
-    Map<String, String> headers = {
-      'auth_token': authToken
-    };
-
-    String body = json.encode(modifiedWordList);
-
-    await _queryApi('wordList', 'json', permalink, headers: headers, method: ApiMethods.put, body: body);
+    await _queryApi('wordList', 'json', permalink, method: ApiMethods.put, body: modifiedWordList, authToken: authToken);
   }
 
   // TODO: doesn't return any success/failure status?
@@ -227,13 +212,7 @@ class Wordnik {
     String permalink,
     List<StringValue> wordsToDelete
   ) async {
-    Map<String, String> headers = {
-      'auth_token': authToken
-    };
-
-    String body = json.encode(wordsToDelete);
-
-    await _queryApi('wordList', 'json', permalink, extraTerm: 'deleteWords', headers: headers, method: ApiMethods.post, body: body);
+    await _queryApi('wordList', 'json', permalink, extraTerm: 'deleteWords', method: ApiMethods.post, body: wordsToDelete, authToken: authToken);
   }
 
   Future<List<WordListWord>> getWordListWords(
@@ -246,10 +225,6 @@ class Wordnik {
       int limit = 100
     }
   ) async {
-    Map<String, String> headers = {
-      'auth_token': authToken
-    };
-
     Map<String, String> parameters = {
       'sortBy': sortBy,
       'sortOrder': sortOrder,
@@ -257,7 +232,7 @@ class Wordnik {
       'limit': '$limit'
     };
 
-    String wordListWordListJson = await _queryApi('wordList', 'json', permalink, extraTerm: 'words', headers: headers, queryParameters: parameters);
+    String wordListWordListJson = await _queryApi('wordList', 'json', permalink, extraTerm: 'words', queryParameters: parameters, authToken: authToken);
 
     List<dynamic> wordListWordList = json.decode(wordListWordListJson);
 
@@ -270,26 +245,14 @@ class Wordnik {
     String permalink,
     List<StringValue> wordsToAdd
   ) async {
-    Map<String, String> headers = {
-      'auth_token': authToken
-    };
-
-    String body = json.encode(wordsToAdd);
-
-    await _queryApi('wordList', 'json', permalink, extraTerm: 'words', headers: headers, method: ApiMethods.post, body: body);
+    await _queryApi('wordList', 'json', permalink, extraTerm: 'words', method: ApiMethods.post, body: wordsToAdd, authToken: authToken);
   }
 
   Future<WordList> createWordList(
     String authToken,
     WordList newWordList
   ) async {
-    Map<String, String> headers = {
-      'auth_token': authToken
-    };
-
-    String body = json.encode(newWordList);
-
-    String wordListJson = await _queryApi('wordLists', 'json', '', headers: headers, method: ApiMethods.post, body: body);
+    String wordListJson = await _queryApi('wordLists', 'json', '', method: ApiMethods.post, body: newWordList, authToken: authToken);
 
     return WordList.fromJson(json.decode(wordListJson));
   }
