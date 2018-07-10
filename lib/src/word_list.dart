@@ -6,21 +6,21 @@ part 'word_list.g.dart';
 class WordList extends Object with _$WordListSerializerMixin {
   final DateTime createdAt;
 
-  final String description;
+  String description;
 
   final int id;
 
   final DateTime lastActivityAt;
 
   @JsonKey(required: true, disallowNullValue: true)
-  final String name;
+  String name;
 
   final int numberWordsInList;
 
   final String permalink;
 
   @JsonKey(required: true, disallowNullValue: true)
-  final String type;
+  String type;
 
   final DateTime updatedAt;
 

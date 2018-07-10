@@ -136,13 +136,19 @@ class Wordnik {
     return ApiTokenStatus.fromJson(json.decode(statusJson));
   }
 
-  Future<AuthenticationToken> authenticate(String username, String password) async {
+  // TODO: GET version of authenticate is not implemented
+  Future<AuthenticationToken> authenticate(
+    String username,
+    String password
+  ) async {
     String tokenJson = await _queryApi('account', 'json', 'authenticate', extraTerm: username, method: ApiMethods.post, body: password);
 
     return AuthenticationToken.fromJson(json.decode(tokenJson));
   }
 
-  Future<User> getLoggedInUser(String authToken) async {
+  Future<User> getLoggedInUser(
+    String authToken
+  ) async {
     Map<String, String> headers = {
       'auth_token': authToken
     };
@@ -175,12 +181,113 @@ class Wordnik {
     return wordList.map<WordList>((list) => WordList.fromJson(list)).toList();
   }
 
-  Future<WordList> createWordList(String authToken, WordList wordList) async {
+  // TODO: Doesn't return any success/failure status?
+  Future<Null> deleteWordList(
+    String authToken,
+    String permalink
+  ) async {
     Map<String, String> headers = {
       'auth_token': authToken
     };
 
-    String body = json.encode(wordList);
+    await _queryApi('wordList', 'json', permalink, headers: headers, method: ApiMethods.delete);
+  }
+
+  Future<WordList> getWordListByPermalink(
+    String authToken,
+    String permalink
+  ) async {
+    Map<String, String> headers = {
+      'auth_token': authToken
+    };
+
+    String wordListJson = await _queryApi('wordList', 'json', permalink, headers: headers);
+
+    return WordList.fromJson(json.decode(wordListJson));
+  }
+
+  // TODO: doesn't return any success/failure status?
+  Future<Null> updateWordList(
+    String authToken,
+    String permalink,
+    WordList modifiedWordList
+  ) async {
+    Map<String, String> headers = {
+      'auth_token': authToken
+    };
+
+    String body = json.encode(modifiedWordList);
+
+    await _queryApi('wordList', 'json', permalink, headers: headers, method: ApiMethods.put, body: body);
+  }
+
+  // TODO: doesn't return any success/failure status?
+  Future<Null> deleteWordsFromWordList(
+    String authToken,
+    String permalink,
+    List<StringValue> wordsToDelete
+  ) async {
+    Map<String, String> headers = {
+      'auth_token': authToken
+    };
+
+    String body = json.encode(wordsToDelete);
+
+    await _queryApi('wordList', 'json', permalink, extraTerm: 'deleteWords', headers: headers, method: ApiMethods.post, body: body);
+  }
+
+  Future<List<WordListWord>> getWordListWords(
+    String authToken,
+    String permalink,
+    {
+      String sortBy = 'createDate',
+      String sortOrder = 'desc',
+      int skip = 0,
+      int limit = 100
+    }
+  ) async {
+    Map<String, String> headers = {
+      'auth_token': authToken
+    };
+
+    Map<String, String> parameters = {
+      'sortBy': sortBy,
+      'sortOrder': sortOrder,
+      'skip': '$skip',
+      'limit': '$limit'
+    };
+
+    String wordListWordListJson = await _queryApi('wordList', 'json', permalink, extraTerm: 'words', headers: headers, queryParameters: parameters);
+
+    List<dynamic> wordListWordList = json.decode(wordListWordListJson);
+
+    return wordListWordList.map<WordListWord>((word) => WordListWord.fromJson(word)).toList();
+  }
+
+  // TODO: doesn't return any success/failure status?
+  Future<Null> addWordsToWordList(
+    String authToken,
+    String permalink,
+    List<StringValue> wordsToAdd
+  ) async {
+    Map<String, String> headers = {
+      'auth_token': authToken
+    };
+
+    String body = json.encode(wordsToAdd);
+
+    await _queryApi('wordList', 'json', permalink, extraTerm: 'words', headers: headers, method: ApiMethods.post, body: body);
+  }
+
+  Future<WordList> createWordList(
+    String authToken,
+    WordList newWordList
+  ) async {
+    Map<String, String> headers = {
+      'auth_token': authToken
+    };
+
+    String body = json.encode(newWordList);
 
     String wordListJson = await _queryApi('wordLists', 'json', '', headers: headers, method: ApiMethods.post, body: body);
 
