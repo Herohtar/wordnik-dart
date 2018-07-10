@@ -181,7 +181,7 @@ class Wordnik {
   }
 
   // TODO: Doesn't return any success/failure status?
-  Future<Null> deleteWordList(
+  Future<void> deleteWordList(
     String authToken,
     String permalink
   ) async {
@@ -198,7 +198,7 @@ class Wordnik {
   }
 
   // TODO: doesn't return any success/failure status?
-  Future<Null> updateWordList(
+  Future<void> updateWordList(
     String authToken,
     String permalink,
     WordList modifiedWordList
@@ -207,7 +207,7 @@ class Wordnik {
   }
 
   // TODO: doesn't return any success/failure status?
-  Future<Null> deleteWordsFromWordList(
+  Future<void> deleteWordsFromWordList(
     String authToken,
     String permalink,
     List<StringValue> wordsToDelete
@@ -240,7 +240,7 @@ class Wordnik {
   }
 
   // TODO: doesn't return any success/failure status?
-  Future<Null> addWordsToWordList(
+  Future<void> addWordsToWordList(
     String authToken,
     String permalink,
     List<StringValue> wordsToAdd
