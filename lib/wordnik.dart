@@ -136,6 +136,9 @@ class Wordnik {
   }
 
   /// Authenticates with a Wordnik [username] and [password]
+  /// 
+  /// Returns an [AuthenticationToken] containing the tokens necessary
+  /// for API calls that require an authenticated user.
   ///
   /// The API documentation also describes a HTTP GET version, but
   /// only the HTTP POST variant is implemented here for security.
@@ -148,6 +151,7 @@ class Wordnik {
     return AuthenticationToken.fromJson(json.decode(tokenJson));
   }
 
+  /// Returns the [User] associated with the provided [authToken]
   Future<User> getLoggedInUser(
     String authToken
   ) async {
@@ -156,6 +160,11 @@ class Wordnik {
     return User.fromJson(json.decode(userJson));
   }
 
+  /// Fetches a [List] of [WordList] that belong to the user
+  /// 
+  /// Requires a valid [authToken] from [AuthenticationToken].
+  /// You can skip over the first [skip] results, and limit the number
+  /// of returned results to [limit].
   Future<List<WordList>> getWordListsForLoggedInUser(
     String authToken,
     {
