@@ -1,3 +1,9 @@
+## [0.3.0] - 2018-07-10
+
+* Implemented the remaining `word` API calls
+* Added example package (incomplete)
+* Minor internal API adjustments
+
 ## [0.2.0] - 2018-07-10
 
 * Implemented all `wordList` API calls

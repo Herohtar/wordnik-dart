@@ -1,5 +1,29 @@
 # wordnik
 
-Wordnik API for Dart. (See <https://developer.wordnik.com/>)
+### Wordnik API for Dart
 
-Currently, only `account`, `wordList`, `wordLists`, and `words` API calls are implemented.
+Work in progress. Currently, all object models and API calls have been implemented, but with minimal testing. API signatures are likely to change as development continues.
+
+#### Related:
+* Wordnik: <https://www.wordnik.com/>
+* Wordnik API: <https://developer.wordnik.com/docs>
+
+
+## Basic usage
+```dart
+import 'package:wordnik/wordnik.dart';
+
+void main() async {
+
+  Wordnik wordnik = Wordnik('YOUR_API_KEY');
+
+  WordObject randomWord = await wordnik.getRandomWord(
+    includePartOfSpeech: 'verb',
+    minLength: 6,
+    maxLength: 10
+  );
+
+  print(randomWord.word);
+
+}
+```
