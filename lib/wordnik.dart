@@ -125,13 +125,20 @@ class Wordnik {
     return response.body;
   }
 
+  /// Returns usage statistics for the API account.
+  ///
+  /// The API documentation for this is somewhat confusing, but
+  /// it actually returns the statistics for your API key.
   Future<ApiTokenStatus> getApiTokenStatus() async {
     String statusJson = await _queryApi('account', 'json', 'apiTokenStatus');
 
     return ApiTokenStatus.fromJson(json.decode(statusJson));
   }
 
-  // TODO: GET version of authenticate is not implemented
+  /// Authenticates with a Wordnik [username] and [password]
+  ///
+  /// The API documentation also describes a HTTP GET version, but
+  /// only the HTTP POST variant is implemented here for security.
   Future<AuthenticationToken> authenticate(
     String username,
     String password
@@ -307,6 +314,7 @@ class Wordnik {
     return definitionList.map((definition) => Definition.fromJson(definition)).toList();
   }
 
+  /// Fetches etymology data for the specified [word]
   Future<List<String>> getEtymologies(
     String word,
     {
@@ -318,8 +326,9 @@ class Wordnik {
     };
 
     String eListJson = await _queryApi('word', 'json', word, extraTerm: 'etymologies', queryParameters: parameters);
+    List<dynamic> eList = json.decode(eListJson);
 
-    return json.decode(eListJson);
+    return eList.map((e) => e.toString()).toList();
   }
 
   Future<ExampleSearchResults> getExamples(
