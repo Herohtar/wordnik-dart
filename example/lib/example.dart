@@ -1,41 +1,45 @@
 // These aren't necessary for standard operation of the API;
 // they are only required for the API key import and some of the example code
-import 'dart:convert';
-import 'dart:io';
 import 'dart:math';
+import 'src/credentials.dart';
 
 // Required imports
 import 'package:wordnik/wordnik.dart';
 
 void main() async {
   // This isn't required, but you'll need to provide the API key in some way
-  Map<String, dynamic> credentials = json.decode(await File('credentials.json').readAsString());
+  Credentials credentials = Credentials.fromFile('credentials.json');
 
-  Wordnik wordnik = Wordnik(credentials['api_key']);
+  Wordnik wordnik = Wordnik(credentials.apiKey);
 
-  AuthenticationToken authToken = await wordnik.authenticate(credentials['username'], credentials['password']);
+  AuthenticationToken authToken = await wordnik.authenticate(credentials.username, credentials.password);
   print('Authenticated and received token "${authToken.token}".\n');
 
   User user = await wordnik.getLoggedInUser(authToken.token);
   print('Welcome, ${user.displayName}!\n');
 
   ApiTokenStatus apiStatus = await wordnik.getApiTokenStatus();
-  print('You have made ${apiStatus.totalRequests} requests and have ${apiStatus.remainingCalls} remaining.\nCounter will reset in ${apiStatus.resetsIn.inMinutes} minutes.\n');
+  print('You have made ${apiStatus.totalRequests} requests and have ${apiStatus.remainingCalls} remaining.');
+  print('Counter will reset in ${apiStatus.resetsIn.inMinutes} minutes.\n');
 
   WordObject exampleWord = await wordnik.getWord('example');
   print('Got word "${exampleWord.word}".\n');
 
   List<AudioFile> audioFiles = await wordnik.getAudio(exampleWord.word);
-  print('${audioFiles.length} audio results found.\nThe first one is at: "${audioFiles.first.fileUrl}"\n');
+  print('${audioFiles.length} audio results found.');
+  print('The first one is: "${audioFiles.first.fileUrl}"\n');
 
   List<Definition> definitions = await wordnik.getDefinitions(exampleWord.word);
-  print('${definitions.length} definitions found.\nThe first one is: "${definitions.first.text}"\n');
+  print('${definitions.length} definitions found.');
+  print('The first one is: "${definitions.first.text}"\n');
 
   List<String> etymologies = await wordnik.getEtymologies(exampleWord.word);
-  print('${etymologies.length} etymologies found.\nThe first one is: "${etymologies.first}"\n');
+  print('${etymologies.length} etymologies found.');
+  print('The first one is: "${etymologies.first}"\n');
 
   ExampleSearchResults examples = await wordnik.getExamples(exampleWord.word);
-  print('${examples.examples.length} examples found.\nThe first one is: "${examples.examples.first.text}"\n');
+  print('${examples.examples.length} examples found.');
+  print('The first one is: "${examples.examples.first.text}"\n');
 
   FrequencySummary frequencySummary = await wordnik.getWordFrequency(exampleWord.word);
   Frequency frequency = frequencySummary.frequency[Random().nextInt(frequencySummary.frequency.length)];
@@ -111,10 +115,10 @@ void main() async {
   );
   print('New word list "${createdWordList.name}" created with permalink "${createdWordList.permalink}".\n');
 
-  List<StringValue> wordsToAdd = List<StringValue>();
-  wordsToAdd.add(StringValue(word: exampleWord.word));
-  wordsToAdd.add(StringValue(word: randomNoun.word));
-  wordsToAdd.addAll(randomAdjectives.map((word) => StringValue(word: word.word)));
+  List<StringValue> wordsToAdd = List<StringValue>()
+    ..add(StringValue(word: exampleWord.word))
+    ..add(StringValue(word: randomNoun.word))
+    ..addAll(randomAdjectives.map((word) => StringValue(word: word.word)));
   await wordnik.addWordsToWordList(
     authToken.token,
     createdWordList.permalink,
@@ -122,9 +126,9 @@ void main() async {
   );
   print('Added ${wordsToAdd.length} words to "${createdWordList.name}".\n');
 
-  List<StringValue> wordsToDelete = List<StringValue>();
-  wordsToDelete.add(StringValue(word: exampleWord.word));
-  wordsToDelete.add(StringValue(word: randomAdjectives[Random().nextInt(randomAdjectives.length)].word));
+  List<StringValue> wordsToDelete = List<StringValue>()
+    ..add(StringValue(word: exampleWord.word))
+    ..add(StringValue(word: randomAdjectives[Random().nextInt(randomAdjectives.length)].word));
   await wordnik.deleteWordsFromWordList(
     authToken.token,
     createdWordList.permalink,

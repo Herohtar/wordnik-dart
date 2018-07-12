@@ -1,17 +1,16 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:test/test.dart';
 import 'package:wordnik/wordnik.dart';
 
+import 'credentials.dart';
+
 void main() {
-  Map<String, dynamic> credentials;
+  Credentials credentials;
   setUp(() async {
-    credentials = json.decode(await File('credentials.json').readAsString());
+    credentials = Credentials.fromFile('credentials.json');
   });
 
   test('checks initialization of wordnik api', () {
-    final Wordnik wordnik = Wordnik(credentials['api_key']);
-    expect(wordnik.apiKey, credentials['api_key']);
+    final Wordnik wordnik = Wordnik(credentials.apiKey);
+    expect(wordnik.apiKey, credentials.apiKey);
   });
 }
