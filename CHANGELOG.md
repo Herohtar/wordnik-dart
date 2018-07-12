@@ -1,3 +1,10 @@
+## [0.3.1] - 2018-07-11
+
+* Fixed return type for `getEtymologies()`
+* Fixed some parameter encoding issues
+* Completed examples for all API calls
+* Documentation work continues
+
 ## [0.3.0] - 2018-07-10
 
 * Implemented the remaining `word` API calls
