@@ -136,7 +136,7 @@ class Wordnik {
   }
 
   /// Authenticates with a Wordnik [username] and [password]
-  /// 
+  ///
   /// Returns an [AuthenticationToken] containing the tokens necessary
   /// for API calls that require an authenticated user.
   ///
@@ -161,7 +161,7 @@ class Wordnik {
   }
 
   /// Fetches a [List] of [WordList] that belong to the user
-  /// 
+  ///
   /// Requires a valid [authToken] from [AuthenticationToken].
   /// You can skip over the first [skip] results, and limit the number
   /// of returned results to [limit].
@@ -390,7 +390,7 @@ class Wordnik {
   ) async {
     Map<String, String> parameters = {
       'useCanonical': '$useCanonical',
-      'sourceDictionary': '$sourceDictionary',
+      'sourceDictionary': sourceDictionary,
       'limit': '$limit'
     };
 
@@ -431,8 +431,8 @@ class Wordnik {
   ) async {
     Map<String, String> parameters = {
       'useCanonical': '$useCanonical',
-      'sourceDictionary': '$sourceDictionary',
-      'typeFormat': '$typeFormat',
+      'sourceDictionary': sourceDictionary,
+      'typeFormat': typeFormat,
       'limit': '$limit'
     };
 
@@ -452,7 +452,7 @@ class Wordnik {
   ) async {
     Map<String, String> parameters = {
       'useCanonical': '$useCanonical',
-      'relationshipTypes': '$relationshipTypes',
+      'relationshipTypes': relationshipTypes,
       'limitPerRelationshipType': '$limitPerRelationshipType'
     };
 

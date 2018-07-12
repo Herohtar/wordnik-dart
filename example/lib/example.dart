@@ -41,25 +41,124 @@ void main() async {
   Frequency frequency = frequencySummary.frequency[Random().nextInt(frequencySummary.frequency.length)];
   print('${frequency.count} occurances from the year ${frequency.year}\n');
 
-  /*WordObject randomWord = await wordnik.getRandomWord(
-    minLength: 7,
-    maxLength: 9,
-    includePartOfSpeech: 'noun'
+  List<Syllable> syllables = await wordnik.getHyphenation(exampleWord.word);
+  print('This word has ${syllables.length} syllables: ${syllables.map((s) => s.text).join('-')}\n');
+
+  List<Bigram> bigrams = await wordnik.getPhrases(
+    exampleWord.word,
+    limit: 10
   );
-  print('Got random word "${randomWord.word}"');
+  Bigram bigram = bigrams[Random().nextInt(bigrams.length)];
+  print('You might say "${bigram.gram1} ${bigram.gram2}".\n');
 
-  WordList newWordList = WordList('Example List', 'PRIVATE', description: 'Created by the Wordnik API for Dart.');
-  WordList createdWordList = await wordnik.createWordList(authToken.token, newWordList);
-  print('New word list "${createdWordList.name}" created with permalink "${createdWordList.permalink}"');
+  List<TextPron> textProns = await wordnik.getTextPronunciations(exampleWord.word);
+  TextPron textPron = textProns.first;
+  print('It is pronounced "${textPron.raw}".\n');
 
-  List<WordObject> randomWords = await wordnik.getRandomWords(
+  List<Related> relatedWords = await wordnik.getRelatedWords(
+    exampleWord.word,
+    relationshipTypes: 'synonym,rhyme'
+  );
+  Related synonyms = relatedWords.firstWhere((word) => word.relationshipType == 'synonym');
+  Related rhymes = relatedWords.firstWhere((word) => word.relationshipType == 'rhyme');
+  print('${synonyms.words.length} synonyms found, including "${synonyms.words[Random().nextInt(synonyms.words.length)]}".\n');
+  print('${rhymes.words.length} rhymes found, including "${rhymes.words[Random().nextInt(rhymes.words.length)]}".\n');
+
+  Example example = await wordnik.getTopExample(exampleWord.word);
+  print('The top example is: "${example.text}" from ${example.title}.\n');
+
+  WordOfTheDay wordOfTheDay = await wordnik.getWordOfTheDay();
+  WordOfTheDay previousWordOfTheDay = await wordnik.getWordOfTheDay(date: DateTime.now().subtract(Duration(days: 1)));
+  print('The word of the day is "${wordOfTheDay.word}".\n');
+  print('Yesterday\'s word of the day was "${previousWordOfTheDay.word}".\n');
+
+  DefinitionSearchResults reverseDictionaryResults = await wordnik.reverseDictionary('eating utensil with prongs');
+  Definition reverseDictionary = reverseDictionaryResults.results.first;
+  print('A word that means "eating utensil with prongs" might be "${reverseDictionary.word}".\n');
+
+  WordSearchResults searchResults = await wordnik.searchWords(
+    '.+?rong.+?',
+    allowRegex: true,
+    skip: 1,
+    limit: 1
+  );
+  WordSearchResult searchResult = searchResults.searchResults.first;
+  print('${searchResults.totalResults} words found that contain the sequence "rong", including "${searchResult.word}".\n');
+
+  WordObject randomNoun = await wordnik.getRandomWord(
     includePartOfSpeech: 'noun',
-    minLength: 6,
-    maxLength: 10,
-    limit: 5
-  );*/
+    minLength: 5,
+    maxLength: 7
+  );
+  print('Got random noun "${randomNoun.word}".\n');
 
+  List<WordObject> randomAdjectives = await wordnik.getRandomWords(
+    includePartOfSpeech: 'adjective',
+    minLength: 5,
+    maxLength: 7,
+    limit: 3
+  );
+  print('Got random adjectives: ${randomAdjectives.map((adjective) => adjective.word).join(', ')}\n');
 
+  WordList newWordList = WordList(
+    'Temporary Example List',
+    'PRIVATE',
+    description: 'Created by the Wordnik API for Dart.'
+  );
+  WordList createdWordList = await wordnik.createWordList(
+    authToken.token,
+    newWordList
+  );
+  print('New word list "${createdWordList.name}" created with permalink "${createdWordList.permalink}".\n');
 
-  // TODO: complete example
+  List<StringValue> wordsToAdd = List<StringValue>();
+  wordsToAdd.add(StringValue(word: exampleWord.word));
+  wordsToAdd.add(StringValue(word: randomNoun.word));
+  wordsToAdd.addAll(randomAdjectives.map((word) => StringValue(word: word.word)));
+  await wordnik.addWordsToWordList(
+    authToken.token,
+    createdWordList.permalink,
+    wordsToAdd
+  );
+  print('Added ${wordsToAdd.length} words to "${createdWordList.name}".\n');
+
+  List<StringValue> wordsToDelete = List<StringValue>();
+  wordsToDelete.add(StringValue(word: exampleWord.word));
+  wordsToDelete.add(StringValue(word: randomAdjectives[Random().nextInt(randomAdjectives.length)].word));
+  await wordnik.deleteWordsFromWordList(
+    authToken.token,
+    createdWordList.permalink,
+    wordsToDelete
+  );
+  print('Deleted ${wordsToDelete.length} words from "${createdWordList.name}".\n');
+
+  WordList modifiedWordList = createdWordList
+    ..description = 'I feel like a ${randomAdjectives[Random().nextInt(randomAdjectives.length)].word} ${randomNoun.word} ${exampleWord.word}.';
+  await wordnik.updateWordList(
+    authToken.token,
+    modifiedWordList.permalink,
+    modifiedWordList
+  );
+  print('Updated description for "${modifiedWordList.name}".\n');
+
+  List<WordList> userWordLists = await wordnik.getWordListsForLoggedInUser(authToken.token);
+  print('Found ${userWordLists.length} word lists. The first one is titled "${userWordLists.first.name}".\n');
+
+  WordList ourWordList = await wordnik.getWordListByPermalink(
+    authToken.token,
+    createdWordList.permalink
+  );
+  print('"${ourWordList.name}" now contains ${ourWordList.numberWordsInList} words and the description is "${ourWordList.description}".\n');
+
+  List<WordListWord> wordListWords = await wordnik.getWordListWords(
+    authToken.token,
+    ourWordList.permalink
+  );
+  print('The words on the list are: ${wordListWords.map((word) => word.word).join(', ')}.\n');
+
+  await wordnik.deleteWordList(
+    authToken.token,
+    ourWordList.permalink
+  );
+  print('Deleted "${ourWordList.name}".\n');
 }
