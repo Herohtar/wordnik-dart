@@ -1,7 +1,7 @@
 // These aren't necessary for standard operation of the API;
 // they are only required for the API key import and some of the example code
 import 'dart:math';
-import 'src/credentials.dart';
+import 'package:credentials/credentials.dart';
 
 // Required imports
 import 'package:wordnik/wordnik.dart';
