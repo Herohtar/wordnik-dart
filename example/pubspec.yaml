@@ -5,8 +5,7 @@ environment:
   sdk: ">=2.0.0-dev.58.0 <2.0.0"
 
 dependencies:
-  wordnik: ^0.2.0
+  wordnik: ^0.3.2
 
   # Used for the example, but not required for the API
-  credentials:
-    path: ../../credentials
+  credentials_helper: ^1.0.1

@@ -1,12 +1,14 @@
 // These aren't necessary for standard operation of the API;
 // they are only required for the API key import and some of the example code
 import 'dart:math';
-import 'package:credentials/credentials.dart';
+import 'package:credentials_helper/credentials_helper.dart';
 
 // Required imports
 import 'package:wordnik/wordnik.dart';
 
 void main() async {
+  Random random = Random();
+
   // This isn't required, but you'll need to provide the API key in some way
   Credentials credentials = Credentials.fromFile('credentials.json');
 
@@ -42,7 +44,7 @@ void main() async {
   print('The first one is: "${examples.examples.first.text}"\n');
 
   FrequencySummary frequencySummary = await wordnik.getWordFrequency(exampleWord.word);
-  Frequency frequency = frequencySummary.frequency[Random().nextInt(frequencySummary.frequency.length)];
+  Frequency frequency = frequencySummary.frequency[random.nextInt(frequencySummary.frequency.length)];
   print('${frequency.count} occurances from the year ${frequency.year}\n');
 
   List<Syllable> syllables = await wordnik.getHyphenation(exampleWord.word);
@@ -52,7 +54,7 @@ void main() async {
     exampleWord.word,
     limit: 10
   );
-  Bigram bigram = bigrams[Random().nextInt(bigrams.length)];
+  Bigram bigram = bigrams[random.nextInt(bigrams.length)];
   print('You might say "${bigram.gram1} ${bigram.gram2}".\n');
 
   List<TextPron> textProns = await wordnik.getTextPronunciations(exampleWord.word);
@@ -65,8 +67,8 @@ void main() async {
   );
   Related synonyms = relatedWords.firstWhere((word) => word.relationshipType == 'synonym');
   Related rhymes = relatedWords.firstWhere((word) => word.relationshipType == 'rhyme');
-  print('${synonyms.words.length} synonyms found, including "${synonyms.words[Random().nextInt(synonyms.words.length)]}".\n');
-  print('${rhymes.words.length} rhymes found, including "${rhymes.words[Random().nextInt(rhymes.words.length)]}".\n');
+  print('${synonyms.words.length} synonyms found, including "${synonyms.words[random.nextInt(synonyms.words.length)]}".\n');
+  print('${rhymes.words.length} rhymes found, including "${rhymes.words[random.nextInt(rhymes.words.length)]}".\n');
 
   Example example = await wordnik.getTopExample(exampleWord.word);
   print('The top example is: "${example.text}" from ${example.title}.\n');
@@ -128,7 +130,7 @@ void main() async {
 
   List<StringValue> wordsToDelete = List<StringValue>()
     ..add(StringValue(word: exampleWord.word))
-    ..add(StringValue(word: randomAdjectives[Random().nextInt(randomAdjectives.length)].word));
+    ..add(StringValue(word: randomAdjectives[random.nextInt(randomAdjectives.length)].word));
   await wordnik.deleteWordsFromWordList(
     authToken.token,
     createdWordList.permalink,
@@ -137,7 +139,7 @@ void main() async {
   print('Deleted ${wordsToDelete.length} words from "${createdWordList.name}".\n');
 
   WordList modifiedWordList = createdWordList
-    ..description = 'I feel like a ${randomAdjectives[Random().nextInt(randomAdjectives.length)].word} ${randomNoun.word} ${exampleWord.word}.';
+    ..description = 'I feel like a ${randomAdjectives[random.nextInt(randomAdjectives.length)].word} ${randomNoun.word} ${exampleWord.word}.';
   await wordnik.updateWordList(
     authToken.token,
     modifiedWordList.permalink,

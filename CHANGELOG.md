@@ -1,3 +1,8 @@
+## [v0.3.2](https://github.com/Herohtar/wordnik-dart/releases/tag/v0.3.2) - 2018-07-14
+
+* Improved example code
+* Added [`credentials_helper`](https://pub.dartlang.org/packages/credentials_helper) to work with the API key more easily
+
 ## [v0.3.1](https://github.com/Herohtar/wordnik-dart/releases/tag/v0.3.1) - 2018-07-11
 
 * Fixed return type for `getEtymologies()`

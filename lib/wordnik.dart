@@ -77,7 +77,18 @@ class Wordnik {
 
   Wordnik(this.apiKey);
 
-  Future<String> _queryApi(String resource, String format, String operation, {String extraTerm, Map<String, String> queryParameters, ApiMethods method = ApiMethods.get, dynamic body, String authToken}) async {
+  Future<String> _queryApi(
+    String resource,
+    String format,
+    String operation,
+    {
+      String extraTerm,
+      Map<String, String> queryParameters,
+      ApiMethods method = ApiMethods.get,
+      dynamic body,
+      String authToken
+    }
+  ) async {
     List<String> segments = [
       'v$_apiVersion',
       '$resource.$format',

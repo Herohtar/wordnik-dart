@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 import 'package:wordnik/wordnik.dart';
-import 'package:credentials/credentials.dart';
+import 'package:credentials_helper/credentials_helper.dart';
 
 void main() {
   Credentials credentials;
