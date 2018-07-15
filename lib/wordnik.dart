@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io' show HttpStatus;
 
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
+import 'package:wordnik/src/api_exception.dart';
 import 'package:wordnik/src/api_token_status.dart';
 import 'package:wordnik/src/audio_file.dart';
 import 'package:wordnik/src/authentication_token.dart';
@@ -24,6 +26,7 @@ import 'package:wordnik/src/word_object.dart';
 import 'package:wordnik/src/word_of_the_day.dart';
 import 'package:wordnik/src/word_search_results.dart';
 
+export 'package:wordnik/src/api_exception.dart';
 export 'package:wordnik/src/api_token_status.dart';
 export 'package:wordnik/src/audio_file.dart';
 export 'package:wordnik/src/audio_type.dart';
@@ -77,7 +80,7 @@ class Wordnik {
 
   Wordnik(this.apiKey);
 
-  Future<String> _queryApi(
+  Future<dynamic> _queryApi(
     String resource,
     String format,
     String operation,
@@ -132,8 +135,13 @@ class Wordnik {
         break;
     }
 
-    // TODO: handle status codes, etc
-    return response.body;
+    dynamic responseJson = json.decode(response.body);
+
+    if (response.statusCode == HttpStatus.ok) {
+      return responseJson;
+    } else {
+      throw ApiException.fromJson(responseJson);
+    }
   }
 
   /// Returns usage statistics for the API account.
@@ -141,9 +149,7 @@ class Wordnik {
   /// The API documentation for this is somewhat confusing, but
   /// it actually returns the statistics for your API key.
   Future<ApiTokenStatus> getApiTokenStatus() async {
-    String statusJson = await _queryApi('account', 'json', 'apiTokenStatus');
-
-    return ApiTokenStatus.fromJson(json.decode(statusJson));
+    return ApiTokenStatus.fromJson(await _queryApi('account', 'json', 'apiTokenStatus'));
   }
 
   /// Authenticates with a Wordnik [username] and [password]
@@ -157,18 +163,14 @@ class Wordnik {
     String username,
     String password
   ) async {
-    String tokenJson = await _queryApi('account', 'json', 'authenticate', extraTerm: username, method: ApiMethods.post, body: password);
-
-    return AuthenticationToken.fromJson(json.decode(tokenJson));
+    return AuthenticationToken.fromJson(await _queryApi('account', 'json', 'authenticate', extraTerm: username, method: ApiMethods.post, body: password));
   }
 
   /// Returns the [User] associated with the provided [authToken]
   Future<User> getLoggedInUser(
     String authToken
   ) async {
-    String userJson = await _queryApi('account', 'json', 'user', authToken: authToken);
-
-    return User.fromJson(json.decode(userJson));
+    return User.fromJson(await _queryApi('account', 'json', 'user', authToken: authToken));
   }
 
   /// Fetches a [List] of [WordList] that belong to the user
@@ -188,9 +190,7 @@ class Wordnik {
       'limit': '$limit'
     };
 
-    String wordListJson = await _queryApi('account', 'json', 'wordLists', queryParameters: parameters, authToken: authToken);
-
-    List<dynamic> wordList = json.decode(wordListJson);
+    List<dynamic> wordList = await _queryApi('account', 'json', 'wordLists', queryParameters: parameters, authToken: authToken);
 
     return wordList.map((list) => WordList.fromJson(list)).toList();
   }
@@ -207,9 +207,7 @@ class Wordnik {
     String authToken,
     String permalink
   ) async {
-    String wordListJson = await _queryApi('wordList', 'json', permalink, authToken: authToken);
-
-    return WordList.fromJson(json.decode(wordListJson));
+    return WordList.fromJson(await _queryApi('wordList', 'json', permalink, authToken: authToken));
   }
 
   // TODO: doesn't return any success/failure status?
@@ -247,9 +245,7 @@ class Wordnik {
       'limit': '$limit'
     };
 
-    String wordListWordListJson = await _queryApi('wordList', 'json', permalink, extraTerm: 'words', queryParameters: parameters, authToken: authToken);
-
-    List<dynamic> wordListWordList = json.decode(wordListWordListJson);
+    List<dynamic> wordListWordList = await _queryApi('wordList', 'json', permalink, extraTerm: 'words', queryParameters: parameters, authToken: authToken);
 
     return wordListWordList.map((word) => WordListWord.fromJson(word)).toList();
   }
@@ -267,9 +263,7 @@ class Wordnik {
     String authToken,
     WordList newWordList
   ) async {
-    String wordListJson = await _queryApi('wordLists', 'json', '', method: ApiMethods.post, body: newWordList, authToken: authToken);
-
-    return WordList.fromJson(json.decode(wordListJson));
+    return WordList.fromJson(await _queryApi('wordLists', 'json', '', method: ApiMethods.post, body: newWordList, authToken: authToken));
   }
 
   Future<WordObject> getWord(
@@ -284,9 +278,7 @@ class Wordnik {
       'includeSuggestions': '$includeSuggestions'
     };
 
-    String wordJson = await _queryApi('word', 'json', word, queryParameters: parameters);
-
-    return WordObject.fromJson(json.decode(wordJson));
+    return WordObject.fromJson(await _queryApi('word', 'json', word, queryParameters: parameters));
   }
 
   Future<List<AudioFile>> getAudio(
@@ -301,8 +293,7 @@ class Wordnik {
       'limit': '$limit'
     };
 
-    String audioListJson = await _queryApi('word', 'json', word, extraTerm: 'audio', queryParameters: parameters);
-    List<dynamic> audioList = json.decode(audioListJson);
+    List<dynamic> audioList = await _queryApi('word', 'json', word, extraTerm: 'audio', queryParameters: parameters);
 
     return audioList.map((audio) => AudioFile.fromJson(audio)).toList();
   }
@@ -328,8 +319,7 @@ class Wordnik {
       'includeTags': '$includeTags'
     };
 
-    String definitionListJson = await _queryApi('word', 'json', word, extraTerm: 'definitions', queryParameters: parameters);
-    List<dynamic> definitionList = json.decode(definitionListJson);
+    List<dynamic> definitionList = await _queryApi('word', 'json', word, extraTerm: 'definitions', queryParameters: parameters);
 
     return definitionList.map((definition) => Definition.fromJson(definition)).toList();
   }
@@ -345,8 +335,7 @@ class Wordnik {
       'useCanonical': '$useCanonical'
     };
 
-    String eListJson = await _queryApi('word', 'json', word, extraTerm: 'etymologies', queryParameters: parameters);
-    List<dynamic> eList = json.decode(eListJson);
+    List<dynamic> eList = await _queryApi('word', 'json', word, extraTerm: 'etymologies', queryParameters: parameters);
 
     return eList.map((e) => e.toString()).toList();
   }
@@ -367,9 +356,7 @@ class Wordnik {
       'limit': '$limit'
     };
 
-    String examplesJson = await _queryApi('word', 'json', word, extraTerm: 'examples', queryParameters: parameters);
-
-    return ExampleSearchResults.fromJson(json.decode(examplesJson));
+    return ExampleSearchResults.fromJson(await _queryApi('word', 'json', word, extraTerm: 'examples', queryParameters: parameters));
   }
 
   Future<FrequencySummary> getWordFrequency(
@@ -386,9 +373,7 @@ class Wordnik {
       'endYear': '$endYear'
     };
 
-    String frequencyJson = await _queryApi('word', 'json', word, extraTerm: 'frequency', queryParameters: parameters);
-
-    return FrequencySummary.fromJson(json.decode(frequencyJson));
+    return FrequencySummary.fromJson(await _queryApi('word', 'json', word, extraTerm: 'frequency', queryParameters: parameters));
   }
 
   Future<List<Syllable>> getHyphenation(
@@ -405,8 +390,7 @@ class Wordnik {
       'limit': '$limit'
     };
 
-    String syllableListJson = await _queryApi('word', 'json', word, extraTerm: 'hyphenation', queryParameters: parameters);
-    List<dynamic> syllableList = json.decode(syllableListJson);
+    List<dynamic> syllableList = await _queryApi('word', 'json', word, extraTerm: 'hyphenation', queryParameters: parameters);
 
     return syllableList.map((syllable) => Syllable.fromJson(syllable)).toList();
   }
@@ -425,8 +409,7 @@ class Wordnik {
       'wlmi': '$wlmi'
     };
 
-    String bigramListJson = await _queryApi('word', 'json', word, extraTerm: 'phrases', queryParameters: parameters);
-    List<dynamic> bigramList = json.decode(bigramListJson);
+    List<dynamic> bigramList = await _queryApi('word', 'json', word, extraTerm: 'phrases', queryParameters: parameters);
 
     return bigramList.map((bigram) => Bigram.fromJson(bigram)).toList();
   }
@@ -447,8 +430,7 @@ class Wordnik {
       'limit': '$limit'
     };
 
-    String proListJson = await _queryApi('word', 'json', word, extraTerm: 'pronunciations', queryParameters: parameters);
-    List<dynamic> proList = json.decode(proListJson);
+    List<dynamic> proList = await _queryApi('word', 'json', word, extraTerm: 'pronunciations', queryParameters: parameters);
 
     return proList.map((pro) => TextPron.fromJson(pro)).toList();
   }
@@ -467,8 +449,7 @@ class Wordnik {
       'limitPerRelationshipType': '$limitPerRelationshipType'
     };
 
-    String relatedListJson = await _queryApi('word', 'json', word, extraTerm: 'relatedWords', queryParameters: parameters);
-    List<dynamic> relatedList = json.decode(relatedListJson);
+    List<dynamic> relatedList = await _queryApi('word', 'json', word, extraTerm: 'relatedWords', queryParameters: parameters);
 
     return relatedList.map((related) => Related.fromJson(related)).toList();
   }
@@ -483,9 +464,7 @@ class Wordnik {
       'useCanonical': '$useCanonical'
     };
 
-    String exampleJson = await _queryApi('word', 'json', word, extraTerm: 'topExample', queryParameters: parameters);
-
-    return Example.fromJson(json.decode(exampleJson));
+    return Example.fromJson(await _queryApi('word', 'json', word, extraTerm: 'topExample', queryParameters: parameters));
   }
 
   Future<WordObject> getRandomWord(
@@ -513,9 +492,7 @@ class Wordnik {
       'maxLength': '$maxLength'
     };
 
-    String wordJson = await _queryApi('words', 'json', 'randomWord', queryParameters: parameters);
-
-    return WordObject.fromJson(json.decode(wordJson));
+    return WordObject.fromJson(await _queryApi('words', 'json', 'randomWord', queryParameters: parameters));
   }
 
   Future<List<WordObject>> getRandomWords(
@@ -549,8 +526,7 @@ class Wordnik {
       'limit': '$limit'
     };
 
-    String wordListJson = await _queryApi('words', 'json', 'randomWords', queryParameters: parameters);
-    List<dynamic> wordList = json.decode(wordListJson);
+    List<dynamic> wordList = await _queryApi('words', 'json', 'randomWords', queryParameters: parameters);
 
     return wordList.map((word) => WordObject.fromJson(word)).toList();
   }
@@ -594,9 +570,7 @@ class Wordnik {
       'limit': '$limit'
     };
 
-    String reverseDictionaryJson = await _queryApi('words', 'json', 'reverseDictionary', queryParameters: parameters);
-
-    return DefinitionSearchResults.fromJson(json.decode(reverseDictionaryJson));
+    return DefinitionSearchResults.fromJson(await _queryApi('words', 'json', 'reverseDictionary', queryParameters: parameters));
   }
 
   Future<WordSearchResults> searchWords(
@@ -631,9 +605,7 @@ class Wordnik {
       'limit': '$limit'
     };
 
-    String wordSearchJson = await _queryApi('words', 'json', 'search', extraTerm: query, queryParameters: parameters);
-
-    return WordSearchResults.fromJson(json.decode(wordSearchJson));
+    return WordSearchResults.fromJson(await _queryApi('words', 'json', 'search', extraTerm: query, queryParameters: parameters));
   }
 
   Future<WordOfTheDay> getWordOfTheDay(
@@ -645,8 +617,6 @@ class Wordnik {
       'date': _dateFormat.format(date)
     };
 
-    String wordOfTheDayJson = await _queryApi('words', 'json', 'wordOfTheDay', queryParameters: parameters);
-
-    return WordOfTheDay.fromJson(json.decode(wordOfTheDayJson));
+    return WordOfTheDay.fromJson(await _queryApi('words', 'json', 'wordOfTheDay', queryParameters: parameters));
   }
 }
