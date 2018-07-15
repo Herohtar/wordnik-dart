@@ -1,8 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import 'package:wordnik/src/content_provider.dart';
-import 'package:wordnik/src/simple_definition.dart';
-import 'package:wordnik/src/simple_example.dart';
+import 'package:wordnik/src/models/content_provider.dart';
+import 'package:wordnik/src/models/simple_definition.dart';
+import 'package:wordnik/src/models/simple_example.dart';
 
 part 'word_of_the_day.g.dart';
 

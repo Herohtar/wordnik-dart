@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import 'package:wordnik/src/category.dart';
+import 'package:wordnik/src/models/category.dart';
 
 part 'root.g.dart';
 

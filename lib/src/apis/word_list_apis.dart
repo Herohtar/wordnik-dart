@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:wordnik/src/api_client.dart';
 import 'package:wordnik/src/enums.dart';
-import 'package:wordnik/src/string_value.dart';
-import 'package:wordnik/src/word_list.dart';
-import 'package:wordnik/src/word_list_word.dart';
+import 'package:wordnik/src/models/string_value.dart';
+import 'package:wordnik/src/models/word_list.dart';
+import 'package:wordnik/src/models/word_list_word.dart';
 
 abstract class WordListApis implements ApiClient {
     // TODO: doesn't return any success/failure status?

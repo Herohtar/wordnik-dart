@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import 'package:wordnik/src/word_search_result.dart';
+import 'package:wordnik/src/models/word_search_result.dart';
 
 part 'word_search_results.g.dart';
 

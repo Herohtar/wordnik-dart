@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:wordnik/src/api_client.dart';
-import 'package:wordnik/src/api_token_status.dart';
-import 'package:wordnik/src/authentication_token.dart';
 import 'package:wordnik/src/enums.dart';
-import 'package:wordnik/src/user.dart';
-import 'package:wordnik/src/word_list.dart';
+import 'package:wordnik/src/models/api_token_status.dart';
+import 'package:wordnik/src/models/authentication_token.dart';
+import 'package:wordnik/src/models/user.dart';
+import 'package:wordnik/src/models/word_list.dart';
 
 abstract class AccountApis implements ApiClient {
   /// Returns usage statistics for the API account.

@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import 'package:wordnik/src/frequency.dart';
+import 'package:wordnik/src/models/frequency.dart';
 
 part 'frequency_summary.g.dart';
 

@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import 'package:wordnik/src/definition.dart';
+import 'package:wordnik/src/models/definition.dart';
 
 part 'definition_search_results.g.dart';
 

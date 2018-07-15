@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:io' show HttpStatus;
 
 import 'package:http/http.dart' as http;
-import 'package:wordnik/src/api_exception.dart';
+import 'package:wordnik/src/models/api_exception.dart';
 import 'package:wordnik/src/enums.dart';
 
 /// Contains the core elements of the API.

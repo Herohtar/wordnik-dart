@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import 'package:wordnik/src/example.dart';
-import 'package:wordnik/src/facet.dart';
+import 'package:wordnik/src/models/example.dart';
+import 'package:wordnik/src/models/facet.dart';
 
 part 'example_search_results.g.dart';
 

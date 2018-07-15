@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import 'package:wordnik/src/scored_word.dart';
+import 'package:wordnik/src/models/scored_word.dart';
 
 part 'sentence.g.dart';
 

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:wordnik/src/api_client.dart';
 import 'package:wordnik/src/enums.dart';
-import 'package:wordnik/src/word_list.dart';
+import 'package:wordnik/src/models/word_list.dart';
 
 abstract class WordListsApis implements ApiClient {
   Future<WordList> createWordList(

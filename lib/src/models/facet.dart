@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import 'package:wordnik/src/facet_value.dart';
+import 'package:wordnik/src/models/facet_value.dart';
 
 part 'facet.g.dart';
 

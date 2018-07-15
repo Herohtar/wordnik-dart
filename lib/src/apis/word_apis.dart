@@ -1,16 +1,16 @@
 import 'dart:async';
 
 import 'package:wordnik/src/api_client.dart';
-import 'package:wordnik/src/audio_file.dart';
-import 'package:wordnik/src/bigram.dart';
-import 'package:wordnik/src/definition.dart';
-import 'package:wordnik/src/example.dart';
-import 'package:wordnik/src/example_search_results.dart';
-import 'package:wordnik/src/frequency_summary.dart';
-import 'package:wordnik/src/related.dart';
-import 'package:wordnik/src/syllable.dart';
-import 'package:wordnik/src/text_pron.dart';
-import 'package:wordnik/src/word_object.dart';
+import 'package:wordnik/src/models/audio_file.dart';
+import 'package:wordnik/src/models/bigram.dart';
+import 'package:wordnik/src/models/definition.dart';
+import 'package:wordnik/src/models/example.dart';
+import 'package:wordnik/src/models/example_search_results.dart';
+import 'package:wordnik/src/models/frequency_summary.dart';
+import 'package:wordnik/src/models/related.dart';
+import 'package:wordnik/src/models/syllable.dart';
+import 'package:wordnik/src/models/text_pron.dart';
+import 'package:wordnik/src/models/word_object.dart';
 
 abstract class WordApis implements ApiClient {
   Future<WordObject> getWord(

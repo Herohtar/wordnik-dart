@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:intl/intl.dart';
 import 'package:wordnik/src/api_client.dart';
-import 'package:wordnik/src/definition_search_results.dart';
-import 'package:wordnik/src/word_object.dart';
-import 'package:wordnik/src/word_of_the_day.dart';
-import 'package:wordnik/src/word_search_results.dart';
+import 'package:wordnik/src/models/definition_search_results.dart';
+import 'package:wordnik/src/models/word_object.dart';
+import 'package:wordnik/src/models/word_of_the_day.dart';
+import 'package:wordnik/src/models/word_search_results.dart';
 
 abstract class WordsApis implements ApiClient {
   final DateFormat _dateFormat = DateFormat('yyyy-MM-dd');

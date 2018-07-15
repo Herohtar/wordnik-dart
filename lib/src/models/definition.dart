@@ -1,11 +1,11 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import 'package:wordnik/src/citation.dart';
-import 'package:wordnik/src/example_usage.dart';
-import 'package:wordnik/src/label.dart';
-import 'package:wordnik/src/note.dart';
-import 'package:wordnik/src/related.dart';
-import 'package:wordnik/src/text_pron.dart';
+import 'package:wordnik/src/models/citation.dart';
+import 'package:wordnik/src/models/example_usage.dart';
+import 'package:wordnik/src/models/label.dart';
+import 'package:wordnik/src/models/note.dart';
+import 'package:wordnik/src/models/related.dart';
+import 'package:wordnik/src/models/text_pron.dart';
 
 part 'definition.g.dart';
 

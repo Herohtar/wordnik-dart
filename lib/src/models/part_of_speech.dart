@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import 'package:wordnik/src/category.dart';
-import 'package:wordnik/src/root.dart';
+import 'package:wordnik/src/models/category.dart';
+import 'package:wordnik/src/models/root.dart';
 
 part 'part_of_speech.g.dart';
 
