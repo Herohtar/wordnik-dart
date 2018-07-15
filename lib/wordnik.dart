@@ -33,7 +33,6 @@ export 'package:wordnik/src/models/scored_word.dart';
 export 'package:wordnik/src/models/sentence.dart';
 export 'package:wordnik/src/models/simple_definition.dart';
 export 'package:wordnik/src/models/simple_example.dart';
-export 'package:wordnik/src/models/string_value.dart';
 export 'package:wordnik/src/models/syllable.dart';
 export 'package:wordnik/src/models/text_pron.dart';
 export 'package:wordnik/src/models/user.dart';

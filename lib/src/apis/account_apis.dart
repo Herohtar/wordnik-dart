@@ -7,11 +7,15 @@ import 'package:wordnik/src/models/authentication_token.dart';
 import 'package:wordnik/src/models/user.dart';
 import 'package:wordnik/src/models/word_list.dart';
 
+/// Contains the API calls for the `account` endpoint.
 abstract class AccountApis implements ApiClient {
+  // TODO: rename this to better reflect that it is related to the API key?
   /// Returns usage statistics for the API account.
   ///
   /// The API documentation for this is somewhat confusing, but
   /// it actually returns the statistics for your API key.
+  ///
+  /// Throws an [ApiException] if the API returns an error status.
   Future<ApiTokenStatus> getApiTokenStatus() async {
     return ApiTokenStatus.fromJson(await queryApi('account', 'json', 'apiTokenStatus'));
   }
@@ -23,6 +27,8 @@ abstract class AccountApis implements ApiClient {
   ///
   /// The API documentation also describes a HTTP GET version, but
   /// only the HTTP POST variant is implemented here for security.
+  ///
+  /// Throws an [ApiException] if the API returns an error status.
   Future<AuthenticationToken> authenticate(
     String username,
     String password
@@ -31,6 +37,8 @@ abstract class AccountApis implements ApiClient {
   }
 
   /// Returns the [User] associated with the provided [authToken]
+  ///
+  /// Throws an [ApiException] if the API returns an error status.
   Future<User> getLoggedInUser(
     String authToken
   ) async {
@@ -39,9 +47,12 @@ abstract class AccountApis implements ApiClient {
 
   /// Fetches a [List] of [WordList] that belong to the user
   ///
-  /// Requires a valid [authToken] from [AuthenticationToken].
+  /// Requires a valid [authToken] from [authenticate].
+  ///
   /// You can skip over the first [skip] results, and limit the number
   /// of returned results to [limit].
+  ///
+  /// Throws an [ApiException] if the API returns an error status.
   Future<List<WordList>> getWordListsForLoggedInUser(
     String authToken,
     {

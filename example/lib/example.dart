@@ -117,10 +117,10 @@ void main() async {
   );
   print('New word list "${createdWordList.name}" created with permalink "${createdWordList.permalink}".\n');
 
-  List<StringValue> wordsToAdd = List<StringValue>()
-    ..add(StringValue(word: exampleWord.word))
-    ..add(StringValue(word: randomNoun.word))
-    ..addAll(randomAdjectives.map((word) => StringValue(word: word.word)));
+  List<String> wordsToAdd = List<String>()
+    ..add(exampleWord.word)
+    ..add(randomNoun.word)
+    ..addAll(randomAdjectives.map((word) => word.word));
   await wordnik.addWordsToWordList(
     authToken.token,
     createdWordList.permalink,
@@ -128,9 +128,9 @@ void main() async {
   );
   print('Added ${wordsToAdd.length} words to "${createdWordList.name}".\n');
 
-  List<StringValue> wordsToDelete = List<StringValue>()
-    ..add(StringValue(word: exampleWord.word))
-    ..add(StringValue(word: randomAdjectives[random.nextInt(randomAdjectives.length)].word));
+  List<String> wordsToDelete = List<String>()
+    ..add(exampleWord.word)
+    ..add(randomAdjectives[random.nextInt(randomAdjectives.length)].word);
   await wordnik.deleteWordsFromWordList(
     authToken.token,
     createdWordList.permalink,
