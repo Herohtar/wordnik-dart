@@ -1,6 +1,6 @@
 name: wordnik
-description: Wordnik API for Dart
-version: 0.3.2
+description: An API client library for working with the Wordnik API in Dart.
+version: 0.3.3
 author: "Herohtar <belac1186@gmail.com>"
 homepage: https://github.com/herohtar/wordnik-dart
 

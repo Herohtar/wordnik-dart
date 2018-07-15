@@ -1,3 +1,13 @@
+## [v0.3.3](https://github.com/Herohtar/wordnik-dart/releases/tag/v0.3.3) - 2018-07-15
+
+* Added an `ApiException` which is now thrown when the API returns an error
+* Modified `deleteWordsFromWordList()` and `addWordsToWordList()` to take `List<String>` instead of `List<StringValue>`
+* `StringValue` is no longer exposed as it is now only used internally
+* Completed documentation for `account`, `wordList`, and `wordLists` APIs
+* Added more tests
+* Added dependency for [`http_status`](https://pub.dartlang.org/packages/http_status) for internal use
+* Major internal refactoring and reorganization for readability/maintainability (doesn't affect public-facing API)
+
 ## [v0.3.2](https://github.com/Herohtar/wordnik-dart/releases/tag/v0.3.2) - 2018-07-14
 
 * Improved example code
