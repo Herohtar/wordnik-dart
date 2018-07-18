@@ -12,7 +12,18 @@ import 'package:wordnik/src/models/syllable.dart';
 import 'package:wordnik/src/models/text_pron.dart';
 import 'package:wordnik/src/models/word_object.dart';
 
+/// Contains the API calls for the `word` endpoint.
 abstract class WordApis implements ApiClient {
+  /// Returns the [WordObject] for the specified [word].
+  ///
+  /// If [useCanonical] is `true`, the API will try to return the correct
+  /// root word (eg. `cats` will return `cat`). Otherwise, the exact [word]
+  /// requested will be returned.
+  ///
+  /// If [includeSuggestions] is `true`, the returned [WordObject] will also
+  /// include suggestions for correct spelling, case variants, etc.
+  ///
+  /// Throws an [ApiException] if the API returns an error status.
   Future<WordObject> getWord(
     String word,
     {
@@ -28,6 +39,14 @@ abstract class WordApis implements ApiClient {
     return WordObject.fromJson(await queryApi('word', 'json', word, queryParameters: parameters));
   }
 
+  /// Fetches audio metadata for the given [word].
+  ///
+  /// If [useCanonical] is `true`, the [List] of [AudioFile] will be
+  /// for the canonical form (`cats` => `cat`).
+  ///
+  /// The maximum number of results returned can be set with [limit].
+  ///
+  /// Throws an [ApiException] if the API returns an error status.
   Future<List<AudioFile>> getAudio(
     String word,
     {
@@ -45,11 +64,37 @@ abstract class WordApis implements ApiClient {
     return audioList.map((audio) => AudioFile.fromJson(audio)).toList();
   }
 
+  // TODO: Change the behavior of sourceDictionaries?
+  /// Returns a [List] of [Definition] for the specified [word].
+  ///
+  /// The maximum number of results returned can be set with [limit].
+  ///
+  /// You can limit the results to one or more parts of speech by listing
+  /// them in [partOfSpeech]. Otherwise, the default is to return all
+  /// parts of speech.
+  ///
+  /// If [includeRelated] is `true`, the returned definitions will contain
+  /// a list of related words.
+  ///
+  /// If [sourceDictionaries] is set to `all`, results from all sources
+  /// will be returned. If specific dictionaries are listed, results will
+  /// only be returned from the first specified source that has definitions.
+  /// If blank, the results will be from the first dictionary that has
+  /// definitions, searched in the following order: `ahd` => `wiktionary`
+  /// => `webster` => `century` => `wordnet`.
+  ///
+  /// If [useCanonical] is `true`, the API will try to return the correct
+  /// root word (eg, `cats` => `cat`). Otherwise, results will be for the
+  /// exact [word] specified.
+  ///
+  /// If [includeTags] is `true`, the response text will include XML tags.
+  ///
+  /// Throws an [ApiException] if the API returns an error status.
   Future<List<Definition>> getDefinitions(
     String word,
     {
       int limit = 200,
-      String partOfSpeech,
+      List<String> partOfSpeech,
       bool includeRelated = false,
       List<String> sourceDictionaries,
       bool useCanonical = false,
@@ -59,7 +104,7 @@ abstract class WordApis implements ApiClient {
     Map<String, String> parameters = {
       'word': word,
       'limit': '$limit',
-      'partOfSpeech': partOfSpeech,
+      'partOfSpeech': partOfSpeech?.join(','),
       'includeRelated': '$includeRelated',
       'sourceDictionaries': sourceDictionaries?.join(',') ?? '',
       'useCanonical': '$useCanonical',
@@ -72,6 +117,12 @@ abstract class WordApis implements ApiClient {
   }
 
   /// Fetches etymology data for the specified [word]
+  ///
+  /// If [useCanonical] is `true`, the API will try to return the correct
+  /// root word (eg, `cats` => `cat`). Otherwise, the exact [word] specified
+  /// will be returned.
+  ///
+  /// Throws an [ApiException] if the API returns an error status.
   Future<List<String>> getEtymologies(
     String word,
     {
@@ -87,6 +138,20 @@ abstract class WordApis implements ApiClient {
     return eList.map((e) => e.toString()).toList();
   }
 
+  /// Returns examples for the specified [word].
+  ///
+  /// If [includeDuplicates] is `true`, the results will include duplicate
+  /// examples found in other sources. Otherwise, only the first examples
+  /// found will be returned.
+  ///
+  /// If [useCanonical] is `true`, the API will try to return the correct
+  /// root word (eg, `cats` => `cat`). Otherwise, the exact [word] specified
+  /// will be returned.
+  ///
+  /// You can [skip] a specified number of results, and [limit] the number
+  /// of results returned.
+  ///
+  /// Throws an [ApiException] if the API returns an error status.
   Future<ExampleSearchResults> getExamples(
     String word,
     {
@@ -106,6 +171,14 @@ abstract class WordApis implements ApiClient {
     return ExampleSearchResults.fromJson(await queryApi('word', 'json', word, extraTerm: 'examples', queryParameters: parameters));
   }
 
+  /// Returns usage information for the specified [word] for the time period
+  /// starting at [startYear] up to [endYear].
+  ///
+  /// If [useCanonical] is `true`, the API will try to return the correct
+  /// root word (eg, `cats` => `cat`). Otherwise results for the exact
+  /// [word] specified will be returned.
+  ///
+  /// Throws an [ApiException] if the API returns an error status.
   Future<FrequencySummary> getWordFrequency(
     String word,
     {
@@ -123,6 +196,20 @@ abstract class WordApis implements ApiClient {
     return FrequencySummary.fromJson(await queryApi('word', 'json', word, extraTerm: 'frequency', queryParameters: parameters));
   }
 
+  // TODO: Change sourceDictionary to an enum? (all locations)
+  /// Returns [Syllable] information for the specified [word].
+  ///
+  /// If [useCanonical] is `true`, the API will try to return the correct
+  /// root word (eg, `cats` => `cat`). Otherwise, the exact [word] specified
+  /// will be returned.
+  ///
+  /// You can choose the specific [sourceDictionary] to use. Valid options are:
+  /// `ahd`, `century`, `wiktionary`, `webster`, and `wordnet`.
+  ///
+  /// You can restrict the number of syllables returned with [limit], though why
+  /// you would ever want to do that is beyond me...
+  ///
+  /// Throws an [ApiException] if the API returns an error status.
   Future<List<Syllable>> getHyphenation(
     String word,
     {
@@ -142,6 +229,18 @@ abstract class WordApis implements ApiClient {
     return syllableList.map((syllable) => Syllable.fromJson(syllable)).toList();
   }
 
+  // TODO: What is WLMI?
+  /// Fetches [Bigram] phrases for the specified [word].
+  ///
+  /// If [useCanonical] is `true`, the API will try to return the correct
+  /// root word (eg, `cats` => `cat`). Otherwise, the exact [word] specified
+  /// will be returned.
+  ///
+  /// The maximum number of results to return can be specified with [limit].
+  ///
+  /// You can also specify the minimum [wlmi] for the returned phrases.
+  ///
+  /// Throws an [ApiException] if the API returns an error status.
   Future<List<Bigram>> getPhrases(
     String word,
     {
@@ -161,6 +260,23 @@ abstract class WordApis implements ApiClient {
     return bigramList.map((bigram) => Bigram.fromJson(bigram)).toList();
   }
 
+  // TODO: Make typeFormat an enum?
+  /// Returns text pronunciations for the specified [word].
+  ///
+  /// If [useCanonical] is `true`, the API will try to return the correct
+  /// root word (eg, `cats` => `cat`). Otherwise, the exact [word] specified
+  /// will be returned.
+  ///
+  /// You can choose the specific [sourceDictionary] to use. Valid options are:
+  /// `ahd`, `century`, `wiktionary`, `webster`, and `wordnet`.
+  ///
+  /// The type of pronunciation returned can be specified with [typeFormat]. Valid
+  /// options are: `ahd`, `arpabet`, `gcide-diacritical`, and `IPA`. If left blank,
+  /// all available types are returned.
+  ///
+  /// The maximum number of results to return can be specified with [limit].
+  ///
+  /// Throws an [ApiException] if the API returns an error status.
   Future<List<TextPron>> getTextPronunciations(
     String word,
     {
@@ -182,17 +298,34 @@ abstract class WordApis implements ApiClient {
     return proList.map((pro) => TextPron.fromJson(pro)).toList();
   }
 
+  // TODO: Make relationshipTypes a class?
+  /// Returns words related to the specified [word].
+  ///
+  /// If [useCanonical] is `true`, the API will try to return the correct
+  /// root word (eg, `cats` => `cat`). Otherwise, the exact [word] specified
+  /// will be returned.
+  ///
+  /// You can limit the results to specific [relationshipTypes], otherwise
+  /// all relationships are returned. Valid values are: `synonym`, `antonym`, `variant`,
+  /// `equivalent`, `cross-reference`, `related-word`, `rhyme`, `form`, `etymologically-related-term`,
+  /// `hypernym`, `hyponym`, `inflected-form`, `primary`, `same-context`, `verb-form`,
+  /// `verb-stem`, and `has_topic`.
+  ///
+  /// [limitPerRelationshipType] specifies how many words to return for
+  /// each relationship type found.
+  ///
+  /// Throws an [ApiException] if the API returns an error status.
   Future<List<Related>> getRelatedWords(
     String word,
     {
       bool useCanonical = false,
-      String relationshipTypes,
+      List<String> relationshipTypes,
       int limitPerRelationshipType = 10
     }
   ) async {
     Map<String, String> parameters = {
       'useCanonical': '$useCanonical',
-      'relationshipTypes': relationshipTypes,
+      'relationshipTypes': relationshipTypes?.join(','),
       'limitPerRelationshipType': '$limitPerRelationshipType'
     };
 
@@ -201,6 +334,13 @@ abstract class WordApis implements ApiClient {
     return relatedList.map((related) => Related.fromJson(related)).toList();
   }
 
+  /// Returns a top [Example] for the specified [word].
+  ///
+  /// If [useCanonical] is `true`, the API will try to return the correct
+  /// root word (eg, `cats` => `cat`). Otherwise, the exact [word] specified
+  /// will be returned.
+  ///
+  /// Throws an [ApiException] if the API returns an error status.
   Future<Example> getTopExample(
     String word,
     {

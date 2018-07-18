@@ -63,7 +63,7 @@ void main() async {
 
   List<Related> relatedWords = await wordnik.getRelatedWords(
     exampleWord.word,
-    relationshipTypes: 'synonym,rhyme'
+    relationshipTypes: ['synonym', 'rhyme']
   );
   Related synonyms = relatedWords.firstWhere((word) => word.relationshipType == 'synonym');
   Related rhymes = relatedWords.firstWhere((word) => word.relationshipType == 'rhyme');
