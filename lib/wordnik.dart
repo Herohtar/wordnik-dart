@@ -27,6 +27,7 @@ export 'package:wordnik/src/models/frequency.dart';
 export 'package:wordnik/src/models/label.dart';
 export 'package:wordnik/src/models/note.dart';
 export 'package:wordnik/src/models/part_of_speech.dart';
+export 'package:wordnik/src/models/part_of_speech_options.dart';
 export 'package:wordnik/src/models/related.dart';
 export 'package:wordnik/src/models/root.dart';
 export 'package:wordnik/src/models/scored_word.dart';

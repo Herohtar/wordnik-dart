@@ -92,14 +92,14 @@ void main() async {
   print('${searchResults.totalResults} words found that contain the sequence "rong", including "${searchResult.word}".\n');
 
   WordObject randomNoun = await wordnik.getRandomWord(
-    includePartOfSpeech: 'noun',
+    partsOfSpeech: PartOfSpeechOptions(noun: true, nounPlural: false, nounPosessive: false, properNoun: false, properNounPlural: false, properNounPosessive: false, givenName: false, familyName: false),
     minLength: 5,
     maxLength: 7
   );
   print('Got random noun "${randomNoun.word}".\n');
 
   List<WordObject> randomAdjectives = await wordnik.getRandomWords(
-    includePartOfSpeech: 'adjective',
+    partsOfSpeech: PartOfSpeechOptions(adjective: true),
     minLength: 5,
     maxLength: 7,
     limit: 3

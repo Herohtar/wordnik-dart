@@ -3,18 +3,43 @@ import 'dart:async';
 import 'package:intl/intl.dart';
 import 'package:wordnik/src/api_client.dart';
 import 'package:wordnik/src/models/definition_search_results.dart';
+import 'package:wordnik/src/models/part_of_speech_options.dart';
 import 'package:wordnik/src/models/word_object.dart';
 import 'package:wordnik/src/models/word_of_the_day.dart';
 import 'package:wordnik/src/models/word_search_results.dart';
 
+/// Contains the API calls for the `words` endpoint.
 abstract class WordsApis implements ApiClient {
   final DateFormat _dateFormat = DateFormat('yyyy-MM-dd');
 
+  // TODO: Make include/excludePartOfSpeech an object
+  /// Returns a single random [WordObject].
+  ///
+  /// If [hasDictionaryDef] is `true`, only words with dictionary definitions will be
+  /// returned.
+  ///
+  /// You can specify which [partsOfSpeech] to include or exclude by passing a configured
+  /// [PartOfSpeechOptions]. Setting a property to `true` will include it, while `false`
+  /// will exclude it. If you do not set a property it will default to `null` and be
+  /// unaffected. Not passing a [PartOfSpeechOptions] has the same effect as passing
+  /// one will all properties set to `null` (defaults) -- all parts of speech will be
+  /// included.
+  ///
+  /// You can choose to only return words with a corpus frequency between [minCorpusCount]
+  /// and [maxCorpusCount]. Set [maxCorpusCount] to `-1` to have no maximum.
+  ///
+  /// You can choose to only return words that appear in [minDictionaryCount] to
+  /// [maxDictionaryCount] dictionaries. Set [maxDictionaryCount] to `-1` to have no
+  /// maximum.
+  ///
+  /// You can choose to only return words with a length of [minLength] to [maxLength].
+  /// Set [maxLength] to `-1` to have no maximum.
+  ///
+  /// Throws an [ApiException] if the API returns an error status.
   Future<WordObject> getRandomWord(
     {
       bool hasDictionaryDef = true,
-      String includePartOfSpeech = '',
-      String excludePartOfSpeech = '',
+      PartOfSpeechOptions partsOfSpeech,
       int minCorpusCount = 1,
       int maxCorpusCount = -1,
       int minDictionaryCount = 1,
@@ -25,8 +50,8 @@ abstract class WordsApis implements ApiClient {
   ) async {
     Map<String, String> parameters = {
       'hasDictionaryDef': '$hasDictionaryDef',
-      'includePartOfSpeech': includePartOfSpeech,
-      'excludePartOfSpeech': excludePartOfSpeech,
+      'includePartOfSpeech': partsOfSpeech?.includeString ?? '',
+      'excludePartOfSpeech': partsOfSpeech?.excludeString ?? '',
       'minCorpusCount': '$minCorpusCount',
       'maxCorpusCount': '$maxCorpusCount',
       'minDictionaryCount': '$minDictionaryCount',
@@ -41,8 +66,7 @@ abstract class WordsApis implements ApiClient {
   Future<List<WordObject>> getRandomWords(
     {
       bool hasDictionaryDef = true,
-      String includePartOfSpeech = '',
-      String excludePartOfSpeech = '',
+      PartOfSpeechOptions partsOfSpeech,
       int minCorpusCount = 1,
       int maxCorpusCount = -1,
       int minDictionaryCount = 1,
@@ -56,8 +80,8 @@ abstract class WordsApis implements ApiClient {
   ) async {
     Map<String, String> parameters = {
       'hasDictionaryDef': '$hasDictionaryDef',
-      'includePartOfSpeech': includePartOfSpeech,
-      'excludePartOfSpeech': excludePartOfSpeech,
+      'includePartOfSpeech': partsOfSpeech?.includeString ?? '',
+      'excludePartOfSpeech': partsOfSpeech?.excludeString ?? '',
       'minCorpusCount': '$minCorpusCount',
       'maxCorpusCount': '$maxCorpusCount',
       'minDictionaryCount': '$minDictionaryCount',
@@ -74,14 +98,14 @@ abstract class WordsApis implements ApiClient {
     return wordList.map((word) => WordObject.fromJson(word)).toList();
   }
 
+  // TODO: Make include/excludeSourceDictionaries like partsOfSpeech?
   Future<DefinitionSearchResults> reverseDictionary(
     String query,
     {
       String findSenseForWord,
       String includeSourceDictionaries,
       String excludeSourceDictionaries,
-      String includePartOfSpeech,
-      String excludePartOfSpeech,
+      PartOfSpeechOptions partsOfSpeech,
       int minCorpusCount = 5,
       int maxCorpusCount = -1,
       int minLength = 1,
@@ -99,8 +123,8 @@ abstract class WordsApis implements ApiClient {
       'findSenseForWord': findSenseForWord,
       'includeSourceDictionaries': includeSourceDictionaries,
       'excludeSourceDictionaries': excludeSourceDictionaries,
-      'includePartOfSpeech': includePartOfSpeech,
-      'excludePartOfSpeech': excludePartOfSpeech,
+      'includePartOfSpeech': partsOfSpeech?.includeString ?? '',
+      'excludePartOfSpeech': partsOfSpeech?.excludeString ?? '',
       'minCorpusCount': '$minCorpusCount',
       'maxCorpusCount': '$maxCorpusCount',
       'minLength': '$minLength',
@@ -121,8 +145,7 @@ abstract class WordsApis implements ApiClient {
     {
       bool allowRegex = false,
       bool caseSensitive = true,
-      String includePartOfSpeech,
-      String excludePartOfSpeech,
+      PartOfSpeechOptions partsOfSpeech,
       int minCorpusCount = 5,
       int maxCorpusCount = -1,
       int minDictionaryCount = 1,
@@ -136,8 +159,8 @@ abstract class WordsApis implements ApiClient {
     Map<String, String> parameters = {
       'allowRegex': '$allowRegex',
       'caseSensitive': '$caseSensitive',
-      'includePartOfSpeech': includePartOfSpeech,
-      'excludePartOfSpeech': excludePartOfSpeech,
+      'includePartOfSpeech': partsOfSpeech?.includeString ?? '',
+      'excludePartOfSpeech': partsOfSpeech?.excludeString ?? '',
       'minCorpusCount': '$minCorpusCount',
       'maxCorpusCount': '$maxCorpusCount',
       'minDictionaryCount': '$minDictionaryCount',
