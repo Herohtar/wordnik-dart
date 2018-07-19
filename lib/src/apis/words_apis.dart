@@ -12,7 +12,6 @@ import 'package:wordnik/src/models/word_search_results.dart';
 abstract class WordsApis implements ApiClient {
   final DateFormat _dateFormat = DateFormat('yyyy-MM-dd');
 
-  // TODO: Make include/excludePartOfSpeech an object
   /// Returns a single random [WordObject].
   ///
   /// If [hasDictionaryDef] is `true`, only words with dictionary definitions will be
@@ -63,6 +62,35 @@ abstract class WordsApis implements ApiClient {
     return WordObject.fromJson(await queryApi('words', 'json', 'randomWord', queryParameters: parameters));
   }
 
+  // TODO: make `sortBy` an enum
+  // TODO: make `sortOrder` an enum
+  /// Returns a [List] of random [WordObject].
+  /// 
+  /// If [hasDictionaryDef] is `true`, only words with dictionary definitions will be
+  /// returned.
+  ///
+  /// You can specify which [partsOfSpeech] to include or exclude by passing a configured
+  /// [PartOfSpeechOptions]. Setting a property to `true` will include it, while `false`
+  /// will exclude it. If you do not set a property it will default to `null` and be
+  /// unaffected. Not passing a [PartOfSpeechOptions] has the same effect as passing
+  /// one will all properties set to `null` (defaults) -- all parts of speech will be
+  /// included.
+  ///
+  /// You can choose to only return words with a corpus frequency between [minCorpusCount]
+  /// and [maxCorpusCount]. Set [maxCorpusCount] to `-1` to have no maximum.
+  ///
+  /// You can choose to only return words that appear in [minDictionaryCount] to
+  /// [maxDictionaryCount] dictionaries. Set [maxDictionaryCount] to `-1` to have no
+  /// maximum.
+  ///
+  /// You can choose to only return words with a length of [minLength] to [maxLength].
+  /// Set [maxLength] to `-1` to have no maximum.
+  /// 
+  /// You can specify an attribute to [sortBy] and the [sortOrder].
+  /// 
+  /// You can choose how many words are returned by specifying a [limit].
+  ///
+  /// Throws an [ApiException] if the API returns an error status.
   Future<List<WordObject>> getRandomWords(
     {
       bool hasDictionaryDef = true,
