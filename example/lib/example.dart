@@ -84,7 +84,7 @@ void main() async {
 
   WordSearchResults searchResults = await wordnik.searchWords(
     '.+?rong.+?',
-    allowRegex: true,
+    isRegex: true,
     skip: 1,
     limit: 1
   );
