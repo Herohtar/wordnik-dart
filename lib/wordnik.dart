@@ -7,7 +7,7 @@ import 'package:wordnik/src/apis/words_apis.dart';
 
 export 'package:wordnik/src/enums.dart';
 export 'package:wordnik/src/models/api_exception.dart';
-export 'package:wordnik/src/models/api_token_status.dart';
+export 'package:wordnik/src/models/api_key_status.dart';
 export 'package:wordnik/src/models/audio_file.dart';
 export 'package:wordnik/src/models/audio_type.dart';
 export 'package:wordnik/src/models/authentication_token.dart';

@@ -20,9 +20,9 @@ void main() async {
   User user = await wordnik.getLoggedInUser(authToken.token);
   print('Welcome, ${user.displayName}!\n');
 
-  ApiTokenStatus apiStatus = await wordnik.getApiTokenStatus();
-  print('You have made ${apiStatus.totalRequests} requests and have ${apiStatus.remainingCalls} remaining.');
-  print('Counter will reset in ${apiStatus.resetsIn.inMinutes} minutes.\n');
+  ApiKeyStatus keyStatus = await wordnik.getApiKeyStatus();
+  print('You have made ${keyStatus.totalRequests} requests and have ${keyStatus.remainingCalls} remaining.');
+  print('Counter will reset in ${keyStatus.resetsIn.inMinutes} minutes.\n');
 
   WordObject exampleWord = await wordnik.getWord('example');
   print('Got word "${exampleWord.word}".\n');

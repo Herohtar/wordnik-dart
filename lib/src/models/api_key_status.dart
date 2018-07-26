@@ -1,15 +1,17 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'api_token_status.g.dart';
+part 'api_key_status.g.dart';
 
 Duration _durationFromMilliseconds(int milliseconds) => Duration(milliseconds: milliseconds);
 int _durationToMilliseconds(Duration duration) => duration.inMilliseconds;
 
-//TODO: rename 'token' aspects to be more clear that it's actually for the API key?
-/// Contains details associated with the given [token] (API key)
+/// Contains details associated with the given [apiKey].
+///
+/// The API docs call this `ApiTokenStatus`, but never refer to the API Key as an
+/// "API token" anywhere else.
 @JsonSerializable(includeIfNull: false)
-class ApiTokenStatus extends Object with _$ApiTokenStatusSerializerMixin {
-  /// The amount of time left until the [token] expires
+class ApiKeyStatus extends Object with _$ApiKeyStatusSerializerMixin {
+  /// The amount of time left until the [apiKey] expires
   @JsonKey(
     name: 'expiresInMillis',
     fromJson: _durationFromMilliseconds,
@@ -28,25 +30,26 @@ class ApiTokenStatus extends Object with _$ApiTokenStatusSerializerMixin {
   )
   final Duration resetsIn;
 
-  /// The API key these stats are associated with
-  final String token;
+  /// The [apiKey] these stats are associated with
+  @JsonKey(name: 'token')
+  final String apiKey;
 
   /// The number of API requests made since the last reset
   final int totalRequests;
 
-  /// Whether the API key is valid
+  /// Whether the [apiKey] is valid
   ///
   /// This is confusing, because trying to get stats for an invalid key
   /// returns an error, so it doesn't seem possible to ever be false.
   final bool valid;
 
-  /// Constructs a new [ApiTokenStatus]
-  ApiTokenStatus(
+  /// Constructs a new [ApiKeyStatus]
+  ApiKeyStatus(
     {
       Duration expiresIn,
       this.remainingCalls,
       Duration resetsIn,
-      this.token,
+      this.apiKey,
       this.totalRequests,
       this.valid
     }
@@ -54,6 +57,6 @@ class ApiTokenStatus extends Object with _$ApiTokenStatusSerializerMixin {
   : this.expiresIn = expiresIn ?? Duration(seconds: 0),
     this.resetsIn = resetsIn ?? Duration(seconds: 0);
 
-  /// Constructs a new [ApiTokenStatus] from a JSON map
-  factory ApiTokenStatus.fromJson(Map<String, dynamic> json) => _$ApiTokenStatusFromJson(json);
+  /// Constructs a new [ApiKeyStatus] from a JSON map
+  factory ApiKeyStatus.fromJson(Map<String, dynamic> json) => _$ApiKeyStatusFromJson(json);
 }

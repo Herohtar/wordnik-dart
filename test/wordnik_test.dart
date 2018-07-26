@@ -16,7 +16,7 @@ void main() {
     test('Invalid API key', () {
       Wordnik wordnik = Wordnik('invalid-api-key');
       expect(
-        wordnik.getApiTokenStatus(),
+        wordnik.getApiKeyStatus(),
         throwsA(predicate((e) => e is ApiException && e.message == 'unauthorized'))
       );
     });
@@ -24,8 +24,8 @@ void main() {
     test('Valid API key', () {
       Wordnik wordnik = Wordnik(credentials.apiKey);
       expect(
-        wordnik.getApiTokenStatus(),
-        allOf(completes, completion(predicate<ApiTokenStatus>((auth) => auth.valid)))
+        wordnik.getApiKeyStatus(),
+        allOf(completes, completion(predicate<ApiKeyStatus>((auth) => auth.valid)))
       );
     });
   });

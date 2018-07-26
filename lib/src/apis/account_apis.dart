@@ -2,22 +2,22 @@ import 'dart:async';
 
 import 'package:wordnik/src/api_client.dart';
 import 'package:wordnik/src/enums.dart';
-import 'package:wordnik/src/models/api_token_status.dart';
+import 'package:wordnik/src/models/api_key_status.dart';
 import 'package:wordnik/src/models/authentication_token.dart';
 import 'package:wordnik/src/models/user.dart';
 import 'package:wordnik/src/models/word_list.dart';
 
 /// Contains the API calls for the `account` endpoint.
 abstract class AccountApis implements ApiClient {
-  // TODO: rename this to better reflect that it is related to the API key?
-  /// Returns usage statistics for the API account.
+  /// Returns usage statistics for the API key currently in use.
   ///
-  /// The API documentation for this is somewhat confusing, but
-  /// it actually returns the statistics for your API key.
+  /// The API documentation for this is somewhat confusing in that it calls it
+  /// `ApiTokenStatus`, but they don't refer to the API key as an "API token"
+  /// anywhere else.
   ///
   /// Throws an [ApiException] if the API returns an error status.
-  Future<ApiTokenStatus> getApiTokenStatus() async {
-    return ApiTokenStatus.fromJson(await queryApi('account', 'json', 'apiTokenStatus'));
+  Future<ApiKeyStatus> getApiKeyStatus() async {
+    return ApiKeyStatus.fromJson(await queryApi('account', 'json', 'apiTokenStatus'));
   }
 
   /// Authenticates with a Wordnik [username] and [password]

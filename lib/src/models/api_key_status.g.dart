@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'api_token_status.dart';
+part of 'api_key_status.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ApiTokenStatus _$ApiTokenStatusFromJson(Map<String, dynamic> json) {
-  return new ApiTokenStatus(
+ApiKeyStatus _$ApiKeyStatusFromJson(Map<String, dynamic> json) {
+  return new ApiKeyStatus(
       expiresIn: json['expiresInMillis'] == null
           ? null
           : _durationFromMilliseconds(json['expiresInMillis'] as int),
@@ -15,16 +15,16 @@ ApiTokenStatus _$ApiTokenStatusFromJson(Map<String, dynamic> json) {
       resetsIn: json['resetsInMillis'] == null
           ? null
           : _durationFromMilliseconds(json['resetsInMillis'] as int),
-      token: json['token'] as String,
+      apiKey: json['token'] as String,
       totalRequests: json['totalRequests'] as int,
       valid: json['valid'] as bool);
 }
 
-abstract class _$ApiTokenStatusSerializerMixin {
+abstract class _$ApiKeyStatusSerializerMixin {
   Duration get expiresIn;
   int get remainingCalls;
   Duration get resetsIn;
-  String get token;
+  String get apiKey;
   int get totalRequests;
   bool get valid;
   Map<String, dynamic> toJson() {
@@ -41,7 +41,7 @@ abstract class _$ApiTokenStatusSerializerMixin {
     writeNotNull('remainingCalls', remainingCalls);
     writeNotNull('resetsInMillis',
         resetsIn == null ? null : _durationToMilliseconds(resetsIn));
-    writeNotNull('token', token);
+    writeNotNull('token', apiKey);
     writeNotNull('totalRequests', totalRequests);
     writeNotNull('valid', valid);
     return val;
