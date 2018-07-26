@@ -19,6 +19,6 @@ abstract class WordListsApis implements ApiClient {
     String authToken,
     WordList newWordList
   ) async {
-    return WordList.fromJson(await queryApi('wordLists', 'json', '', method: ApiMethods.post, body: newWordList, authToken: authToken));
+    return WordList.fromJson(await queryApi('wordLists', 'json', '', method: ApiMethod.post, body: newWordList, authToken: authToken));
   }
 }

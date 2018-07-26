@@ -19,7 +19,7 @@ abstract class WordListApis implements ApiClient {
     String authToken,
     String permalink
   ) async {
-    await queryApi('wordList', 'json', permalink, method: ApiMethods.delete, authToken: authToken);
+    await queryApi('wordList', 'json', permalink, method: ApiMethod.delete, authToken: authToken);
   }
 
   /// Fetches a [WordList] by its [permalink].
@@ -50,7 +50,7 @@ abstract class WordListApis implements ApiClient {
     String permalink,
     WordList modifiedWordList
   ) async {
-    await queryApi('wordList', 'json', permalink, method: ApiMethods.put, body: modifiedWordList, authToken: authToken);
+    await queryApi('wordList', 'json', permalink, method: ApiMethod.put, body: modifiedWordList, authToken: authToken);
   }
 
   /// Removes words from a [WordList] belonging to the authenticated user.
@@ -68,7 +68,7 @@ abstract class WordListApis implements ApiClient {
     String permalink,
     List<String> wordsToDelete
   ) async {
-    await queryApi('wordList', 'json', permalink, extraTerm: 'deleteWords', method: ApiMethods.post, body: wordsToDelete.map((word) => StringValue(word: word)).toList(), authToken: authToken);
+    await queryApi('wordList', 'json', permalink, extraTerm: 'deleteWords', method: ApiMethod.post, body: wordsToDelete.map((word) => StringValue(word: word)).toList(), authToken: authToken);
   }
 
   /// Fetches a [List] of [WordListWord] from a [WordList] belonging to
@@ -78,8 +78,7 @@ abstract class WordListApis implements ApiClient {
   ///
   /// You must specify the list to modify by its [permalink].
   ///
-  /// Optionally, the property to [sortBy] can be specified as well as the
-  /// [sortOrder].
+  /// You can specify an attribute to [sortBy] and the [sortOrder].
   ///
   /// You can [skip] a number of words and [limit] the number of words returned.
   ///
@@ -89,14 +88,14 @@ abstract class WordListApis implements ApiClient {
     String permalink,
     {
       String sortBy = 'createDate',
-      String sortOrder = 'desc',
+      SortOrder sortOrder = SortOrder.desc,
       int skip = 0,
       int limit = 100
     }
   ) async {
     Map<String, String> parameters = {
       'sortBy': sortBy,
-      'sortOrder': sortOrder,
+      'sortOrder': (sortOrder == null) ? '' : sortOrder.toString().split('.')[1],
       'skip': '$skip',
       'limit': '$limit'
     };
@@ -121,6 +120,6 @@ abstract class WordListApis implements ApiClient {
     String permalink,
     List<String> wordsToAdd
   ) async {
-    await queryApi('wordList', 'json', permalink, extraTerm: 'words', method: ApiMethods.post, body: wordsToAdd.map((word) => StringValue(word: word)).toList(), authToken: authToken);
+    await queryApi('wordList', 'json', permalink, extraTerm: 'words', method: ApiMethod.post, body: wordsToAdd.map((word) => StringValue(word: word)).toList(), authToken: authToken);
   }
 }

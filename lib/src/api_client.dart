@@ -32,7 +32,7 @@ abstract class ApiClient {
   /// If the URL requires a query string, include them in [queryParameters].
   ///
   /// If the API call requires something other than `HTTP GET`, specify it in [method].
-  /// When [method] is [ApiMethods.post] or [ApiMethods.put], you can specify data to
+  /// When [method] is [ApiMethod.post] or [ApiMethod.put], you can specify data to
   /// submit in [body].
   ///
   /// You must provide [authToken] for any calls that require authentication.
@@ -43,7 +43,7 @@ abstract class ApiClient {
     {
       String extraTerm,
       Map<String, String> queryParameters,
-      ApiMethods method = ApiMethods.get,
+      ApiMethod method = ApiMethod.get,
       dynamic body,
       String authToken
     }
@@ -76,16 +76,16 @@ abstract class ApiClient {
 
     http.Response response;
     switch (method) {
-      case ApiMethods.post:
+      case ApiMethod.post:
         response = await http.post(queryUri, headers: headers, body: json.encode(body));
         break;
-      case ApiMethods.put:
+      case ApiMethod.put:
         response = await http.put(queryUri, headers: headers, body: json.encode(body));
         break;
-      case ApiMethods.delete:
+      case ApiMethod.delete:
         response = await http.delete(queryUri, headers: headers);
         break;
-      case ApiMethods.get:
+      case ApiMethod.get:
       default:
         response = await http.get(queryUri, headers: headers);
         break;

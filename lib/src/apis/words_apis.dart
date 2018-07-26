@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:intl/intl.dart';
 import 'package:wordnik/src/api_client.dart';
+import 'package:wordnik/src/enums.dart';
 import 'package:wordnik/src/models/definition_search_results.dart';
 import 'package:wordnik/src/models/part_of_speech_options.dart';
 import 'package:wordnik/src/models/word_object.dart';
@@ -62,8 +63,6 @@ abstract class WordsApis implements ApiClient {
     return WordObject.fromJson(await queryApi('words', 'json', 'randomWord', queryParameters: parameters));
   }
 
-  // TODO: make `sortBy` an enum
-  // TODO: make `sortOrder` an enum
   /// Returns a [List] of random [WordObject].
   ///
   /// If [hasDictionaryDef] is `true`, only words with dictionary definitions will be
@@ -101,8 +100,8 @@ abstract class WordsApis implements ApiClient {
       int maxDictionaryCount = -1,
       int minLength = 1,
       int maxLength = -1,
-      String sortBy = 'alpha',
-      String sortOrder = 'desc',
+      SortBy sortBy = SortBy.alpha,
+      SortOrder sortOrder = SortOrder.desc,
       int limit = 10
     }
   ) async {
@@ -116,8 +115,8 @@ abstract class WordsApis implements ApiClient {
       'maxDictionaryCount': '$maxDictionaryCount',
       'minLength': '$minLength',
       'maxLength': '$maxLength',
-      'sortBy': sortBy,
-      'sortOrder': sortOrder,
+      'sortBy': (sortBy == null) ? '' : sortBy.toString().split('.')[1],
+      'sortOrder': (sortOrder == null) ? '' : sortOrder.toString().split('.')[1],
       'limit': '$limit'
     };
 
@@ -177,8 +176,8 @@ abstract class WordsApis implements ApiClient {
       int maxLength = -1,
       String expandTerms,
       bool includeTags = false,
-      String sortBy,
-      String sortOrder,
+      SortBy sortBy,
+      SortOrder sortOrder,
       int skip = 0,
       int limit = 10
     }
@@ -196,8 +195,8 @@ abstract class WordsApis implements ApiClient {
       'maxLength': '$maxLength',
       'expandTerms': expandTerms,
       'includeTags': '$includeTags',
-      'sortBy': sortBy,
-      'sortOrder': sortOrder,
+      'sortBy': (sortBy == null) ? '' : sortBy.toString().split('.')[1],
+      'sortOrder': (sortOrder == null) ? '' : sortOrder.toString().split('.')[1],
       'skip': '$skip',
       'limit': '$limit'
     };

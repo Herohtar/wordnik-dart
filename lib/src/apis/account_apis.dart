@@ -33,7 +33,7 @@ abstract class AccountApis implements ApiClient {
     String username,
     String password
   ) async {
-    return AuthenticationToken.fromJson(await queryApi('account', 'json', 'authenticate', extraTerm: username, method: ApiMethods.post, body: password));
+    return AuthenticationToken.fromJson(await queryApi('account', 'json', 'authenticate', extraTerm: username, method: ApiMethod.post, body: password));
   }
 
   /// Returns the [User] associated with the provided [authToken]

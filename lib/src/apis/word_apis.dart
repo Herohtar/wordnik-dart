@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:wordnik/src/api_client.dart';
+import 'package:wordnik/src/enums.dart';
 import 'package:wordnik/src/models/audio_file.dart';
 import 'package:wordnik/src/models/bigram.dart';
 import 'package:wordnik/src/models/definition.dart';
@@ -64,7 +65,6 @@ abstract class WordApis implements ApiClient {
     return audioList.map((audio) => AudioFile.fromJson(audio)).toList();
   }
 
-  // TODO: Change the behavior of sourceDictionaries?
   /// Returns a [List] of [Definition] for the specified [word].
   ///
   /// The maximum number of results returned can be set with [limit].
@@ -104,7 +104,7 @@ abstract class WordApis implements ApiClient {
     Map<String, String> parameters = {
       'word': word,
       'limit': '$limit',
-      'partOfSpeech': partOfSpeech?.join(','),
+      'partOfSpeech': partOfSpeech?.join(',') ?? '',
       'includeRelated': '$includeRelated',
       'sourceDictionaries': sourceDictionaries?.join(',') ?? '',
       'useCanonical': '$useCanonical',
@@ -196,15 +196,13 @@ abstract class WordApis implements ApiClient {
     return FrequencySummary.fromJson(await queryApi('word', 'json', word, extraTerm: 'frequency', queryParameters: parameters));
   }
 
-  // TODO: Change sourceDictionary to an enum? (all locations)
   /// Returns [Syllable] information for the specified [word].
   ///
   /// If [useCanonical] is `true`, the API will try to return the correct
   /// root word (eg, `cats` => `cat`). Otherwise, the exact [word] specified
   /// will be returned.
   ///
-  /// You can choose the specific [sourceDictionary] to use. Valid options are:
-  /// `ahd`, `century`, `wiktionary`, `webster`, and `wordnet`.
+  /// You can choose a specific [sourceDictionary] to use.
   ///
   /// You can restrict the number of syllables returned with [limit], though why
   /// you would ever want to do that is beyond me...
@@ -214,13 +212,13 @@ abstract class WordApis implements ApiClient {
     String word,
     {
       bool useCanonical = false,
-      String sourceDictionary,
+      SourceDictionary sourceDictionary,
       int limit = 50
     }
   ) async {
     Map<String, String> parameters = {
       'useCanonical': '$useCanonical',
-      'sourceDictionary': sourceDictionary,
+      'sourceDictionary': (sourceDictionary == null) ? '' : sourceDictionary.toString().split('.')[1],
       'limit': '$limit'
     };
 
@@ -260,18 +258,15 @@ abstract class WordApis implements ApiClient {
     return bigramList.map((bigram) => Bigram.fromJson(bigram)).toList();
   }
 
-  // TODO: Make typeFormat an enum?
   /// Returns text pronunciations for the specified [word].
   ///
   /// If [useCanonical] is `true`, the API will try to return the correct
   /// root word (eg, `cats` => `cat`). Otherwise, the exact [word] specified
   /// will be returned.
   ///
-  /// You can choose the specific [sourceDictionary] to use. Valid options are:
-  /// `ahd`, `century`, `wiktionary`, `webster`, and `wordnet`.
+  /// You can choose a specific [sourceDictionary] to use.
   ///
-  /// The type of pronunciation returned can be specified with [typeFormat]. Valid
-  /// options are: `ahd`, `arpabet`, `gcide-diacritical`, and `IPA`. If left blank,
+  /// The [type] of pronunciation returned can be specified. If left unset,
   /// all available types are returned.
   ///
   /// The maximum number of results to return can be specified with [limit].
@@ -281,15 +276,15 @@ abstract class WordApis implements ApiClient {
     String word,
     {
       bool useCanonical = false,
-      String sourceDictionary,
-      String typeFormat,
+      SourceDictionary sourceDictionary,
+      TextPronType type,
       int limit = 50
     }
   ) async {
     Map<String, String> parameters = {
       'useCanonical': '$useCanonical',
-      'sourceDictionary': sourceDictionary,
-      'typeFormat': typeFormat,
+      'sourceDictionary': (sourceDictionary == null) ? '' : sourceDictionary.toString().split('.')[1],
+      'typeFormat': (type == null) ? '' : type.toString().split('.')[1].replaceAll('_', '-'),
       'limit': '$limit'
     };
 
@@ -298,7 +293,7 @@ abstract class WordApis implements ApiClient {
     return proList.map((pro) => TextPron.fromJson(pro)).toList();
   }
 
-  // TODO: Make relationshipTypes a class?
+  // TODO: Change relationshipTypes?
   /// Returns words related to the specified [word].
   ///
   /// If [useCanonical] is `true`, the API will try to return the correct
