@@ -2,7 +2,7 @@
 
 ### Wordnik API for Dart
 
-Work in progress. Currently, all object models and API calls have been implemented, but with minimal testing. API signatures are likely to change as development continues.
+All object models and API calls have been implemented, but with minimal testing. API signatures are likely to change until fully tested.
 
 #### Related:
 * Wordnik: <https://www.wordnik.com/>

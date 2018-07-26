@@ -1,3 +1,11 @@
+## [v0.4.0](https://github.com/Herohtar/wordnik-dart/releases/tag/v0.4.0) - 2018-07-25
+
+* Completed documentation for API calls
+* API calls that used CSV strings were changed to use `List<String>`
+* Multiple other API call parameters have been modified to work in a more sensible way
+* Renamed `ApiTokenStatus` to `ApiKeyStatus`
+* Added enums for use in the API calls that require them
+
 ## [v0.3.3](https://github.com/Herohtar/wordnik-dart/releases/tag/v0.3.3) - 2018-07-15
 
 * Added an `ApiException` which is now thrown when the API returns an error
