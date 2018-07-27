@@ -4,7 +4,7 @@ part 'api_exception.g.dart';
 
 /// Thrown when a request to the API returns an error response.
 @JsonSerializable()
-class ApiException extends Object with _$ApiExceptionSerializerMixin implements Exception {
+class ApiException implements Exception {
   /// The type of response returned from the API. (Usually error.)
   final String type;
 
@@ -16,4 +16,7 @@ class ApiException extends Object with _$ApiExceptionSerializerMixin implements 
 
   /// Constructs a new [ApiException] from a JSON map.
   factory ApiException.fromJson(Map<String, dynamic> json) => _$ApiExceptionFromJson(json);
+
+  /// Returns this object as a JSON map.
+  Map<String, dynamic> toJson() => _$ApiExceptionToJson(this);
 }

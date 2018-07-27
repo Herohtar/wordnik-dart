@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'syllable.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class Syllable extends Object with _$SyllableSerializerMixin {
+class Syllable {
   final int seq;
 
   final String text;
@@ -19,4 +19,7 @@ class Syllable extends Object with _$SyllableSerializerMixin {
   );
 
   factory Syllable.fromJson(Map<String, dynamic> json) => _$SyllableFromJson(json);
+
+  /// Returns this object as a JSON map.
+  Map<String, dynamic> toJson() => _$SyllableToJson(this);
 }

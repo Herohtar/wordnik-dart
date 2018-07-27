@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'simple_example.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class SimpleExample extends Object with _$SimpleExampleSerializerMixin {
+class SimpleExample {
   final int id;
 
   final String text;
@@ -22,4 +22,7 @@ class SimpleExample extends Object with _$SimpleExampleSerializerMixin {
   );
 
   factory SimpleExample.fromJson(Map<String, dynamic> json) => _$SimpleExampleFromJson(json);
+
+  /// Returns this object as a JSON map.
+  Map<String, dynamic> toJson() => _$SimpleExampleToJson(this);
 }

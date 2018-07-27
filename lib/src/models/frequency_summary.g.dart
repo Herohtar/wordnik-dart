@@ -20,26 +20,19 @@ FrequencySummary _$FrequencySummaryFromJson(Map<String, dynamic> json) {
       word: json['word'] as String);
 }
 
-abstract class _$FrequencySummarySerializerMixin {
-  List<Frequency> get frequency;
-  String get frequencyString;
-  int get totalCount;
-  int get unknownYearCount;
-  String get word;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{};
+Map<String, dynamic> _$FrequencySummaryToJson(FrequencySummary instance) {
+  var val = <String, dynamic>{};
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('frequency', frequency);
-    writeNotNull('frequencyString', frequencyString);
-    writeNotNull('totalCount', totalCount);
-    writeNotNull('unknownYearCount', unknownYearCount);
-    writeNotNull('word', word);
-    return val;
   }
+
+  writeNotNull('frequency', instance.frequency);
+  writeNotNull('frequencyString', instance.frequencyString);
+  writeNotNull('totalCount', instance.totalCount);
+  writeNotNull('unknownYearCount', instance.unknownYearCount);
+  writeNotNull('word', instance.word);
+  return val;
 }

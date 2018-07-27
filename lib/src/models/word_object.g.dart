@@ -18,28 +18,20 @@ WordObject _$WordObjectFromJson(Map<String, dynamic> json) {
       word: json['word'] as String);
 }
 
-abstract class _$WordObjectSerializerMixin {
-  String get canonicalForm;
-  int get id;
-  String get originalWord;
-  List<String> get suggestions;
-  String get vulgar;
-  String get word;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{};
+Map<String, dynamic> _$WordObjectToJson(WordObject instance) {
+  var val = <String, dynamic>{};
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('canonicalForm', canonicalForm);
-    writeNotNull('id', id);
-    writeNotNull('originalWord', originalWord);
-    writeNotNull('suggestions', suggestions);
-    writeNotNull('vulgar', vulgar);
-    writeNotNull('word', word);
-    return val;
   }
+
+  writeNotNull('canonicalForm', instance.canonicalForm);
+  writeNotNull('id', instance.id);
+  writeNotNull('originalWord', instance.originalWord);
+  writeNotNull('suggestions', instance.suggestions);
+  writeNotNull('vulgar', instance.vulgar);
+  writeNotNull('word', instance.word);
+  return val;
 }

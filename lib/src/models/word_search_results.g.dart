@@ -17,20 +17,16 @@ WordSearchResults _$WordSearchResultsFromJson(Map<String, dynamic> json) {
       totalResults: json['totalResults'] as int);
 }
 
-abstract class _$WordSearchResultsSerializerMixin {
-  List<WordSearchResult> get searchResults;
-  int get totalResults;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{};
+Map<String, dynamic> _$WordSearchResultsToJson(WordSearchResults instance) {
+  var val = <String, dynamic>{};
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('searchResults', searchResults);
-    writeNotNull('totalResults', totalResults);
-    return val;
   }
+
+  writeNotNull('searchResults', instance.searchResults);
+  writeNotNull('totalResults', instance.totalResults);
+  return val;
 }

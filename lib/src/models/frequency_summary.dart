@@ -5,7 +5,7 @@ import 'package:wordnik/src/models/frequency.dart';
 part 'frequency_summary.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class FrequencySummary extends Object with _$FrequencySummarySerializerMixin {
+class FrequencySummary {
   @JsonKey(defaultValue: <Frequency>[])
   final List<Frequency> frequency;
 
@@ -29,4 +29,7 @@ class FrequencySummary extends Object with _$FrequencySummarySerializerMixin {
   : this.frequency = frequency ?? <Frequency>[];
 
   factory FrequencySummary.fromJson(Map<String, dynamic> json) => _$FrequencySummaryFromJson(json);
+
+  /// Returns this object as a JSON map.
+  Map<String, dynamic> toJson() => _$FrequencySummaryToJson(this);
 }

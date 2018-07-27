@@ -15,24 +15,18 @@ Note _$NoteFromJson(Map<String, dynamic> json) {
       value: json['value'] as String);
 }
 
-abstract class _$NoteSerializerMixin {
-  List<String> get appliesTo;
-  String get noteType;
-  int get pos;
-  String get value;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{};
+Map<String, dynamic> _$NoteToJson(Note instance) {
+  var val = <String, dynamic>{};
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('appliesTo', appliesTo);
-    writeNotNull('noteType', noteType);
-    writeNotNull('pos', pos);
-    writeNotNull('value', value);
-    return val;
   }
+
+  writeNotNull('appliesTo', instance.appliesTo);
+  writeNotNull('noteType', instance.noteType);
+  writeNotNull('pos', instance.pos);
+  writeNotNull('value', instance.value);
+  return val;
 }

@@ -20,30 +20,28 @@ ApiKeyStatus _$ApiKeyStatusFromJson(Map<String, dynamic> json) {
       valid: json['valid'] as bool);
 }
 
-abstract class _$ApiKeyStatusSerializerMixin {
-  Duration get expiresIn;
-  int get remainingCalls;
-  Duration get resetsIn;
-  String get apiKey;
-  int get totalRequests;
-  bool get valid;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{};
+Map<String, dynamic> _$ApiKeyStatusToJson(ApiKeyStatus instance) {
+  var val = <String, dynamic>{};
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('expiresInMillis',
-        expiresIn == null ? null : _durationToMilliseconds(expiresIn));
-    writeNotNull('remainingCalls', remainingCalls);
-    writeNotNull('resetsInMillis',
-        resetsIn == null ? null : _durationToMilliseconds(resetsIn));
-    writeNotNull('token', apiKey);
-    writeNotNull('totalRequests', totalRequests);
-    writeNotNull('valid', valid);
-    return val;
   }
+
+  writeNotNull(
+      'expiresInMillis',
+      instance.expiresIn == null
+          ? null
+          : _durationToMilliseconds(instance.expiresIn));
+  writeNotNull('remainingCalls', instance.remainingCalls);
+  writeNotNull(
+      'resetsInMillis',
+      instance.resetsIn == null
+          ? null
+          : _durationToMilliseconds(instance.resetsIn));
+  writeNotNull('token', instance.apiKey);
+  writeNotNull('totalRequests', instance.totalRequests);
+  writeNotNull('valid', instance.valid);
+  return val;
 }

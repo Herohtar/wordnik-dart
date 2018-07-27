@@ -13,22 +13,17 @@ TextPron _$TextPronFromJson(Map<String, dynamic> json) {
       seq: json['seq'] as int);
 }
 
-abstract class _$TextPronSerializerMixin {
-  String get raw;
-  String get rawType;
-  int get seq;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{};
+Map<String, dynamic> _$TextPronToJson(TextPron instance) {
+  var val = <String, dynamic>{};
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('raw', raw);
-    writeNotNull('rawType', rawType);
-    writeNotNull('seq', seq);
-    return val;
   }
+
+  writeNotNull('raw', instance.raw);
+  writeNotNull('rawType', instance.rawType);
+  writeNotNull('seq', instance.seq);
+  return val;
 }

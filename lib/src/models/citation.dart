@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'citation.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class Citation extends Object with _$CitationSerializerMixin {
+class Citation {
   final String cite;
 
   final String source;
@@ -16,4 +16,7 @@ class Citation extends Object with _$CitationSerializerMixin {
   );
 
   factory Citation.fromJson(Map<String, dynamic> json) => _$CitationFromJson(json);
+
+  /// Returns this object as a JSON map.
+  Map<String, dynamic> toJson() => _$CitationToJson(this);
 }

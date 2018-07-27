@@ -15,26 +15,19 @@ Bigram _$BigramFromJson(Map<String, dynamic> json) {
       wlmi: (json['wlmi'] as num)?.toDouble());
 }
 
-abstract class _$BigramSerializerMixin {
-  int get count;
-  String get gram1;
-  String get gram2;
-  double get mi;
-  double get wlmi;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{};
+Map<String, dynamic> _$BigramToJson(Bigram instance) {
+  var val = <String, dynamic>{};
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('count', count);
-    writeNotNull('gram1', gram1);
-    writeNotNull('gram2', gram2);
-    writeNotNull('mi', mi);
-    writeNotNull('wlmi', wlmi);
-    return val;
   }
+
+  writeNotNull('count', instance.count);
+  writeNotNull('gram1', instance.gram1);
+  writeNotNull('gram2', instance.gram2);
+  writeNotNull('mi', instance.mi);
+  writeNotNull('wlmi', instance.wlmi);
+  return val;
 }

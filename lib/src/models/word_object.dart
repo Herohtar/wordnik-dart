@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'word_object.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class WordObject extends Object with _$WordObjectSerializerMixin {
+class WordObject {
   final String canonicalForm;
 
   @JsonKey(required: true, defaultValue: 0)
@@ -31,4 +31,7 @@ class WordObject extends Object with _$WordObjectSerializerMixin {
   : this.suggestions = suggestions ?? <String>[];
 
   factory WordObject.fromJson(Map<String, dynamic> json) => _$WordObjectFromJson(json);
+
+  /// Returns this object as a JSON map.
+  Map<String, dynamic> toJson() => _$WordObjectToJson(this);
 }

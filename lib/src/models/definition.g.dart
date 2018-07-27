@@ -41,48 +41,30 @@ Definition _$DefinitionFromJson(Map<String, dynamic> json) {
       word: json['word'] as String);
 }
 
-abstract class _$DefinitionSerializerMixin {
-  String get attributionText;
-  String get attributionUrl;
-  List<Citation> get citations;
-  List<ExampleUsage> get exampleUses;
-  String get extendedText;
-  List<Label> get labels;
-  List<Note> get notes;
-  String get partOfSpeech;
-  List<Related> get relatedWords;
-  double get score;
-  String get seqString;
-  String get sequence;
-  String get sourceDictionary;
-  String get text;
-  List<TextPron> get textProns;
-  String get word;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{};
+Map<String, dynamic> _$DefinitionToJson(Definition instance) {
+  var val = <String, dynamic>{};
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('attributionText', attributionText);
-    writeNotNull('attributionUrl', attributionUrl);
-    writeNotNull('citations', citations);
-    writeNotNull('exampleUses', exampleUses);
-    writeNotNull('extendedText', extendedText);
-    writeNotNull('labels', labels);
-    writeNotNull('notes', notes);
-    writeNotNull('partOfSpeech', partOfSpeech);
-    writeNotNull('relatedWords', relatedWords);
-    writeNotNull('score', score);
-    writeNotNull('seqString', seqString);
-    writeNotNull('sequence', sequence);
-    writeNotNull('sourceDictionary', sourceDictionary);
-    writeNotNull('text', text);
-    writeNotNull('textProns', textProns);
-    writeNotNull('word', word);
-    return val;
   }
+
+  writeNotNull('attributionText', instance.attributionText);
+  writeNotNull('attributionUrl', instance.attributionUrl);
+  writeNotNull('citations', instance.citations);
+  writeNotNull('exampleUses', instance.exampleUses);
+  writeNotNull('extendedText', instance.extendedText);
+  writeNotNull('labels', instance.labels);
+  writeNotNull('notes', instance.notes);
+  writeNotNull('partOfSpeech', instance.partOfSpeech);
+  writeNotNull('relatedWords', instance.relatedWords);
+  writeNotNull('score', instance.score);
+  writeNotNull('seqString', instance.seqString);
+  writeNotNull('sequence', instance.sequence);
+  writeNotNull('sourceDictionary', instance.sourceDictionary);
+  writeNotNull('text', instance.text);
+  writeNotNull('textProns', instance.textProns);
+  writeNotNull('word', instance.word);
+  return val;
 }

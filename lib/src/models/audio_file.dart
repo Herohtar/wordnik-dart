@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'audio_file.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class AudioFile extends Object with _$AudioFileSerializerMixin {
+class AudioFile {
   final String attributionText;
 
   final String attributionUrl;
@@ -53,4 +53,7 @@ class AudioFile extends Object with _$AudioFileSerializerMixin {
   );
 
   factory AudioFile.fromJson(Map<String, dynamic> json) => _$AudioFileFromJson(json);
+
+  /// Returns this object as a JSON map.
+  Map<String, dynamic> toJson() => _$AudioFileToJson(this);
 }

@@ -153,7 +153,7 @@ abstract class WordsApis implements ApiClient {
   /// You can choose to only return words with a length of [minLength] to [maxLength].
   /// Set [maxLength] to `-1` to have no maximum.
   ///
-  /// You can specify [expandTerms], but the API isn't clear what that actually means...
+  /// You can specify [expandTerms], but the API isn't clear what that actually does...
   ///
   /// If [includeTags] is `true`, the response text will include XML tags.
   ///

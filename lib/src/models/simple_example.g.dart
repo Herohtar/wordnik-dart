@@ -14,24 +14,18 @@ SimpleExample _$SimpleExampleFromJson(Map<String, dynamic> json) {
       url: json['url'] as String);
 }
 
-abstract class _$SimpleExampleSerializerMixin {
-  int get id;
-  String get text;
-  String get title;
-  String get url;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{};
+Map<String, dynamic> _$SimpleExampleToJson(SimpleExample instance) {
+  var val = <String, dynamic>{};
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('id', id);
-    writeNotNull('text', text);
-    writeNotNull('title', title);
-    writeNotNull('url', url);
-    return val;
   }
+
+  writeNotNull('id', instance.id);
+  writeNotNull('text', instance.text);
+  writeNotNull('title', instance.title);
+  writeNotNull('url', instance.url);
+  return val;
 }

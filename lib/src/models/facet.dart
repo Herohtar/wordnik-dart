@@ -5,7 +5,7 @@ import 'package:wordnik/src/models/facet_value.dart';
 part 'facet.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class Facet extends Object with _$FacetSerializerMixin {
+class Facet {
   @JsonKey(defaultValue: <FacetValue>[])
   final List<FacetValue> facetValues;
 
@@ -20,4 +20,7 @@ class Facet extends Object with _$FacetSerializerMixin {
   : this.facetValues = facetValues ?? <FacetValue>[];
 
   factory Facet.fromJson(Map<String, dynamic> json) => _$FacetFromJson(json);
+
+  /// Returns this object as a JSON map.
+  Map<String, dynamic> toJson() => _$FacetToJson(this);
 }

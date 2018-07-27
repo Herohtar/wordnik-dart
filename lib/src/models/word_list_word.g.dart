@@ -19,30 +19,21 @@ WordListWord _$WordListWordFromJson(Map<String, dynamic> json) {
       word: json['word'] as String);
 }
 
-abstract class _$WordListWordSerializerMixin {
-  DateTime get createdAt;
-  int get id;
-  int get numberCommentsOnWord;
-  int get numberLists;
-  int get userId;
-  String get username;
-  String get word;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{};
+Map<String, dynamic> _$WordListWordToJson(WordListWord instance) {
+  var val = <String, dynamic>{};
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('createdAt', createdAt?.toIso8601String());
-    writeNotNull('id', id);
-    writeNotNull('numberCommentsOnWord', numberCommentsOnWord);
-    writeNotNull('numberLists', numberLists);
-    writeNotNull('userId', userId);
-    writeNotNull('username', username);
-    writeNotNull('word', word);
-    return val;
   }
+
+  writeNotNull('createdAt', instance.createdAt?.toIso8601String());
+  writeNotNull('id', instance.id);
+  writeNotNull('numberCommentsOnWord', instance.numberCommentsOnWord);
+  writeNotNull('numberLists', instance.numberLists);
+  writeNotNull('userId', instance.userId);
+  writeNotNull('username', instance.username);
+  writeNotNull('word', instance.word);
+  return val;
 }

@@ -18,32 +18,22 @@ User _$UserFromJson(Map<String, dynamic> json) {
       username: json['username'] as String);
 }
 
-abstract class _$UserSerializerMixin {
-  String get displayName;
-  String get email;
-  String get faceBookId;
-  int get id;
-  String get password;
-  int get status;
-  String get userName;
-  String get username;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{};
+Map<String, dynamic> _$UserToJson(User instance) {
+  var val = <String, dynamic>{};
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('displayName', displayName);
-    writeNotNull('email', email);
-    writeNotNull('faceBookId', faceBookId);
-    writeNotNull('id', id);
-    writeNotNull('password', password);
-    writeNotNull('status', status);
-    writeNotNull('userName', userName);
-    writeNotNull('username', username);
-    return val;
   }
+
+  writeNotNull('displayName', instance.displayName);
+  writeNotNull('email', instance.email);
+  writeNotNull('faceBookId', instance.faceBookId);
+  writeNotNull('id', instance.id);
+  writeNotNull('password', instance.password);
+  writeNotNull('status', instance.status);
+  writeNotNull('userName', instance.userName);
+  writeNotNull('username', instance.username);
+  return val;
 }

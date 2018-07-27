@@ -7,7 +7,7 @@ import 'package:wordnik/src/models/simple_example.dart';
 part 'word_of_the_day.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class WordOfTheDay extends Object with _$WordOfTheDaySerializerMixin {
+class WordOfTheDay {
   final String category;
 
   final ContentProvider contentProvider;
@@ -55,4 +55,7 @@ class WordOfTheDay extends Object with _$WordOfTheDaySerializerMixin {
     this.examples = examples ?? <SimpleExample>[];
 
   factory WordOfTheDay.fromJson(Map<String, dynamic> json) => _$WordOfTheDayFromJson(json);
+
+  /// Returns this object as a JSON map.
+  Map<String, dynamic> toJson() => _$WordOfTheDayToJson(this);
 }

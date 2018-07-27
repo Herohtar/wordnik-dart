@@ -5,7 +5,7 @@ import 'package:wordnik/src/models/word_search_result.dart';
 part 'word_search_results.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class WordSearchResults extends Object with _$WordSearchResultsSerializerMixin {
+class WordSearchResults {
   @JsonKey(defaultValue: <WordSearchResult>[])
   final List<WordSearchResult> searchResults;
 
@@ -20,4 +20,7 @@ class WordSearchResults extends Object with _$WordSearchResultsSerializerMixin {
   : this.searchResults = searchResults ?? <WordSearchResult>[];
 
   factory WordSearchResults.fromJson(Map<String, dynamic> json) => _$WordSearchResultsFromJson(json);
+
+  /// Returns this object as a JSON map.
+  Map<String, dynamic> toJson() => _$WordSearchResultsToJson(this);
 }

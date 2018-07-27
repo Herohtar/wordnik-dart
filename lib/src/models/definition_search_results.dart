@@ -5,7 +5,7 @@ import 'package:wordnik/src/models/definition.dart';
 part 'definition_search_results.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class DefinitionSearchResults extends Object with _$DefinitionSearchResultsSerializerMixin {
+class DefinitionSearchResults {
   @JsonKey(defaultValue: <Definition>[])
   final List<Definition> results;
 
@@ -20,4 +20,7 @@ class DefinitionSearchResults extends Object with _$DefinitionSearchResultsSeria
   : this.results = results ?? <Definition>[];
 
   factory DefinitionSearchResults.fromJson(Map<String, dynamic> json) => _$DefinitionSearchResultsFromJson(json);
+
+  /// Returns this object as a JSON map.
+  Map<String, dynamic> toJson() => _$DefinitionSearchResultsToJson(this);
 }

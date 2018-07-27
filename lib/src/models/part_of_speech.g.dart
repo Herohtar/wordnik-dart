@@ -25,22 +25,17 @@ PartOfSpeech _$PartOfSpeechFromJson(Map<String, dynamic> json) {
               []);
 }
 
-abstract class _$PartOfSpeechSerializerMixin {
-  List<Category> get allCategories;
-  List<Root> get roots;
-  List<String> get storageAbbr;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{};
+Map<String, dynamic> _$PartOfSpeechToJson(PartOfSpeech instance) {
+  var val = <String, dynamic>{};
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('allCategories', allCategories);
-    writeNotNull('roots', roots);
-    writeNotNull('storageAbbr', storageAbbr);
-    return val;
   }
+
+  writeNotNull('allCategories', instance.allCategories);
+  writeNotNull('roots', instance.roots);
+  writeNotNull('storageAbbr', instance.storageAbbr);
+  return val;
 }

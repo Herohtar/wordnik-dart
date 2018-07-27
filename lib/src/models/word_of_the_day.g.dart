@@ -39,40 +39,26 @@ WordOfTheDay _$WordOfTheDayFromJson(Map<String, dynamic> json) {
       word: json['word'] as String);
 }
 
-abstract class _$WordOfTheDaySerializerMixin {
-  String get category;
-  ContentProvider get contentProvider;
-  DateTime get createdAt;
-  String get createdBy;
-  List<SimpleDefinition> get definitions;
-  List<SimpleExample> get examples;
-  String get htmlExtra;
-  int get id;
-  String get note;
-  String get parentId;
-  DateTime get publishDate;
-  String get word;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{};
+Map<String, dynamic> _$WordOfTheDayToJson(WordOfTheDay instance) {
+  var val = <String, dynamic>{};
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('category', category);
-    writeNotNull('contentProvider', contentProvider);
-    writeNotNull('createdAt', createdAt?.toIso8601String());
-    writeNotNull('createdBy', createdBy);
-    writeNotNull('definitions', definitions);
-    writeNotNull('examples', examples);
-    writeNotNull('htmlExtra', htmlExtra);
-    writeNotNull('id', id);
-    writeNotNull('note', note);
-    writeNotNull('parentId', parentId);
-    writeNotNull('publishDate', publishDate?.toIso8601String());
-    writeNotNull('word', word);
-    return val;
   }
+
+  writeNotNull('category', instance.category);
+  writeNotNull('contentProvider', instance.contentProvider);
+  writeNotNull('createdAt', instance.createdAt?.toIso8601String());
+  writeNotNull('createdBy', instance.createdBy);
+  writeNotNull('definitions', instance.definitions);
+  writeNotNull('examples', instance.examples);
+  writeNotNull('htmlExtra', instance.htmlExtra);
+  writeNotNull('id', instance.id);
+  writeNotNull('note', instance.note);
+  writeNotNull('parentId', instance.parentId);
+  writeNotNull('publishDate', instance.publishDate?.toIso8601String());
+  writeNotNull('word', instance.word);
+  return val;
 }

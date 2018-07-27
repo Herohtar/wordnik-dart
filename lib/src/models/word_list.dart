@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'word_list.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class WordList extends Object with _$WordListSerializerMixin {
+class WordList {
   final DateTime createdAt;
 
   String description;
@@ -45,4 +45,7 @@ class WordList extends Object with _$WordListSerializerMixin {
   );
 
   factory WordList.fromJson(Map<String, dynamic> json) => _$WordListFromJson(json);
+
+  /// Returns this object as a JSON map.
+  Map<String, dynamic> toJson() => _$WordListToJson(this);
 }

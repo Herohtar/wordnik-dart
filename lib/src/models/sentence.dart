@@ -5,7 +5,7 @@ import 'package:wordnik/src/models/scored_word.dart';
 part 'sentence.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class Sentence extends Object with _$SentenceSerializerMixin {
+class Sentence {
   final String display;
 
   final int documentMetadataId;
@@ -32,4 +32,7 @@ class Sentence extends Object with _$SentenceSerializerMixin {
   : this.scoredWords = scoredWords ?? <ScoredWord>[];
 
   factory Sentence.fromJson(Map<String, dynamic> json) => _$SentenceFromJson(json);
+
+  /// Returns this object as a JSON map.
+  Map<String, dynamic> toJson() => _$SentenceToJson(this);
 }

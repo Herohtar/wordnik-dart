@@ -10,18 +10,15 @@ ExampleUsage _$ExampleUsageFromJson(Map<String, dynamic> json) {
   return new ExampleUsage(text: json['text'] as String);
 }
 
-abstract class _$ExampleUsageSerializerMixin {
-  String get text;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{};
+Map<String, dynamic> _$ExampleUsageToJson(ExampleUsage instance) {
+  var val = <String, dynamic>{};
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('text', text);
-    return val;
   }
+
+  writeNotNull('text', instance.text);
+  return val;
 }

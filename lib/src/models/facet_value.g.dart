@@ -11,20 +11,16 @@ FacetValue _$FacetValueFromJson(Map<String, dynamic> json) {
       count: json['count'] as int, value: json['value'] as String);
 }
 
-abstract class _$FacetValueSerializerMixin {
-  int get count;
-  String get value;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{};
+Map<String, dynamic> _$FacetValueToJson(FacetValue instance) {
+  var val = <String, dynamic>{};
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('count', count);
-    writeNotNull('value', value);
-    return val;
   }
+
+  writeNotNull('count', instance.count);
+  writeNotNull('value', instance.value);
+  return val;
 }

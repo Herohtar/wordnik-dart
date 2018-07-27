@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'scored_word.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class ScoredWord extends Object with _$ScoredWordSerializerMixin {
+class ScoredWord {
   final double baseWordScore;
 
   final int docTermCount;
@@ -43,4 +43,7 @@ class ScoredWord extends Object with _$ScoredWordSerializerMixin {
   );
 
   factory ScoredWord.fromJson(Map<String, dynamic> json) => _$ScoredWordFromJson(json);
+
+  /// Returns this object as a JSON map.
+  Map<String, dynamic> toJson() => _$ScoredWordToJson(this);
 }

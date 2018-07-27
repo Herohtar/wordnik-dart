@@ -21,38 +21,25 @@ ScoredWord _$ScoredWordFromJson(Map<String, dynamic> json) {
       wordType: json['wordType'] as String);
 }
 
-abstract class _$ScoredWordSerializerMixin {
-  double get baseWordScore;
-  int get docTermCount;
-  int get id;
-  String get lemma;
-  String get partOfSpeech;
-  int get position;
-  double get score;
-  int get sentenceId;
-  bool get stopword;
-  String get word;
-  String get wordType;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{};
+Map<String, dynamic> _$ScoredWordToJson(ScoredWord instance) {
+  var val = <String, dynamic>{};
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('baseWordScore', baseWordScore);
-    writeNotNull('docTermCount', docTermCount);
-    writeNotNull('id', id);
-    writeNotNull('lemma', lemma);
-    writeNotNull('partOfSpeech', partOfSpeech);
-    writeNotNull('position', position);
-    writeNotNull('score', score);
-    writeNotNull('sentenceId', sentenceId);
-    writeNotNull('stopword', stopword);
-    writeNotNull('word', word);
-    writeNotNull('wordType', wordType);
-    return val;
   }
+
+  writeNotNull('baseWordScore', instance.baseWordScore);
+  writeNotNull('docTermCount', instance.docTermCount);
+  writeNotNull('id', instance.id);
+  writeNotNull('lemma', instance.lemma);
+  writeNotNull('partOfSpeech', instance.partOfSpeech);
+  writeNotNull('position', instance.position);
+  writeNotNull('score', instance.score);
+  writeNotNull('sentenceId', instance.sentenceId);
+  writeNotNull('stopword', instance.stopword);
+  writeNotNull('word', instance.word);
+  writeNotNull('wordType', instance.wordType);
+  return val;
 }

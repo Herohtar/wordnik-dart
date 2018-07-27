@@ -5,7 +5,7 @@ import 'package:wordnik/src/models/category.dart';
 part 'root.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class Root extends Object with _$RootSerializerMixin {
+class Root {
   @JsonKey(defaultValue: <Category>[])
   final List<Category> categories;
 
@@ -24,4 +24,7 @@ class Root extends Object with _$RootSerializerMixin {
   : this.categories = categories ?? <Category>[];
 
   factory Root.fromJson(Map<String, dynamic> json) => _$RootFromJson(json);
+
+  /// Returns this object as a JSON map.
+  Map<String, dynamic> toJson() => _$RootToJson(this);
 }

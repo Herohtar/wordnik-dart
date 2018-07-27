@@ -28,38 +28,25 @@ WordList _$WordListFromJson(Map<String, dynamic> json) {
       username: json['username'] as String);
 }
 
-abstract class _$WordListSerializerMixin {
-  DateTime get createdAt;
-  String get description;
-  int get id;
-  DateTime get lastActivityAt;
-  String get name;
-  int get numberWordsInList;
-  String get permalink;
-  String get type;
-  DateTime get updatedAt;
-  int get userId;
-  String get username;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{};
+Map<String, dynamic> _$WordListToJson(WordList instance) {
+  var val = <String, dynamic>{};
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('createdAt', createdAt?.toIso8601String());
-    writeNotNull('description', description);
-    writeNotNull('id', id);
-    writeNotNull('lastActivityAt', lastActivityAt?.toIso8601String());
-    writeNotNull('name', name);
-    writeNotNull('numberWordsInList', numberWordsInList);
-    writeNotNull('permalink', permalink);
-    writeNotNull('type', type);
-    writeNotNull('updatedAt', updatedAt?.toIso8601String());
-    writeNotNull('userId', userId);
-    writeNotNull('username', username);
-    return val;
   }
+
+  writeNotNull('createdAt', instance.createdAt?.toIso8601String());
+  writeNotNull('description', instance.description);
+  writeNotNull('id', instance.id);
+  writeNotNull('lastActivityAt', instance.lastActivityAt?.toIso8601String());
+  writeNotNull('name', instance.name);
+  writeNotNull('numberWordsInList', instance.numberWordsInList);
+  writeNotNull('permalink', instance.permalink);
+  writeNotNull('type', instance.type);
+  writeNotNull('updatedAt', instance.updatedAt?.toIso8601String());
+  writeNotNull('userId', instance.userId);
+  writeNotNull('username', instance.username);
+  return val;
 }

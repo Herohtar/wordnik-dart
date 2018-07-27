@@ -18,20 +18,17 @@ DefinitionSearchResults _$DefinitionSearchResultsFromJson(
       totalResults: json['totalResults'] as int);
 }
 
-abstract class _$DefinitionSearchResultsSerializerMixin {
-  List<Definition> get results;
-  int get totalResults;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{};
+Map<String, dynamic> _$DefinitionSearchResultsToJson(
+    DefinitionSearchResults instance) {
+  var val = <String, dynamic>{};
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('results', results);
-    writeNotNull('totalResults', totalResults);
-    return val;
   }
+
+  writeNotNull('results', instance.results);
+  writeNotNull('totalResults', instance.totalResults);
+  return val;
 }

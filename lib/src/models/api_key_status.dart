@@ -10,7 +10,7 @@ int _durationToMilliseconds(Duration duration) => duration.inMilliseconds;
 /// The API docs call this `ApiTokenStatus`, but never refer to the API Key as an
 /// "API token" anywhere else.
 @JsonSerializable(includeIfNull: false)
-class ApiKeyStatus extends Object with _$ApiKeyStatusSerializerMixin {
+class ApiKeyStatus {
   /// The amount of time left until the [apiKey] expires
   @JsonKey(
     name: 'expiresInMillis',
@@ -59,4 +59,7 @@ class ApiKeyStatus extends Object with _$ApiKeyStatusSerializerMixin {
 
   /// Constructs a new [ApiKeyStatus] from a JSON map
   factory ApiKeyStatus.fromJson(Map<String, dynamic> json) => _$ApiKeyStatusFromJson(json);
+
+  /// Returns this object as a JSON map.
+  Map<String, dynamic> toJson() => _$ApiKeyStatusToJson(this);
 }

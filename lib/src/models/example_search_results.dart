@@ -6,7 +6,7 @@ import 'package:wordnik/src/models/facet.dart';
 part 'example_search_results.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class ExampleSearchResults extends Object with _$ExampleSearchResultsSerializerMixin {
+class ExampleSearchResults {
   @JsonKey(defaultValue: <Example>[])
   final List<Example> examples;
 
@@ -23,4 +23,7 @@ class ExampleSearchResults extends Object with _$ExampleSearchResultsSerializerM
     this.facets = facets ?? <Facet>[];
 
   factory ExampleSearchResults.fromJson(Map<String, dynamic> json) => _$ExampleSearchResultsFromJson(json);
+
+  /// Returns this object as a JSON map.
+  Map<String, dynamic> toJson() => _$ExampleSearchResultsToJson(this);
 }

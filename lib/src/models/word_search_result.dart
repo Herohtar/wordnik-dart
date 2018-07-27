@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'word_search_result.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class WordSearchResult extends Object with _$WordSearchResultSerializerMixin {
+class WordSearchResult {
   final int count;
 
   final double lexicality;
@@ -19,4 +19,7 @@ class WordSearchResult extends Object with _$WordSearchResultSerializerMixin {
   );
 
   factory WordSearchResult.fromJson(Map<String, dynamic> json) => _$WordSearchResultFromJson(json);
+
+  /// Returns this object as a JSON map.
+  Map<String, dynamic> toJson() => _$WordSearchResultToJson(this);
 }

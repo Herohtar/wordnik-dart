@@ -13,22 +13,17 @@ AuthenticationToken _$AuthenticationTokenFromJson(Map<String, dynamic> json) {
       userSignature: json['userSignature'] as String);
 }
 
-abstract class _$AuthenticationTokenSerializerMixin {
-  String get token;
-  int get userId;
-  String get userSignature;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{};
+Map<String, dynamic> _$AuthenticationTokenToJson(AuthenticationToken instance) {
+  var val = <String, dynamic>{};
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('token', token);
-    writeNotNull('userId', userId);
-    writeNotNull('userSignature', userSignature);
-    return val;
   }
+
+  writeNotNull('token', instance.token);
+  writeNotNull('userId', instance.userId);
+  writeNotNull('userSignature', instance.userSignature);
+  return val;
 }

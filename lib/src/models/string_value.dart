@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'string_value.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class StringValue extends Object with _$StringValueSerializerMixin {
+class StringValue {
   final String word;
 
   StringValue(
@@ -13,4 +13,7 @@ class StringValue extends Object with _$StringValueSerializerMixin {
   );
 
   factory StringValue.fromJson(Map<String, dynamic> json) => _$StringValueFromJson(json);
+
+  /// Returns this object as a JSON map.
+  Map<String, dynamic> toJson() => _$StringValueToJson(this);
 }

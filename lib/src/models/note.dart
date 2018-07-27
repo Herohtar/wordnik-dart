@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'note.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class Note extends Object with _$NoteSerializerMixin {
+class Note {
   @JsonKey(defaultValue: <String>[])
   final List<String> appliesTo;
 
@@ -24,4 +24,7 @@ class Note extends Object with _$NoteSerializerMixin {
   : this.appliesTo = appliesTo ?? <String>[];
 
   factory Note.fromJson(Map<String, dynamic> json) => _$NoteFromJson(json);
+
+  /// Returns this object as a JSON map.
+  Map<String, dynamic> toJson() => _$NoteToJson(this);
 }

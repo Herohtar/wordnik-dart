@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'category.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class Category extends Object with _$CategorySerializerMixin {
+class Category {
   @JsonKey(required: true, defaultValue: 0)
   final int id;
 
@@ -17,4 +17,7 @@ class Category extends Object with _$CategorySerializerMixin {
   );
 
   factory Category.fromJson(Map<String, dynamic> json) => _$CategoryFromJson(json);
+
+  /// Returns this object as a JSON map.
+  Map<String, dynamic> toJson() => _$CategoryToJson(this);
 }

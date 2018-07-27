@@ -10,20 +10,16 @@ Label _$LabelFromJson(Map<String, dynamic> json) {
   return new Label(text: json['text'] as String, type: json['type'] as String);
 }
 
-abstract class _$LabelSerializerMixin {
-  String get text;
-  String get type;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{};
+Map<String, dynamic> _$LabelToJson(Label instance) {
+  var val = <String, dynamic>{};
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('text', text);
-    writeNotNull('type', type);
-    return val;
   }
+
+  writeNotNull('text', instance.text);
+  writeNotNull('type', instance.type);
+  return val;
 }

@@ -11,20 +11,16 @@ Citation _$CitationFromJson(Map<String, dynamic> json) {
       cite: json['cite'] as String, source: json['source'] as String);
 }
 
-abstract class _$CitationSerializerMixin {
-  String get cite;
-  String get source;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{};
+Map<String, dynamic> _$CitationToJson(Citation instance) {
+  var val = <String, dynamic>{};
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('cite', cite);
-    writeNotNull('source', source);
-    return val;
   }
+
+  writeNotNull('cite', instance.cite);
+  writeNotNull('source', instance.source);
+  return val;
 }

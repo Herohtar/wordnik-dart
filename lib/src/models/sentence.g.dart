@@ -21,28 +21,20 @@ Sentence _$SentenceFromJson(Map<String, dynamic> json) {
           []);
 }
 
-abstract class _$SentenceSerializerMixin {
-  String get display;
-  int get documentMetadataId;
-  bool get hasScoredWords;
-  int get id;
-  int get rating;
-  List<ScoredWord> get scoredWords;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{};
+Map<String, dynamic> _$SentenceToJson(Sentence instance) {
+  var val = <String, dynamic>{};
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('display', display);
-    writeNotNull('documentMetadataId', documentMetadataId);
-    writeNotNull('hasScoredWords', hasScoredWords);
-    writeNotNull('id', id);
-    writeNotNull('rating', rating);
-    writeNotNull('scoredWords', scoredWords);
-    return val;
   }
+
+  writeNotNull('display', instance.display);
+  writeNotNull('documentMetadataId', instance.documentMetadataId);
+  writeNotNull('hasScoredWords', instance.hasScoredWords);
+  writeNotNull('id', instance.id);
+  writeNotNull('rating', instance.rating);
+  writeNotNull('scoredWords', instance.scoredWords);
+  return val;
 }

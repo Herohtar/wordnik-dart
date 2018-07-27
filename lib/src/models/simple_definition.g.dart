@@ -14,24 +14,18 @@ SimpleDefinition _$SimpleDefinitionFromJson(Map<String, dynamic> json) {
       text: json['text'] as String);
 }
 
-abstract class _$SimpleDefinitionSerializerMixin {
-  String get note;
-  String get partOfSpeech;
-  String get source;
-  String get text;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{};
+Map<String, dynamic> _$SimpleDefinitionToJson(SimpleDefinition instance) {
+  var val = <String, dynamic>{};
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('note', note);
-    writeNotNull('partOfSpeech', partOfSpeech);
-    writeNotNull('source', source);
-    writeNotNull('text', text);
-    return val;
   }
+
+  writeNotNull('note', instance.note);
+  writeNotNull('partOfSpeech', instance.partOfSpeech);
+  writeNotNull('source', instance.source);
+  writeNotNull('text', instance.text);
+  return val;
 }

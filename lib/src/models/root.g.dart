@@ -18,22 +18,17 @@ Root _$RootFromJson(Map<String, dynamic> json) {
       name: json['name'] as String);
 }
 
-abstract class _$RootSerializerMixin {
-  List<Category> get categories;
-  int get id;
-  String get name;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{};
+Map<String, dynamic> _$RootToJson(Root instance) {
+  var val = <String, dynamic>{};
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('categories', categories);
-    writeNotNull('id', id);
-    writeNotNull('name', name);
-    return val;
   }
+
+  writeNotNull('categories', instance.categories);
+  writeNotNull('id', instance.id);
+  writeNotNull('name', instance.name);
+  return val;
 }

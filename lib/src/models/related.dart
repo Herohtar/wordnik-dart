@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'related.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class Related extends Object with _$RelatedSerializerMixin {
+class Related {
   final String gram;
 
   final String label1;
@@ -33,4 +33,7 @@ class Related extends Object with _$RelatedSerializerMixin {
   : this.words = words ?? <String>[];
 
   factory Related.fromJson(Map<String, dynamic> json) => _$RelatedFromJson(json);
+
+  /// Returns this object as a JSON map.
+  Map<String, dynamic> toJson() => _$RelatedToJson(this);
 }

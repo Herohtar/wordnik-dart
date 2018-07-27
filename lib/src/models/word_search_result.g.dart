@@ -13,22 +13,17 @@ WordSearchResult _$WordSearchResultFromJson(Map<String, dynamic> json) {
       word: json['word'] as String);
 }
 
-abstract class _$WordSearchResultSerializerMixin {
-  int get count;
-  double get lexicality;
-  String get word;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{};
+Map<String, dynamic> _$WordSearchResultToJson(WordSearchResult instance) {
+  var val = <String, dynamic>{};
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('count', count);
-    writeNotNull('lexicality', lexicality);
-    writeNotNull('word', word);
-    return val;
   }
+
+  writeNotNull('count', instance.count);
+  writeNotNull('lexicality', instance.lexicality);
+  writeNotNull('word', instance.word);
+  return val;
 }

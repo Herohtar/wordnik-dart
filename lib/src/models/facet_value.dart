@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'facet_value.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class FacetValue extends Object with _$FacetValueSerializerMixin {
+class FacetValue {
   final int count;
 
   final String value;
@@ -16,4 +16,7 @@ class FacetValue extends Object with _$FacetValueSerializerMixin {
   );
 
   factory FacetValue.fromJson(Map<String, dynamic> json) => _$FacetValueFromJson(json);
+
+  /// Returns this object as a JSON map.
+  Map<String, dynamic> toJson() => _$FacetValueToJson(this);
 }

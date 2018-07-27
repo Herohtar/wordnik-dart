@@ -7,7 +7,7 @@ import 'package:wordnik/src/models/sentence.dart';
 part 'example.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class Example extends Object with _$ExampleSerializerMixin {
+class Example {
   final int documentId;
 
   final int exampleId;
@@ -50,4 +50,7 @@ class Example extends Object with _$ExampleSerializerMixin {
   );
 
   factory Example.fromJson(Map<String, dynamic> json) => _$ExampleFromJson(json);
+
+  /// Returns this object as a JSON map.
+  Map<String, dynamic> toJson() => _$ExampleToJson(this);
 }

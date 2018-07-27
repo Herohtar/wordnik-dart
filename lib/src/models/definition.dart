@@ -10,7 +10,7 @@ import 'package:wordnik/src/models/text_pron.dart';
 part 'definition.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class Definition extends Object with _$DefinitionSerializerMixin {
+class Definition {
   final String attributionText;
 
   final String attributionUrl;
@@ -77,4 +77,7 @@ class Definition extends Object with _$DefinitionSerializerMixin {
     this.textProns = textProns ?? <TextPron>[];
 
   factory Definition.fromJson(Map<String, dynamic> json) => _$DefinitionFromJson(json);
+
+  /// Returns this object as a JSON map.
+  Map<String, dynamic> toJson() => _$DefinitionToJson(this);
 }

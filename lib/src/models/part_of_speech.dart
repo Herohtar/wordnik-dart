@@ -6,7 +6,7 @@ import 'package:wordnik/src/models/root.dart';
 part 'part_of_speech.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class PartOfSpeech extends Object with _$PartOfSpeechSerializerMixin {
+class PartOfSpeech {
   @JsonKey(defaultValue: <Category>[])
   final List<Category> allCategories;
 
@@ -28,4 +28,7 @@ class PartOfSpeech extends Object with _$PartOfSpeechSerializerMixin {
     this.storageAbbr = storageAbbr ?? <String>[];
 
   factory PartOfSpeech.fromJson(Map<String, dynamic> json) => _$PartOfSpeechFromJson(json);
+
+  /// Returns this object as a JSON map.
+  Map<String, dynamic> toJson() => _$PartOfSpeechToJson(this);
 }

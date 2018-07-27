@@ -26,44 +26,28 @@ AudioFile _$AudioFileFromJson(Map<String, dynamic> json) {
       word: json['word'] as String);
 }
 
-abstract class _$AudioFileSerializerMixin {
-  String get attributionText;
-  String get attributionUrl;
-  String get audioType;
-  int get commentCount;
-  DateTime get createdAt;
-  String get createdBy;
-  String get description;
-  double get duration;
-  String get fileUrl;
-  int get id;
-  double get voteAverage;
-  int get voteCount;
-  double get voteWeightedAverage;
-  String get word;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{};
+Map<String, dynamic> _$AudioFileToJson(AudioFile instance) {
+  var val = <String, dynamic>{};
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('attributionText', attributionText);
-    writeNotNull('attributionUrl', attributionUrl);
-    writeNotNull('audioType', audioType);
-    writeNotNull('commentCount', commentCount);
-    writeNotNull('createdAt', createdAt?.toIso8601String());
-    writeNotNull('createdBy', createdBy);
-    writeNotNull('description', description);
-    writeNotNull('duration', duration);
-    writeNotNull('fileUrl', fileUrl);
-    writeNotNull('id', id);
-    writeNotNull('voteAverage', voteAverage);
-    writeNotNull('voteCount', voteCount);
-    writeNotNull('voteWeightedAverage', voteWeightedAverage);
-    writeNotNull('word', word);
-    return val;
   }
+
+  writeNotNull('attributionText', instance.attributionText);
+  writeNotNull('attributionUrl', instance.attributionUrl);
+  writeNotNull('audioType', instance.audioType);
+  writeNotNull('commentCount', instance.commentCount);
+  writeNotNull('createdAt', instance.createdAt?.toIso8601String());
+  writeNotNull('createdBy', instance.createdBy);
+  writeNotNull('description', instance.description);
+  writeNotNull('duration', instance.duration);
+  writeNotNull('fileUrl', instance.fileUrl);
+  writeNotNull('id', instance.id);
+  writeNotNull('voteAverage', instance.voteAverage);
+  writeNotNull('voteCount', instance.voteCount);
+  writeNotNull('voteWeightedAverage', instance.voteWeightedAverage);
+  writeNotNull('word', instance.word);
+  return val;
 }

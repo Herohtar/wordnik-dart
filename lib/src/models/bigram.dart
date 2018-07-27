@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'bigram.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class Bigram extends Object with _$BigramSerializerMixin {
+class Bigram {
   final int count;
 
   final String gram1;
@@ -25,4 +25,7 @@ class Bigram extends Object with _$BigramSerializerMixin {
   );
 
   factory Bigram.fromJson(Map<String, dynamic> json) => _$BigramFromJson(json);
+
+  /// Returns this object as a JSON map.
+  Map<String, dynamic> toJson() => _$BigramToJson(this);
 }
