@@ -18,6 +18,7 @@ class WordObject {
 
   final String word;
 
+  /// Constructs a new [WordObject].
   WordObject(
     this.id,
     {
@@ -30,6 +31,7 @@ class WordObject {
   )
   : this.suggestions = suggestions ?? <String>[];
 
+  /// Constructs a new [WordObject] from a JSON map.
   factory WordObject.fromJson(Map<String, dynamic> json) => _$WordObjectFromJson(json);
 
   /// Returns this object as a JSON map.
