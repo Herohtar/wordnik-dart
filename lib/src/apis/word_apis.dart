@@ -8,6 +8,7 @@ import 'package:wordnik/src/models/definition.dart';
 import 'package:wordnik/src/models/example.dart';
 import 'package:wordnik/src/models/example_search_results.dart';
 import 'package:wordnik/src/models/frequency_summary.dart';
+import 'package:wordnik/src/models/long.dart';
 import 'package:wordnik/src/models/related.dart';
 import 'package:wordnik/src/models/syllable.dart';
 import 'package:wordnik/src/models/text_pron.dart';
@@ -264,7 +265,8 @@ abstract class WordApis implements ApiClient {
   /// root word (eg, `cats` => `cat`). Otherwise, the exact [word] specified
   /// will be returned.
   ///
-  /// You can choose a specific [sourceDictionary] to use.
+  /// You can choose a specific [sourceDictionary] to use. Valid values are `ahd`,
+  /// `century`, `cmu`, `macmillan`, `wiktionary`, `webster`, and `wordnet`.
   ///
   /// The [type] of pronunciation returned can be specified. If left unset,
   /// all available types are returned.
@@ -327,6 +329,19 @@ abstract class WordApis implements ApiClient {
     List<dynamic> relatedList = await queryApi('word', 'json', word, extraTerm: 'relatedWords', queryParameters: parameters);
 
     return relatedList.map((related) => Related.fromJson(related)).toList();
+  }
+
+  /// Returns the base scrabble score for the given [word].
+  ///
+  /// Throws an [ApiException] if the API returns an error status.
+  Future<int> getScrabbleScore(
+    String word
+  ) async {
+    Map<String, String> parameters = {
+      'word': word
+    };
+
+    return Long.fromJson(await queryApi('word', 'json', word, extraTerm: 'scrabbleScore', queryParameters: parameters)).value;
   }
 
   /// Returns a top [Example] for the specified [word].

@@ -11,7 +11,7 @@ int _durationToMilliseconds(Duration duration) => duration.inMilliseconds;
 /// "API token" anywhere else.
 @JsonSerializable(includeIfNull: false)
 class ApiKeyStatus {
-  /// The amount of time left until the [apiKey] expires
+  /// The amount of time left until the [apiKey] expires.
   @JsonKey(
     name: 'expiresInMillis',
     fromJson: _durationFromMilliseconds,
@@ -19,10 +19,10 @@ class ApiKeyStatus {
   )
   final Duration expiresIn;
 
-  /// The number of API calls remaining before the next reset
+  /// The number of API calls remaining before the next reset.
   final int remainingCalls;
 
-  /// The amount of time left until the API call counts reset
+  /// The amount of time left until the API call counts reset.
   @JsonKey(
     name: 'resetsInMillis',
     fromJson: _durationFromMilliseconds,
@@ -30,20 +30,20 @@ class ApiKeyStatus {
   )
   final Duration resetsIn;
 
-  /// The [apiKey] these stats are associated with
+  /// The [apiKey] these stats are associated with.
   @JsonKey(name: 'token')
   final String apiKey;
 
-  /// The number of API requests made since the last reset
+  /// The number of API requests made since the last reset.
   final int totalRequests;
 
-  /// Whether the [apiKey] is valid
+  /// Whether the [apiKey] is valid.
   ///
   /// This is confusing, because trying to get stats for an invalid key
   /// returns an error, so it doesn't seem possible to ever be false.
   final bool valid;
 
-  /// Constructs a new [ApiKeyStatus]
+  /// Constructs a new [ApiKeyStatus].
   ApiKeyStatus(
     {
       Duration expiresIn,
@@ -57,7 +57,7 @@ class ApiKeyStatus {
   : this.expiresIn = expiresIn ?? Duration(seconds: 0),
     this.resetsIn = resetsIn ?? Duration(seconds: 0);
 
-  /// Constructs a new [ApiKeyStatus] from a JSON map
+  /// Constructs a new [ApiKeyStatus] from a JSON map.
   factory ApiKeyStatus.fromJson(Map<String, dynamic> json) => _$ApiKeyStatusFromJson(json);
 
   /// Returns this object as a JSON map.

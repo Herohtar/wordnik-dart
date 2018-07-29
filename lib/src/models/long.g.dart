@@ -1,16 +1,16 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'audio_type.dart';
+part of 'long.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-AudioType _$AudioTypeFromJson(Map<String, dynamic> json) {
-  return new AudioType(id: json['id'] as int, name: json['name'] as String);
+Long _$LongFromJson(Map<String, dynamic> json) {
+  return new Long(value: json['value'] as int);
 }
 
-Map<String, dynamic> _$AudioTypeToJson(AudioType instance) {
+Map<String, dynamic> _$LongToJson(Long instance) {
   var val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
@@ -19,7 +19,6 @@ Map<String, dynamic> _$AudioTypeToJson(AudioType instance) {
     }
   }
 
-  writeNotNull('id', instance.id);
-  writeNotNull('name', instance.name);
+  writeNotNull('value', instance.value);
   return val;
 }

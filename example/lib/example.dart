@@ -25,7 +25,9 @@ void main() async {
   print('Counter will reset in ${keyStatus.resetsIn.inMinutes} minutes.\n');
 
   WordObject exampleWord = await wordnik.getWord('example');
-  print('Got word "${exampleWord.word}".\n');
+  int score = await wordnik.getScrabbleScore(exampleWord.word);
+  print('Got word "${exampleWord.word}".');
+  print('It has a Scrabble score of $score.\n');
 
   List<AudioFile> audioFiles = await wordnik.getAudio(exampleWord.word);
   print('${audioFiles.length} audio results found.');

@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'api_exception.g.dart';
 
-/// Thrown when a request to the API returns an error response.
+/// Contains the response from the API when a request fails to complete as expected.
 @JsonSerializable()
 class ApiException implements Exception {
   /// The type of response returned from the API. (Usually error.)
