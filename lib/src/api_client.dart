@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:http_status/http_status.dart';
 import 'package:wordnik/src/models/api_exception.dart';
 import 'package:wordnik/src/enums.dart';
 
@@ -93,7 +92,7 @@ abstract class ApiClient {
 
     dynamic responseData = (format == 'json') ? ((response.body.isNotEmpty) ? json.decode(response.body) : null) : response.body;
 
-    if (response.statusCode == HttpStatusCode.OK) {
+    if (response.statusCode == 200) {
       return responseData;
     } else {
       throw ApiException.fromJson(responseData);
