@@ -1,3 +1,12 @@
+## [v1.0.0](https://github.com/Herohtar/wordnik-dart/releases/tag/v1.0.0) - 2018-08-08
+
+* Updated to fully support Dart 2
+* Upgraded `json_seralizable` and updated object models to use the new default of generated ToJson methods instead of Mixins
+* Removed an unused class and added a missing internal class
+* Added a missing API call (`getScrabbleScore`)
+* Updated the example and documentation
+
+
 ## [v0.4.0](https://github.com/Herohtar/wordnik-dart/releases/tag/v0.4.0) - 2018-07-25
 
 * Completed documentation for API calls
